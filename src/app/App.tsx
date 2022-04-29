@@ -10,11 +10,8 @@ export const App = () => {
 
     return (
         <div className={s.app}>
-            <HashRouter>
                 <Header/>
                 <AppRoutes/>
-            </HashRouter>
-
         </div>
     )
 }

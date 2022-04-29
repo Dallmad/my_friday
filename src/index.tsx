@@ -5,16 +5,19 @@ import {App} from './app/App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
 import {store} from './state/store';
+import {HashRouter} from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-      <Provider store={store}>
-              <App/>
-      </Provider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <HashRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </HashRouter>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
