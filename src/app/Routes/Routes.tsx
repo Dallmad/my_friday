@@ -5,8 +5,8 @@ import {Login} from '../../features/Login/Login';
 import {Profile} from '../../features/Profile/Profile';
 import {TestPage} from '../../features/TestPage/TestPage';
 import {Registration} from '../../features/Registartion/Registration';
-import {PasswordRecovery} from '../../features/Registartion/Password-recovery/PasswordRecovery';
 import {NewPassword} from '../../features/Registartion/New-password/NewPassword';
+import {RecoveryPassword} from '../../features/Registartion/Recovery-password/RecoveryPassword';
 
 export const PATH = {
     PROFILE:'/profile',
@@ -29,7 +29,7 @@ export const AppRoutes = () => {
                 <Route path={'*'} element={<Navigate to={PATH.ERROR404}/>}/>
                 <Route path={PATH.TEST_PAGE} element={<TestPage/>}/>
                 <Route path={PATH.REGISTRATION} element={<Registration/>}/>
-                <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
+                <Route path={PATH.PASSWORD_RECOVERY} element={<RecoveryPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
             </Routes>
         </div>

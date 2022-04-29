@@ -1,6 +1,6 @@
-import s from './PasswordRecovery.module.css'
+import s from './RecoveryPassword.module.css'
 
-export const PasswordRecovery = () => {
+export const RecoveryPassword = () => {
     return (
         <div className={s.div}>
             Your pet's name
