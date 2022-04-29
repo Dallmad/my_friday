@@ -1,3 +1,18 @@
+.app {
+    min-height: 1080px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+}
+/*
+p {
+    font-size: 21px;
+}
+*/
+
+
+/*
 .App {
   text-align: center;
 }
@@ -36,3 +51,4 @@
     transform: rotate(360deg);
   }
 }
+*/

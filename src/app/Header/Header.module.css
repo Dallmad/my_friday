@@ -1,0 +1,33 @@
+.div {
+    display: flex;
+    justify-content: space-around;
+}
+.button {
+    display: flex;
+    width: 30%;
+    float: left;
+    height: 25px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #737681;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px #999;
+    margin: 10px;
+
+}
+
+.link {
+    margin-left: 30px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    border-color: #3498db;
+    color: #fff;
+    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+    transition: all 150ms;
+    transition-duration: 500ms;
+}
