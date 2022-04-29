@@ -14,8 +14,7 @@ const Checkbox: React.FC<SuperCheckboxPropsType> = (
         type,
         onChange, onChangeChecked,
         className, spanClassName,
-        children, // в эту переменную попадёт текст, типизировать не нужно так как он затипизирован в React.FC
-
+        children,
         ...restProps
     }
 ) => {
@@ -32,7 +31,6 @@ const Checkbox: React.FC<SuperCheckboxPropsType> = (
                 type={'checkbox'}
                 onChange={onChangeCallback}
                 className={finalInputClassName}
-
                 {...restProps}
             />
             {children && <span className={s.spanClassName}>{children}</span>}

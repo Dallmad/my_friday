@@ -3,15 +3,10 @@ import React, {DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState}
 import s from './EditableSpan.module.css'
 import Input from '../Input/Input';
 
-
-// тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-// тип пропсов обычного спана
 type DefaultSpanPropsType = DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>
 
-// здесь мы говорим что у нашего инпута будут такие же пропсы как у обычного инпута
-// (чтоб не писать value: string, onChange: ...; они уже все описаны в DefaultInputPropsType)
-type SuperEditableSpanType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
+type SuperEditableSpanType = DefaultInputPropsType & {
     onChangeText?: (value: string) => void
     onEnter?: () => void
     error?: string
@@ -21,30 +16,27 @@ type SuperEditableSpanType = DefaultInputPropsType & { // и + ещё пропс
 
 const EditableSpan: React.FC<SuperEditableSpanType> = (
     {
-        autoFocus, // игнорировать изменение этого пропса
+        autoFocus,
         onBlur,
         onEnter,
         spanProps,
 
-        ...restProps// все остальные пропсы попадут в объект restProps
+        ...restProps
     }
 ) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const {children, onDoubleClick, className, ...restSpanProps} = spanProps || {}
 
     const onEnterCallback = () => {
-        setEditMode(false) // выключить editMode при нажатии Enter
-
+        setEditMode(false)
         onEnter && onEnter()
     }
     const onBlurCallback = (e: React.FocusEvent<HTMLInputElement>) => {
-        setEditMode(false) // выключить editMode при нажатии за пределами инпута
-
+        setEditMode(false)
         onBlur && onBlur(e)
     }
     const onDoubleClickCallBack = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-        setEditMode(true) // включить editMode при двойном клике
-
+        setEditMode(true)
         onDoubleClick && onDoubleClick(e)
     }
 
@@ -55,11 +47,10 @@ const EditableSpan: React.FC<SuperEditableSpanType> = (
             {editMode
                 ? (
                     <Input
-                        autoFocus // пропсу с булевым значением не обязательно указывать true
+                        autoFocus
                         onBlur={onBlurCallback}
                         onEnter={onEnterCallback}
-
-                        {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
+                        {...restProps}
                     />
                 ) : (
                     <span
@@ -69,7 +60,6 @@ const EditableSpan: React.FC<SuperEditableSpanType> = (
                         {...restSpanProps}
                     ><img
                         src="https://w7.pngwing.com/pngs/122/292/png-transparent-black-and-white-pencil-silhouette-drawing-pencil-angle-white-pencil.png"/>
-                        {/*если нет захардкодженного текста для спана, то значение инпута*/}
                         {children || restProps.value}
                     </span>
                 )

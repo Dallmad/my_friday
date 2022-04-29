@@ -14,7 +14,6 @@ const Select: React.FC<SuperSelectPropsType> = (
         ...restProps
     }
 ) => {
-    // const mappedOptions: any[] = []; // map options with key
     const mappedOptions: JSX.Element[] = options ? options.map((o, i) => (
         <option key={o+'-'+i} value={o}>{o}</option>
     )):[]
@@ -22,8 +21,6 @@ const Select: React.FC<SuperSelectPropsType> = (
     const onChangeCallback = (e: ChangeEvent<HTMLSelectElement>) => {
         onChange && onChange(e)
         onChangeOption && onChangeOption(e.currentTarget.value)
-
-        // onChange, onChangeOption
     }
 
     return (
