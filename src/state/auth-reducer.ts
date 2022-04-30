@@ -1,7 +1,6 @@
 import {authAPI, LoginParamsType} from '../api/auth-api';
 import {Dispatch} from 'redux';
-import {ThunkAction} from 'redux-thunk';
-import {AppActionType, AppRootStateType, TypedDispatch} from './store';
+import {setProfileStateAC} from './profile-reducer';
 
 const SET_IS_LOGGED_IN = 'login/SET-IS-LOGGED-IN'
 const initialState = {
@@ -22,7 +21,7 @@ export const setIsLoggedIn = (value: boolean) =>
     ({type: SET_IS_LOGGED_IN, value})
 
 // thunks
-export const login = (data: LoginParamsType): ThunkAction<void, AppRootStateType, unknown, AppActionType> => (dispatch: TypedDispatch) => {
+export const login = (data: LoginParamsType) => (dispatch: Dispatch) => {
     authAPI.login(data)
         .then((res) => {
             if (!res.data.error) {
@@ -51,7 +50,15 @@ export const logout = () => (dispatch: Dispatch<LoginActionsType>) => {
             const error = e.res ? e.res.data.error : e.message
         })
 }
-
+export const setUser = () => (dispatch: Dispatch) => {
+    authAPI.me()
+        .then(res => {
+            dispatch(setProfileStateAC(res.data))
+        })
+        .catch((e) => {
+            const error = e.res ? e.res.data.error : e.message
+        })
+}
 // types
 type InitialStateType = typeof initialState
 export type LoginActionsType = ReturnType<typeof setIsLoggedIn>
