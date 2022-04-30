@@ -4,7 +4,7 @@ import s from './Login.module.css'
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../state/store';
-import {loginTC} from '../../state/auth-reducer';
+import {login} from '../../state/auth-reducer';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
@@ -34,7 +34,8 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            //dispatch(loginTC(values))
+            // @ts-ignore
+            dispatch(login(values))
             formik.resetForm()
         },
     })
@@ -55,7 +56,6 @@ export const Login = () => {
                         && <div style={{color: 'red'}}>{formik.errors.email}</div>}
                     <Input
                         type="password"
-                        //name='Password'
                         placeholder={'Enter password'}
                         {...formik.getFieldProps('password')}
                     />
@@ -67,12 +67,7 @@ export const Login = () => {
                                 {...formik.getFieldProps('rememberMe')}
                             />
                     </div>
-
-                    <Button
-                        type={'submit'}
-                        //variant={'contained'}
-                        color={'primary'}
-                    >
+                    <Button type={'submit'}>
                         Login
                     </Button>
                 </div>
