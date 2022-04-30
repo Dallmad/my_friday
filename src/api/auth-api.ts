@@ -37,4 +37,3 @@ export type ResponseType = {
     rememberMe: boolean
     error?: string;
 }
-
