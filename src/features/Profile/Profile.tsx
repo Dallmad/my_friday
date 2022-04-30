@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {ProfileStateType, setProfileStateThunk} from "../../state/profile-reducer";
 import {ChangeEvent, useState} from "react";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
 
 export const Profile = () => {
 
@@ -14,8 +16,8 @@ export const Profile = () => {
     const [newName, setNewName] = useState('')
 
 
-    // if (!isLoggedIn) {
-    //     return <Navigate to='/login'/>
+    //if (!isLoggedIn) {
+    //    return <Navigate to='/login'/>
     // }
 
 
@@ -46,8 +48,8 @@ export const Profile = () => {
                     {nameSwitch
                         ? (
                         <div >
-                               <input value={newName} type="text" onChange={newNameHandler} />
-                               <button onClick={changeName}>Change</button>
+                               <Input value={newName} type="text" onChange={newNameHandler} />
+                               <Button onClick={changeName}>Change</Button>
                         </div>
                         )
                         : (
