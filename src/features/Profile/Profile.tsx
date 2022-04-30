@@ -6,6 +6,7 @@ import {ProfileStateType, setProfileStateThunk} from "../../state/profile-reduce
 import {ChangeEvent, useState} from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import EditableSpan from "../../components/EditableSpan/EditableSpan";
 
 export const Profile = () => {
 
@@ -54,7 +55,7 @@ export const Profile = () => {
                         )
                         : (
                             <div>
-                                <span onDoubleClick={changeSwitchHandler}>name</span>
+                                <EditableSpan onDoubleClick={changeSwitchHandler}>name</EditableSpan>
                             </div>
                         )}
             </div>
