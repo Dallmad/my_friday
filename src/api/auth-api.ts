@@ -3,13 +3,13 @@ import {instance} from './instance';
 
 export const authAPI = {
     login(data: LoginParamsType) {
-        return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('auth/login', data)
+        return instance.post<LoginParamsType, AxiosResponse<ResponseUserType>>('auth/login', data)
     },
     me() {
-        return instance.post<ResponseType>('auth/me')
+        return instance.post<ResponseUserType>('auth/me')
     },
     logout() {
-        return instance.delete<ResponseType>('auth/me')
+        return instance.delete<ResponseUserType>('auth/me')
     }
 }
 
@@ -19,14 +19,14 @@ export type LoginParamsType = {
     password: string
     rememberMe: boolean
 }
-export type ResponseType = {
+export type ResponseUserType = {
     _id: string
     email: string
     name: string
     avatar?: string
     publicCardPacksCount: number
-    created: Date
-    updated: Date
+    created?: Date
+    updated?: Date
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean

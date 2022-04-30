@@ -1,7 +1,6 @@
 import {authAPI, LoginParamsType} from '../api/auth-api';
 import {Dispatch} from 'redux';
 import {setProfileStateAC} from './profile-reducer';
-
 const SET_IS_LOGGED_IN = 'login/SET-IS-LOGGED-IN'
 const initialState = {
     isLoggedIn: false
