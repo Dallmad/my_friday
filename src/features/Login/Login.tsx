@@ -2,17 +2,17 @@ import React from 'react'
 import { Navigate } from 'react-router-dom';
 import s from './Login.module.css'
 import {useFormik} from 'formik';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../../state/store';
+import {useSelector} from 'react-redux';
+import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import {login} from '../../state/auth-reducer';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 
 export const Login = () => {
-    const dispatch = useDispatch()
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const dispatch = useTypedDispatch()
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -34,7 +34,6 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            // @ts-ignore
             dispatch(login(values))
             formik.resetForm()
         },
