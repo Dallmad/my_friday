@@ -1,63 +1,45 @@
 import {Navigate} from 'react-router-dom';
 import s from './Profile.module.css'
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../state/store";
-import {ProfileStateType, setProfileStateThunk} from "../../state/profile-reducer";
-import {ChangeEvent, useState} from "react";
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
-import EditableSpan from "../../components/EditableSpan/EditableSpan";
+import {useSelector} from 'react-redux';
+import {AppRootStateType, useTypedDispatch} from '../../state/store';
+import {setProfileStateThunk} from '../../state/profile-reducer';
+import {useEffect, useState} from 'react';
+import {setUser} from '../../state/auth-reducer';
+import EditableSpan from '../../components/EditableSpan/EditableSpan';
+import ava from '../../assets/images/ava.png'
 
 export const Profile = () => {
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
-    const profileData = useSelector<AppRootStateType, ProfileStateType>((state) => state.profile)
-    const dispatch = useDispatch()
-    const [nameSwitch, changeSwitch] = useState(false)
-    const [newName, setNewName] = useState('')
+    const userName = useSelector<AppRootStateType, string>((state) => state.profile.name)
+    const dispatch = useTypedDispatch()
 
+    const [newName, setNewName] = useState<string>(userName)
 
-    //if (!isLoggedIn) {
-    //    return <Navigate to='/login'/>
-    // }
-
-
-    let picture = 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
-
-    const changeSwitchHandler = () => {
-        changeSwitch(true)
-    }
-
-    const newNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewName(e.currentTarget.value)
-    }
+    useEffect(() => {
+        dispatch(setUser())
+    }, [userName])
 
     const changeName = () => {
-        //@ts-ignore
-        dispatch(setProfileStateThunk(newName, picture))
-        changeSwitch(false)
+        dispatch(setProfileStateThunk(newName))
     }
 
+    if (!isLoggedIn) {
+        return <Navigate to="/login"/>
+    }
 
     return (
         <div className={s.div}>
             <div>
                 Profile
                 <div>
-                    <img src={picture} alt="Avatar"/>
+                    <img src={ava} alt="Avatar"/>
                 </div>
-                    {nameSwitch
-                        ? (
-                        <div >
-                               <Input value={newName} type="text" onChange={newNameHandler} />
-                               <Button onClick={changeName}>Change</Button>
-                        </div>
-                        )
-                        : (
-                            <div>
-                                <span onClick={changeSwitchHandler}>name</span>
-                            </div>
-                        )}
+                <EditableSpan   value={newName}
+                                onChangeText={setNewName}
+                                onBlur={changeName}
+                                onEnter={changeName}
+                />
             </div>
         </div>
     )

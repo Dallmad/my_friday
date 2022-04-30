@@ -1,68 +1,44 @@
- import axios from 'axios';
-import {Dispatch} from "redux";
-import {Simulate} from "react-dom/test-utils";
+import {ResponseUserType} from '../api/auth-api';
+import {Dispatch} from 'redux';
+import {profileAPI} from '../api/profile-api';
 
-// types
+const SET_NEW_NAME = 'profile/SET-NEW-NAME'
 
-type AxiosResponse = {
-    updatedUser: ProfileStateType
-    error?: string
+const initialState = {
+    _id: '',
+    email: '',
+    name: '',
+    /*avatar: '',*/
+    publicCardPacksCount: 0,
+    /*created: '',
+    updated: '',*/
+    isAdmin: false,
+    verified: false,
+    rememberMe: false,
+    /*error: '',*/
 }
 
-type InitialStateType = typeof initialState
-export type ProfileStateType = {
-    _id?: string;
-    email?: string;
-    name?: string;
-    avatar?: string;
-    publicCardPacksCount?: number;
-// количество колод
-
-    created?: Date;
-    updated?: Date;
-    isAdmin?: boolean;
-    verified?: boolean; // подтвердил ли почту
-    rememberMe?: boolean;
-
-    error?: string;
-}
-type ActionsType = ReturnType<typeof setProfileStateAC>
-
-
-// API
-
-export const instance = axios.create({
-    baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
-    withCredentials: true,
-})
-
-
-
-const initialState = {}
-
-export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): ProfileStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): ResponseUserType => {
     switch (action.type) {
-        case 'profile/SET-NEWNAME':
-            let newState = {...action.profile}
-            return newState
+        case SET_NEW_NAME:
+            return {...action.profile}
         default:
             return state
     }
 }
+
 // actions
-export const setProfileStateAC = (profile: ProfileStateType) => ({type: 'profile/SET-NEWNAME', profile} as const)
+export const setProfileStateAC = (profile: ResponseUserType) => ({type: SET_NEW_NAME, profile} as const)
 
 // thunk
-
-export const setProfileStateThunk = (name: string, avatar: string) => (dispatch: any) => {
-    instance.put<any, any>('auth/me', {name , avatar})
-        .then( res => {
-            console.log(res)
-            dispatch(setProfileStateAC(res.updatedUser))
-        }
-        )
-        .catch( error => console.log(error.message))
+export const setProfileStateThunk = (name: string) => (dispatch: Dispatch) => {
+    profileAPI.changeUserName(name)
+        .then(res => {
+            dispatch(setProfileStateAC(res.data))
+        })
+        .catch(error => console.log(error.message))
 }
 
-
-
+//types
+type InitialStateType = typeof initialState
+type ActionsType = ReturnType<typeof setProfileStateAC>
