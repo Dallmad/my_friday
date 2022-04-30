@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import s from './Login.module.css'
 import {useFormik} from 'formik';
 import {useSelector} from 'react-redux';
@@ -13,6 +13,7 @@ export const Login = () => {
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useTypedDispatch()
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -39,7 +40,7 @@ export const Login = () => {
         },
     })
     if (isLoggedIn) {
-        return <Navigate to='/'/>
+        return <Navigate to="/"/>
     }
 
     return (
@@ -62,9 +63,9 @@ export const Login = () => {
                         && <div style={{color: 'red'}}>{formik.errors.password}</div>}
                     <div>
                         <label>Remember me</label>
-                            <Checkbox
-                                {...formik.getFieldProps('rememberMe')}
-                            />
+                        <Checkbox
+                            {...formik.getFieldProps('rememberMe')}
+                        />
                     </div>
                     <Button type={'submit'}>
                         Login
