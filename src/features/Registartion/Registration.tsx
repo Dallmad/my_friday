@@ -2,6 +2,11 @@ import {useFormik} from 'formik';
 import s from './Registration.module.css'
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import {RegistrationType} from "../../API registration/registration-api";
+import {registrationTC} from "../../state/registration-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import { Navigate } from 'react-router-dom';
+import {AppRootStateType} from "../../state/store";
 
 
 interface MyFormValues {
@@ -11,22 +16,29 @@ interface MyFormValues {
 
 export const Registration = () => {
 
-    // const dispatch = useDispatch()
+    const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isRegistration)
+
+    const dispatch = useDispatch()
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
-        validate: (values) => {
+        validate: (values: RegistrationType) => {
             const errors: MyFormValues = {};
             return errors;
         },
         onSubmit: values => {
-            // dispatch(loginTC(values))
-            alert(JSON.stringify(values))
+            // @ts-ignore
+            dispatch(registrationTC(values))
             formik.resetForm()
         },
     })
+
+    if (isRegistration) {
+        return <Navigate to='/login'/>
+    }
 
     return (
         <div className={s.div}>
