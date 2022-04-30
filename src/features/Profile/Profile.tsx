@@ -55,7 +55,7 @@ export const Profile = () => {
                         )
                         : (
                             <div>
-                                <EditableSpan onDoubleClick={changeSwitchHandler}>name</EditableSpan>
+                                <span onClick={changeSwitchHandler}>name</span>
                             </div>
                         )}
             </div>
