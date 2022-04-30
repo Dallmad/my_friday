@@ -1,20 +1,23 @@
 import {Dispatch} from "redux";
-import {registrationAPI, RegistrationType} from "../API registration/registration-api";
+import {registrationAPI, RegistrationType} from "../api/registration-api";
 
+const REGISTRATION = 'registration/REGISTRATION'
 const initialState = {isRegistration: false}
 
 export const registrationReducer = (state: InitialStateType = initialState, action:
     ActionsType): InitialStateType => {
     switch (action.type) {
-        case 'registration/REGISTRATION':
+        case REGISTRATION:
             return {...state, isRegistration: true}
         default:
             return state
     }
 }
+
 // actions
 export const registration = () =>
-    ({type: 'registration/REGISTRATION'} as const)
+    ({type: REGISTRATION} as const)
+
 // thunk
 export const registrationTC = (obj: RegistrationType) => {
     return (dispatch: Dispatch) => {

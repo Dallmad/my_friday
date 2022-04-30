@@ -32,8 +32,7 @@ export const login = (data: LoginParamsType): ThunkAction<void, AppRootStateType
             }
         })
         .catch((e) => {
-            const error = e.res ? e.res.data.error : (e.message + ', more details in the console')
-            console.log('Error: ', {...e})
+            const error = e.res ? e.res.data.error : e.message
         })
 }
 
@@ -49,8 +48,7 @@ export const logout = () => (dispatch: Dispatch<LoginActionsType>) => {
             }
         })
         .catch((e) => {
-            const error = e.res ? e.res.data.error : (e.message + ', more details in the console')
-            console.log('Error: ', {...e})
+            const error = e.res ? e.res.data.error : e.message
         })
 }
 
