@@ -1,4 +1,18 @@
 .div {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+}
+
+.form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.form div {
+    margin: 5px;
 }
