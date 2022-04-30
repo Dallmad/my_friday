@@ -6,7 +6,6 @@ import {Header} from './Header/Header';
 
 export const App = () => {
 
-
     return (
         <div className={s.app}>
                 <Header/>
