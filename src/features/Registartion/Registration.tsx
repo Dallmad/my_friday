@@ -7,6 +7,7 @@ import {registrationTC} from "../../state/registration-reducer";
 import {useSelector} from "react-redux";
 import { Navigate } from 'react-router-dom';
 import {AppRootStateType, useTypedDispatch} from '../../state/store';
+import React from 'react';
 
 
 interface MyFormValues {
@@ -25,8 +26,18 @@ export const Registration = () => {
             email: '',
             password: '',
         },
-        validate: (values: RegistrationType) => {
-            const errors: MyFormValues = {};
+        validate: (values) => {
+            const errors: FormikErrorType = {};
+            if (!values.email) {
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+            if (!values.password) {
+                errors.password = 'Password is required';
+            } else if (values.password.length < 7) {
+                errors.password = 'Password should be more 7 symbols';
+            }
             return errors;
         },
         onSubmit: values => {
@@ -47,22 +58,20 @@ export const Registration = () => {
                     <div>
                         <label htmlFor="email">email</label>
                         <Input
-                            id="email"
-                            name="email"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.email}
+                            type="Email"
+                            {...formik.getFieldProps('email')}
                         />
+                        {formik.touched.email && formik.errors.email
+                            && <div style={{color: 'red'}}>{formik.errors.email}</div>}
                     </div>
                     <div>
                         <label htmlFor="password">password</label>
                         <Input
-                            id="password"
-                            name="password"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.password}
+                            type="password"
+                            {...formik.getFieldProps('password')}
                         />
+                        {formik.touched.password && formik.errors.password
+                            && <div style={{color: 'red'}}>{formik.errors.password}</div>}
                     </div>
                     <div>
                         <Button type="submit">sing up</Button>
@@ -71,4 +80,10 @@ export const Registration = () => {
             </form>
         </div>
     )
+}
+
+//types
+type FormikErrorType = {
+    email?: string
+    password?: string
 }
