@@ -59,6 +59,8 @@ export const Profile = () => {
             {/*              onEnter={changeName}*/}
             {/*/>*/}
 
+            {/*x3*/}
+
             <div className={s.buttons_container}>
                 <button className={s.button_cancel}>Cancel</button>
                 <button className={s.button_save}>Save</button>
