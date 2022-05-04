@@ -14,11 +14,11 @@ export const ErrorSnackbar = () => {
     useEffect(() => {
         if (error) {
             setErr(true)
-            const timer = setInterval(() => {
+            const timer = setTimeout(() => {
                 dispatch(setErrorAC(error))
                 setErr(false)
             }, 4500)
-            return () => clearInterval(timer)
+            return () => clearTimeout(timer)
         }
     }, [error])
 
