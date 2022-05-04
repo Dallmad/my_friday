@@ -35,7 +35,7 @@
 
 .buttonRed {
     height: 25px;
-    width: 130px;
+    min-width: 130px;
     font-size: 16px;
     text-align: center;
     cursor: pointer;
@@ -46,7 +46,6 @@
     border-radius: 10px;
     box-shadow: 0 4px #999;
     margin: 10px;
-
 }
 
 .buttonRed:hover {
