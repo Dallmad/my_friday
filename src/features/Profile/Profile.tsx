@@ -42,10 +42,14 @@ export const Profile = () => {
                 </div>
             </div>
             <div className={s.profile_input}>
-                <TextField id="standard-basic" label="Nickname" variant="standard" className={s.profile_textfield}/>
-            </div>
-            <div className={s.profile_input}>
-                <TextField id="standard-basic" label="Email" variant="standard" className={s.profile_textfield}/>
+                <TextField id="standard-basic"
+                           label="Nickname"
+                           variant="standard"
+                           className={s.profile_textfield}/>
+                <TextField id="standard-basic"
+                           label="Email"
+                           variant="standard"
+                           className={s.profile_textfield}/>
             </div>
 
             {/*для чего editable span?*/}
@@ -59,8 +63,6 @@ export const Profile = () => {
                 <button className={s.button_cancel}>Cancel</button>
                 <button className={s.button_save}>Save</button>
             </div>
-
-
         </div>
     )
 }
