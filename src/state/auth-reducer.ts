@@ -1,6 +1,8 @@
 import {authAPI, LoginParamsType} from '../api/auth-api';
 import {Dispatch} from 'redux';
 import {setProfileStateAC} from './profile-reducer';
+import {handleServerNetworkError} from '../utils/error-utils';
+
 const SET_IS_LOGGED_IN = 'login/SET-IS-LOGGED-IN'
 const initialState = {
     isLoggedIn: false
@@ -22,31 +24,21 @@ export const setIsLoggedIn = (value: boolean) =>
 // thunks
 export const login = (data: LoginParamsType) => (dispatch: Dispatch) => {
     authAPI.login(data)
-        .then((res) => {
-            if (!res.data.error) {
-                dispatch(setIsLoggedIn(true))
-            } else {
-                console.log('error')
-            }
+        .then(res => {
+            dispatch(setIsLoggedIn(true))
         })
-        .catch((e) => {
-            const error = e.res ? e.res.data.error : e.message
+        .catch(error => {
+           handleServerNetworkError(error.response.data.error, dispatch)
         })
 }
 
 export const logout = () => (dispatch: Dispatch<LoginActionsType>) => {
     authAPI.logout()
         .then(res => {
-            if (!res.data.error) {
                 dispatch(setIsLoggedIn(false))
-            } else {
-                {
-                    console.log('error')
-                }
-            }
         })
-        .catch((e) => {
-            const error = e.res ? e.res.data.error : e.message
+        .catch(error => {
+            handleServerNetworkError(error.response.data.error, dispatch)
         })
 }
 export const setUser = () => (dispatch: Dispatch) => {
@@ -54,10 +46,11 @@ export const setUser = () => (dispatch: Dispatch) => {
         .then(res => {
             dispatch(setProfileStateAC(res.data))
         })
-        .catch((e) => {
-            const error = e.res ? e.res.data.error : e.message
+        .catch(error => {
+            handleServerNetworkError(error.response.data.error, dispatch)
         })
 }
+
 // types
 type InitialStateType = typeof initialState
 export type LoginActionsType = ReturnType<typeof setIsLoggedIn>
