@@ -1,3 +1,4 @@
+
 .div {
     display: flex;
     flex-direction: column;
@@ -60,7 +61,9 @@
 }
 
 .profile_input {
-    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
 }
 
@@ -115,7 +118,7 @@
 }
 
 .buttons_container {
-    margin-top: 82px;
+    margin-top: 106px;
     width: 347px;
     display: flex;
     justify-content: space-between;
