@@ -5,10 +5,9 @@ import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import {setProfileStateThunk} from '../../state/profile-reducer';
 import {useEffect, useState} from 'react';
 import {setUser} from '../../state/auth-reducer';
-import EditableSpan from '../../components/EditableSpan/EditableSpan';
 import ava from '../../assets/images/ava.png';
 import icon from '../../assets/images/img_icon.png';
-import Input from "../../components/Input/Input";
+import Input from '../../components/Input/Input';
 
 export const Profile = () => {
 
@@ -21,10 +20,13 @@ export const Profile = () => {
 
     useEffect(() => {
         dispatch(setUser())
-    }, [newName])
+    }, [userName])
 
     const changeName = () => {
         dispatch(setProfileStateThunk(newName))
+    }
+    const cancelChangeName = () => {
+        setNewName(userName)
     }
 
     if (!isLoggedIn) {
@@ -43,21 +45,19 @@ export const Profile = () => {
                 </div>
             </div>
             <form className={s.profile_input}>
-                <EditableSpan value={newName}
-                              onChangeText={setNewName}
-                              onBlur={changeName}
-                              onEnter={changeName}
-                />
-
                 <Input
-                     label={'email'}
-                     value={userEmail}
+                    label={'Nickname'}
+                    value={newName}
+                    onChangeText={setNewName}
+                />
+                <Input
+                    label={'email'}
+                    value={userEmail}
                 />
 
             </form>
-
             <div className={s.buttons_container}>
-                <button className={s.button_cancel}>Cancel</button>
+                <button className={s.button_cancel} onClick={cancelChangeName}>Cancel</button>
                 <button className={s.button_save} onClick={changeName}>Save</button>
             </div>
         </div>
