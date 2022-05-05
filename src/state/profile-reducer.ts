@@ -1,6 +1,7 @@
 import {ResponseUserType} from '../api/auth-api';
 import {Dispatch} from 'redux';
 import {profileAPI} from '../api/profile-api';
+import {loading} from "./registration-reducer";
 
 const SET_NEW_NAME = 'profile/SET-NEW-NAME'
 
@@ -32,9 +33,11 @@ export const setProfileStateAC = (profile: ResponseUserType) => ({type: SET_NEW_
 
 // thunk
 export const setProfileStateThunk = (name: string) => (dispatch: Dispatch) => {
+    dispatch(loading(true))
     profileAPI.changeUserName(name)
         .then(res => {
             dispatch(setProfileStateAC(res.data))
+            dispatch(loading(false))
         })
         .catch(error => console.log(error.message))
 }

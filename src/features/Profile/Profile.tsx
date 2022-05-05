@@ -7,9 +7,11 @@ import {useEffect, useState} from 'react';
 import {setUser} from '../../state/auth-reducer';
 import EditableSpan from '../../components/EditableSpan/EditableSpan';
 import ava from '../../assets/images/ava.png'
+import {Preloader} from "../../components/Preloader/Preloader";
 
 export const Profile = () => {
 
+    const isLoading = useSelector<AppRootStateType, boolean>(state => state.registration.isLoading)
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const userName = useSelector<AppRootStateType, string>((state) => state.profile.name)
     const dispatch = useTypedDispatch()
@@ -22,6 +24,10 @@ export const Profile = () => {
 
     const changeName = () => {
         dispatch(setProfileStateThunk(newName))
+    }
+
+    if (isLoading) {
+        return <Preloader/>
     }
 
     if (!isLoggedIn) {
