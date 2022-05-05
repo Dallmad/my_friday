@@ -2,6 +2,7 @@ import {authAPI, LoginParamsType} from '../api/auth-api';
 import {Dispatch} from 'redux';
 import {setProfileStateAC} from './profile-reducer';
 import {handleServerNetworkError} from '../utils/error-utils';
+import {loading} from './registration-reducer';
 
 const SET_IS_LOGGED_IN = 'login/SET-IS-LOGGED-IN'
 const initialState = {
@@ -23,27 +24,33 @@ export const setIsLoggedIn = (value: boolean) =>
 
 // thunks
 export const login = (data: LoginParamsType) => (dispatch: Dispatch) => {
+    dispatch(loading(true))
     authAPI.login(data)
         .then(res => {
+            dispatch(loading(false))
             dispatch(setIsLoggedIn(true))
         })
         .catch(error => {
-           handleServerNetworkError(error.response.data.error, dispatch)
+            handleServerNetworkError(error.response.data.error, dispatch)
         })
 }
 
-export const logout = () => (dispatch: Dispatch<LoginActionsType>) => {
+export const logout = () => (dispatch: Dispatch) => {
+    dispatch(loading(true))
     authAPI.logout()
         .then(res => {
-                dispatch(setIsLoggedIn(false))
+            dispatch(loading(false))
+            dispatch(setIsLoggedIn(false))
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
         })
 }
 export const setUser = () => (dispatch: Dispatch) => {
+    dispatch(loading(true))
     authAPI.me()
         .then(res => {
+            dispatch(loading(false))
             dispatch(setProfileStateAC(res.data))
         })
         .catch(error => {

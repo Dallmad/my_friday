@@ -6,12 +6,13 @@ import {registrationTC} from "../../state/registration-reducer";
 import {useSelector} from "react-redux";
 import { Navigate } from 'react-router-dom';
 import {AppRootStateType, useTypedDispatch} from '../../state/store';
-import React from 'react';
+import {Preloader} from "../../components/Preloader/Preloader";
 
 
 export const Registration = () => {
 
     const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isRegistration)
+    const isLoading = useSelector<AppRootStateType, boolean>(state => state.registration.isLoading)
 
     const dispatch = useTypedDispatch()
 
@@ -39,6 +40,10 @@ export const Registration = () => {
             formik.resetForm()
         },
     })
+
+    if (isLoading) {
+        return <Preloader/>
+    }
 
     if (isRegistration) {
         return <Navigate to='/login'/>
