@@ -41,7 +41,6 @@ const Input: React.FC<SuperInputTextPropsType> = (
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
 
-
                 {...restProps}
             />
             {error && <span className={finalSpanClassName}>{error}</span>}

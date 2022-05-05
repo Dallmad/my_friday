@@ -5,10 +5,8 @@ import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import {setProfileStateThunk} from '../../state/profile-reducer';
 import {useEffect, useState} from 'react';
 import {setUser} from '../../state/auth-reducer';
-import EditableSpan from '../../components/EditableSpan/EditableSpan';
 import ava from '../../assets/images/avatar.jpg';
 import icon from '../../assets/images/img_icon.png';
-import {TextField} from "@mui/material";
 
 export const Profile = () => {
 
@@ -36,21 +34,27 @@ export const Profile = () => {
                 Personal Information
             </div>
             <div className={s.profile_img}>
-                <img src={ava} alt="Avatar"/>
-                <div className={s.img__icon}>
-                    <img src={icon} alt="Img-Icon"/>
+                <img src={ava} alt="Avatar" className={s.profile_avatar}/>
+                <div className={s.icon}>
+                    <img src={icon} alt="Img-Icon" className={s.icon_img}/>
                 </div>
             </div>
-            <div className={s.profile_input}>
-                <TextField id="standard-basic"
-                           label="Nickname"
-                           variant="standard"
-                           className={s.profile_textfield}/>
-                <TextField id="standard-basic"
-                           label="Email"
-                           variant="standard"
-                           className={s.profile_textfield}/>
-            </div>
+            <form className={s.profile_input}>
+                <label htmlFor='nickname'
+                       className={s.label}>Nickname</label>
+                <input id='nickname'
+                       type='text'
+                       name='nickname'
+                       className={s.profile_textfield}/>
+
+                <label htmlFor='email'
+                       className={s.label}>Email</label>
+                <input id='email'
+                       type='text'
+                       name='email'
+                       className={s.profile_textfield}/>
+
+            </form>
 
             {/*для чего editable span?*/}
             {/*<EditableSpan value={newName}*/}

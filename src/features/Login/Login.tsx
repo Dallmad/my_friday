@@ -39,6 +39,7 @@ export const Login = () => {
             formik.resetForm()
         },
     })
+
     if (isLoggedIn) {
         return <Navigate to="/"/>
     }
