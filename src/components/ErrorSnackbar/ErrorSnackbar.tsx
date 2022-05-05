@@ -4,6 +4,7 @@ import {setErrorAC} from '../../state/profile-reducer';
 import Button from '../Button/Button';
 import s from './ErrorSnackbar.module.css'
 import {useEffect, useState} from 'react';
+import {loading} from '../../state/registration-reducer';
 
 export const ErrorSnackbar = () => {
     const error = useSelector<AppRootStateType, string>(state => state.profile.error)
@@ -16,6 +17,7 @@ export const ErrorSnackbar = () => {
             setErr(true)
             const timer = setTimeout(() => {
                 dispatch(setErrorAC(error))
+                dispatch(loading(false))
                 setErr(false)
             }, 4500)
             return () => clearTimeout(timer)
@@ -24,6 +26,7 @@ export const ErrorSnackbar = () => {
 
     const handleClose = () => {
         dispatch(setErrorAC(''))
+        dispatch(loading(false))
         setErr(false)
     }
 

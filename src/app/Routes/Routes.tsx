@@ -10,7 +10,7 @@ import {RecoveryPassword} from '../../features/Registartion/Recovery-password/Re
 
 export const PATH = {
     PROFILE:'/profile',
-    LOGIN:'/login/*',
+    LOGIN:'/login',
     ERROR404: '/404',
     TEST_PAGE: '/test',
     REGISTRATION: '/registration',

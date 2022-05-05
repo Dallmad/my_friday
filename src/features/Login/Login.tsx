@@ -8,9 +8,11 @@ import {login} from '../../state/auth-reducer';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
+import {Preloader} from "../../components/Preloader/Preloader";
 
 export const Login = () => {
 
+    const isLoading = useSelector<AppRootStateType, boolean>(state => state.registration.isLoading)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useTypedDispatch()
 
@@ -39,7 +41,9 @@ export const Login = () => {
             formik.resetForm()
         },
     })
-
+    if (isLoading) {
+        return <Preloader/>
+    }
     if (isLoggedIn) {
         return <Navigate to="/"/>
     }
