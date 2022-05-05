@@ -1,9 +1,22 @@
 .superInput {
-    width: 200px;
-    padding: 8px 20px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    /*width: 200px;*/
+    /*padding: 8px 20px;*/
+    /*margin: 8px 0;*/
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px;*/
+    width: 347px;
+    height: 27px;
+    border: none;
+    border-bottom: 2px solid #24254A;
+    opacity: 0.2;
+    margin-bottom: 24px;
+    outline: none;
+
+    font-family: 'SF UI Display';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .errorInput {
@@ -17,4 +30,14 @@
 
 .error {
     color: #930720;
+}
+
+.label {
+    font-family: 'SF UI Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: #24254A;
+    opacity: 0.5;
 }

@@ -7,6 +7,8 @@ import {useEffect, useState} from 'react';
 import {setUser} from '../../state/auth-reducer';
 import ava from '../../assets/images/avatar.jpg';
 import icon from '../../assets/images/img_icon.png';
+import EditableSpan from "../../components/EditableSpan/EditableSpan";
+import Input from "../../components/Input/Input";
 
 export const Profile = () => {
 
@@ -40,30 +42,17 @@ export const Profile = () => {
                 </div>
             </div>
             <form className={s.profile_input}>
-                <label htmlFor='nickname'
-                       className={s.label}>Nickname</label>
-                <input id='nickname'
-                       type='text'
-                       name='nickname'
-                       className={s.profile_textfield}/>
+                <EditableSpan value={newName}
+                              onChangeText={setNewName}
+                              onBlur={changeName}
+                              onEnter={changeName}
+                />
 
-                <label htmlFor='email'
-                       className={s.label}>Email</label>
-                <input id='email'
-                       type='text'
-                       name='email'
-                       className={s.profile_textfield}/>
+                <Input
+                    // label={'Email'}
+                />
 
             </form>
-
-            {/*для чего editable span?*/}
-            {/*<EditableSpan value={newName}*/}
-            {/*              onChangeText={setNewName}*/}
-            {/*              onBlur={changeName}*/}
-            {/*              onEnter={changeName}*/}
-            {/*/>*/}
-
-            {/*x3*/}
 
             <div className={s.buttons_container}>
                 <button className={s.button_cancel}>Cancel</button>

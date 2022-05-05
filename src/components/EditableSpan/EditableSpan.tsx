@@ -40,7 +40,7 @@ const EditableSpan: React.FC<SuperEditableSpanType> = (
         onDoubleClick && onDoubleClick(e)
     }
 
-    const spanClassName = `${s.span} ${className}`
+    // const spanClassName = `${s.span} ${className}`
 
     return (
         <>
@@ -51,17 +51,23 @@ const EditableSpan: React.FC<SuperEditableSpanType> = (
                         onBlur={onBlurCallback}
                         onEnter={onEnterCallback}
                         {...restProps}
+                        // label={'labelName'}
                     />
                 ) : (
-                    <span
-                        onDoubleClick={onDoubleClickCallBack}
-                        className={spanClassName}
-
-                        {...restSpanProps}
-                    ><img
-                        src="https://w7.pngwing.com/pngs/122/292/png-transparent-black-and-white-pencil-silhouette-drawing-pencil-angle-white-pencil.png"/>
-                        {children || restProps.value}
-                    </span>
+                    // <span
+                    //     onDoubleClick={onDoubleClickCallBack}
+                    //     className={spanClassName}
+                    //
+                    //     {...restSpanProps}
+                    // >
+                    //     {/*<img*/}
+                    //     {/*// src="https://w7.pngwing.com/pngs/122/292/png-transparent-black-and-white-pencil-silhouette-drawing-pencil-angle-white-pencil.png"/>*/}
+                    //     {children || restProps.value}
+                    // </span>
+                    <Input onDoubleClick={onDoubleClickCallBack}
+                           className={s.superInput}
+                           // label={'labelName'}
+                    />
                 )
             }
         </>
