@@ -8,7 +8,7 @@ import {setUser} from '../../state/auth-reducer';
 import EditableSpan from '../../components/EditableSpan/EditableSpan';
 import ava from '../../assets/images/ava.png'
 import {Preloader} from "../../components/Preloader/Preloader";
-
+import {Logout} from "../../components/Logout/Logout";
 
 export const Profile = () => {
 
@@ -47,6 +47,7 @@ export const Profile = () => {
                                 onBlur={changeName}
                                 onEnter={changeName}
                 />
+                <Logout/>
             </div>
         </div>
     )
