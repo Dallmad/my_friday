@@ -6,7 +6,7 @@ import {setProfileStateThunk} from '../../state/profile-reducer';
 import {useEffect, useState} from 'react';
 import {setUser} from '../../state/auth-reducer';
 import EditableSpan from '../../components/EditableSpan/EditableSpan';
-import ava from '../../assets/images/avatar.jpg';
+import ava from '../../assets/images/ava.png';
 import icon from '../../assets/images/img_icon.png';
 import Input from "../../components/Input/Input";
 
