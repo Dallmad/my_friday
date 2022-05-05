@@ -1,5 +1,4 @@
 import React, {DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState} from 'react'
-
 import s from './EditableSpan.module.css'
 import Input from '../Input/Input';
 
@@ -11,7 +10,8 @@ type SuperEditableSpanType = DefaultInputPropsType & {
     onEnter?: () => void
     error?: string
     spanClassName?: string
-    spanProps?: DefaultSpanPropsType // пропсы для спана
+    spanProps?: DefaultSpanPropsType
+
 }
 
 const EditableSpan: React.FC<SuperEditableSpanType> = (
@@ -51,7 +51,7 @@ const EditableSpan: React.FC<SuperEditableSpanType> = (
                         onBlur={onBlurCallback}
                         onEnter={onEnterCallback}
                         {...restProps}
-                        // label={'labelName'}
+                        label={'labelName'}
                     />
                 ) : (
                     // <span

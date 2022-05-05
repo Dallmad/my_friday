@@ -6,31 +6,25 @@ import {setProfileStateThunk} from '../../state/profile-reducer';
 import {useEffect, useState} from 'react';
 import {setUser} from '../../state/auth-reducer';
 import EditableSpan from '../../components/EditableSpan/EditableSpan';
-import {Preloader} from "../../components/Preloader/Preloader";
-import {Logout} from "../../components/Logout/Logout";
 import ava from '../../assets/images/avatar.jpg';
 import icon from '../../assets/images/img_icon.png';
 import Input from "../../components/Input/Input";
 
 export const Profile = () => {
 
-    const isLoading = useSelector<AppRootStateType, boolean>(state => state.registration.isLoading)
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const userName = useSelector<AppRootStateType, string>((state) => state.profile.name)
+    const userEmail = useSelector<AppRootStateType, string>((state) => state.profile.email)
     const dispatch = useTypedDispatch()
 
     const [newName, setNewName] = useState<string>(userName)
 
     useEffect(() => {
         dispatch(setUser())
-    }, [userName])
+    }, [newName])
 
     const changeName = () => {
         dispatch(setProfileStateThunk(newName))
-    }
-
-    if (isLoading) {
-        return <Preloader/>
     }
 
     if (!isLoggedIn) {
@@ -56,15 +50,15 @@ export const Profile = () => {
                 />
 
                 <Input
-                    // label={'Email'}
+                     label={'email'}
+                     value={userEmail}
                 />
 
             </form>
 
             <div className={s.buttons_container}>
                 <button className={s.button_cancel}>Cancel</button>
-                <button className={s.button_save}>Save</button>
-                <Logout/>
+                <button className={s.button_save} onClick={changeName}>Save</button>
             </div>
         </div>
     )

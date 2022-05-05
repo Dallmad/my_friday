@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navigate} from 'react-router-dom';
+import {Navigate, NavLink} from 'react-router-dom';
 import s from './Login.module.css'
 import {useFormik} from 'formik';
 import {useSelector} from 'react-redux';
@@ -8,11 +8,11 @@ import {login} from '../../state/auth-reducer';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
-import {Preloader} from "../../components/Preloader/Preloader";
+import {PATH} from '../../app/Routes/Routes';
+
 
 export const Login = () => {
 
-    const isLoading = useSelector<AppRootStateType, boolean>(state => state.registration.isLoading)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useTypedDispatch()
 
@@ -41,15 +41,14 @@ export const Login = () => {
             formik.resetForm()
         },
     })
-    if (isLoading) {
-        return <Preloader/>
-    }
+
     if (isLoggedIn) {
         return <Navigate to="/"/>
     }
 
     return (
         <div className={s.div}>
+            <div className={s.title}>Sign In</div>
             <form onSubmit={formik.handleSubmit}>
                 <div className={s.container}>
                     <Input
@@ -66,7 +65,7 @@ export const Login = () => {
                     />
                     {formik.touched.password && formik.errors.password
                         && <div style={{color: 'red'}}>{formik.errors.password}</div>}
-                    <div>
+                    <div className={s.checkbox}>
                         <label>Remember me</label>
                         <Checkbox
                             {...formik.getFieldProps('rememberMe')}
@@ -77,6 +76,9 @@ export const Login = () => {
                     </Button>
                 </div>
             </form>
+            <div className={s.link}>
+                <NavLink to={PATH.REGISTRATION} className={`${s.link} ${s.button}`}>Sign Up</NavLink>
+            </div>
         </div>
     )
 }

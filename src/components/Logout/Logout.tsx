@@ -1,10 +1,15 @@
 import React from "react";
 import Button from "../Button/Button";
 import {logout} from "../../state/auth-reducer";
-import {useTypedDispatch} from "../../state/store";
+import {AppRootStateType, useTypedDispatch} from '../../state/store';
+import {NavLink} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {PATH} from '../../app/Routes/Routes';
+import s from '../../app/Header/Header.module.css';
 
 export const Logout = () => {
 
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useTypedDispatch()
 
     const logoutHandler = () => {
@@ -12,8 +17,9 @@ export const Logout = () => {
     }
 
     return (
-        <Button onClick={logoutHandler}>
-            Logout
-        </Button>
+        <>
+            {isLoggedIn ? <Button onClick={logoutHandler}>Logout</Button>
+                : <NavLink to={PATH.LOGIN} className={s.link}>Login</NavLink>}
+        </>
     )
 }

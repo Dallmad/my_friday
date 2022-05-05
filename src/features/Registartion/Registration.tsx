@@ -6,13 +6,13 @@ import {registrationTC} from "../../state/registration-reducer";
 import {useSelector} from "react-redux";
 import { Navigate } from 'react-router-dom';
 import {AppRootStateType, useTypedDispatch} from '../../state/store';
-import {Preloader} from "../../components/Preloader/Preloader";
+import React from 'react';
 
 
 export const Registration = () => {
 
     const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isRegistration)
-    const isLoading = useSelector<AppRootStateType, boolean>(state => state.registration.isLoading)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     const dispatch = useTypedDispatch()
 
@@ -41,22 +41,22 @@ export const Registration = () => {
         },
     })
 
-    if (isLoading) {
-        return <Preloader/>
-    }
-
     if (isRegistration) {
         return <Navigate to='/login'/>
     }
 
+    if (isLoggedIn) {
+        return <Navigate to="/"/>
+    }
+
     return (
         <div className={s.div}>
-            <div>Registration form</div>
+            <div className={s.title}>Registration form</div>
             <form onSubmit={formik.handleSubmit}>
                 <div className={s.form}>
                     <div>
-                        <label htmlFor="email">email</label>
                         <Input
+                            label={'email'}
                             type="Email"
                             {...formik.getFieldProps('email')}
                         />
@@ -64,8 +64,8 @@ export const Registration = () => {
                             && <div style={{color: 'red'}}>{formik.errors.email}</div>}
                     </div>
                     <div>
-                        <label htmlFor="password">password</label>
                         <Input
+                            label={'password'}
                             type="password"
                             {...formik.getFieldProps('password')}
                         />
@@ -73,7 +73,7 @@ export const Registration = () => {
                             && <div style={{color: 'red'}}>{formik.errors.password}</div>}
                     </div>
                     <div>
-                        <Button type="submit">sing up</Button>
+                        <Button type="submit">Sign Up</Button>
                     </div>
                 </div>
             </form>

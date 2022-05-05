@@ -1,6 +1,18 @@
 .div {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-family: SF UI Display;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    color: #24254A;
+    opacity: 0.70;
+    margin-bottom: 5px;
 }
 
 .container {
@@ -9,4 +21,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.link {
+    font-family: SF UI Display;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    color: #24254A;
+    opacity: 0.80;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 40px;
 }

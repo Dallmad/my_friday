@@ -8,7 +8,7 @@ type SuperInputTextPropsType = DefaultInputPropsType & {
     onEnter?: () => void
     error?: string
     spanClassName?: string
-    // label: string
+    label?: string
 }
 
 const Input: React.FC<SuperInputTextPropsType> = (
@@ -18,7 +18,7 @@ const Input: React.FC<SuperInputTextPropsType> = (
         onKeyPress, onEnter,
         error,
         className, spanClassName,
-        // label,
+        label,
         ...restProps
     }
 ) => {
@@ -36,8 +36,7 @@ const Input: React.FC<SuperInputTextPropsType> = (
 
     return (
         <>
-            {/*//передать пропсы в имя label*/}
-            <label htmlFor={'props.labelName'} className={s.label}>{'props.labelName'}</label>
+            <label htmlFor={`${label}`} className={s.label}>{label}</label>
             <input
                 type={'text'}
                 id={'props.labelName'}
