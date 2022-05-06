@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Titillium+Web:wght@200;400&display=swap');
 .div {
     display: flex;
     flex-direction: column;
@@ -76,7 +76,7 @@
     margin-bottom: 24px;
     outline: none;
 
-    font-family: 'SF UI Display';
+    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -90,7 +90,7 @@
     background: #21268F;
     box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
     border-radius: 30px;
-    font-family: 'SF UI Display';
+    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -113,7 +113,7 @@
     height: 36px;
     background: #D7D8EF;
     border-radius: 30px;
-    font-family: 'SF UI Display';
+    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -139,7 +139,7 @@
 }
 
 .label {
-    font-family: 'SF UI Display';
+    font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -147,3 +147,6 @@
     color: #24254A;
     opacity: 0.5;
 }
+
+
+

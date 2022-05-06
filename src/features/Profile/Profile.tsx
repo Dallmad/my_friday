@@ -9,6 +9,7 @@ import ava from '../../assets/images/avatar.jpg';
 import icon from '../../assets/images/img_icon.png';
 import EditableSpan from "../../components/EditableSpan/EditableSpan";
 import Input from "../../components/Input/Input";
+// import '../../index.css'
 
 export const Profile = () => {
 
@@ -32,9 +33,9 @@ export const Profile = () => {
 
     return (
         <div className={s.div}>
-            <div className={s.profile_name}>
+            <h2 className={s.profile_name}>
                 Personal Information
-            </div>
+            </h2>
             <div className={s.profile_img}>
                 <img src={ava} alt="Avatar" className={s.profile_avatar}/>
                 <div className={s.icon}>
