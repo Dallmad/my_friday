@@ -5,29 +5,31 @@ import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import {setProfileStateThunk} from '../../state/profile-reducer';
 import {useEffect, useState} from 'react';
 import {setUser} from '../../state/auth-reducer';
-import EditableSpan from '../../components/EditableSpan/EditableSpan';
-import ava from '../../assets/images/ava.png'
-import {Preloader} from "../../components/Preloader/Preloader";
+import ava from '../../assets/images/ava.png';
+import icon from '../../assets/images/img_icon.png';
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
 
 export const Profile = () => {
 
-    const isLoading = useSelector<AppRootStateType, boolean>(state => state.registration.isLoading)
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const userName = useSelector<AppRootStateType, string>((state) => state.profile.name)
+    const userEmail = useSelector<AppRootStateType, string>((state) => state.profile.email)
     const dispatch = useTypedDispatch()
 
     const [newName, setNewName] = useState<string>(userName)
 
     useEffect(() => {
         dispatch(setUser())
+        setNewName(userName)
     }, [userName])
 
     const changeName = () => {
         dispatch(setProfileStateThunk(newName))
     }
-
-    if (isLoading) {
-        return <Preloader/>
+    const cancelChangeName = () => {
+        setNewName(userName)
+        dispatch(setProfileStateThunk(userName))
     }
 
     if (!isLoggedIn) {
@@ -36,16 +38,32 @@ export const Profile = () => {
 
     return (
         <div className={s.div}>
-            <div>
-                Profile
-                <div>
-                    <img src={ava} alt="Avatar"/>
+            <div className={s.profile_name}>
+                Personal Information
+            </div>
+            <div className={s.profile_img}>
+                <img src={ava} alt="Avatar" className={s.profile_avatar}/>
+                <div className={s.icon}>
+                    <img src={icon} alt="Img-Icon" className={s.icon_img}/>
                 </div>
-                <EditableSpan   value={newName}
-                                onChangeText={setNewName}
-                                onBlur={changeName}
-                                onEnter={changeName}
+            </div>
+            <form className={s.profile_input}>
+                <Input
+                    label={'Nickname'}
+                    value={newName}
+                    onChangeText={setNewName}
                 />
+                <Input
+                    className={s.editableSpan}
+                    label={'email'}
+                    value={userEmail}
+                />
+
+            </form>
+            <div className={s.buttons_container}>
+                <Button className={s.button_cancel} onClick={cancelChangeName} >Cancel</Button>
+
+                <Button className={s.button_save} onClick={changeName}>Save</Button>
             </div>
         </div>
     )

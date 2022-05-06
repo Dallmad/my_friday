@@ -1,15 +1,22 @@
 import {NavLink} from "react-router-dom";
 import {PATH} from '../Routes/Routes';
 import s from './Header.module.css'
+import {Preloader} from '../../components/Preloader/Preloader';
+import {Logout} from '../../components/Logout/Logout';
 
 
 export const Header = () => {
     return (
-        <div className={s.div}>
-            <NavLink to={PATH.PROFILE} className={`${s.link} ${s.button}`}>Profile</NavLink>
-            <NavLink to={PATH.TEST_PAGE} className={`${s.link} ${s.button}`}>Test page</NavLink>
-            <NavLink to={PATH.REGISTRATION} className={`${s.link} ${s.button}`}>Registration</NavLink>
-            <NavLink to={PATH.LOGIN} className={`${s.link} ${s.button}`}>Login</NavLink>
+        <div>
+            <div className={s.preloader}>
+                <Preloader/>
+            </div>
+            <div className={s.navLink}>
+                <NavLink to={PATH.PROFILE} className={s.link}>Profile</NavLink>
+                <NavLink to={PATH.TEST_PAGE} className={s.link}>Test page</NavLink>
+                <NavLink to={PATH.REGISTRATION} className={s.link}>Registration</NavLink>
+                <Logout/>
+            </div>
         </div>
     )
 }

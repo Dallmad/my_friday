@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {registrationAPI, RegistrationType} from "../api/registration-api";
+import {handleServerNetworkError} from '../utils/error-utils';
 
 const REGISTRATION = 'registration/REGISTRATION'
 const LOADING = 'registration/LOADING'
@@ -38,8 +39,9 @@ export const registrationTC = (obj: RegistrationType) => {
                     dispatch(loading(false))
                 }
             })
-            .catch((error) => {
-                alert(error.response.data.error ? error.response.data.error : '');
+            .catch(error =>{
+                handleServerNetworkError(error.response.data.error, dispatch)
+                dispatch(loading(false))
             })
     }
 }

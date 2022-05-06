@@ -1,0 +1,8 @@
+.img {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 60px;
+    position: absolute;
+    margin-left: -30px;
+}

@@ -25,10 +25,10 @@ export type ResponseUserType = {
     name: string
     avatar?: string
     publicCardPacksCount: number
-    created?: Date
-    updated?: Date
+    created: DateConstructor
+    updated: DateConstructor
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean
-    error?: string;
+    error?: string
 }

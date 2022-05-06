@@ -1,6 +1,5 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
 import s from './Input.module.css'
-import {text} from "stream/consumers";
 
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
@@ -9,6 +8,7 @@ type SuperInputTextPropsType = DefaultInputPropsType & {
     onEnter?: () => void
     error?: string
     spanClassName?: string
+    label?: string
 }
 
 const Input: React.FC<SuperInputTextPropsType> = (
@@ -18,6 +18,7 @@ const Input: React.FC<SuperInputTextPropsType> = (
         onKeyPress, onEnter,
         error,
         className, spanClassName,
+        label,
         ...restProps
     }
 ) => {
@@ -35,12 +36,13 @@ const Input: React.FC<SuperInputTextPropsType> = (
 
     return (
         <>
+            <label htmlFor={`${label}`} className={s.label}>{label}</label>
             <input
                 type={'text'}
+                id={'props.labelName'}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
-
 
                 {...restProps}
             />

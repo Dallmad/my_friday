@@ -1,7 +1,132 @@
 .div {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 413px;
+    height: 540px;
+    background: #F9F9FE;
+    border-radius: 8px;
+}
+
+.profile_name {
+    text-align: center;
+    max-width: 236px;
+    height: 33px;
+    margin: 36px 0 15px 0;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #2D2E46;
+}
+
+.profile_avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 100%;
+    margin-bottom: 38px;
+    object-fit: cover;
+}
+
+.profile_img {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 64px;
+    right: 0;
+    border-radius: 100%;
+    background: rgba(45, 46, 70, 0.5);
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.icon_img {
+    width: 15px;
+    height: 12px;
+    position: relative;
+    left: 8px;
+    top: 4px;
+}
+
+.profile_input {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
 }
-img {
-width: 100px;
+
+.profile_textfield {
+    width: 347px;
+    height: 27px;
+    border: none;
+    border-bottom: 2px solid #24254A;
+    opacity: 0.2;
+    margin-bottom: 24px;
+    outline: none;
+    font-family: 'SF UI Display';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
 }
+
+.button_save {
+    cursor: pointer;
+    width: 127px;
+    height: 36px;
+    background: #21268F;
+    box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    font-family: 'SF UI Display';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #ECECF9;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    border: none;
+}
+
+.button_cancel {
+    cursor: pointer;
+    width: 127px;
+    height: 36px;
+    background: #D7D8EF;
+    border-radius: 30px;
+    font-family: 'SF UI Display';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #21268F;
+    border: none;
+    opacity: 0.8;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.buttons_container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 347px;
+}
+/*
+
+.label {
+    font-family: 'SF UI Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: #24254A;
+    opacity: 0.7;
+}*/
