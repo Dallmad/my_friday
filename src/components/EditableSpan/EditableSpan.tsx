@@ -12,6 +12,7 @@ type SuperEditableSpanType = DefaultInputPropsType & {
     error?: string
     spanClassName?: string
     spanProps?: DefaultSpanPropsType // пропсы для спана
+    profileName?:string
 }
 
 const EditableSpan: React.FC<SuperEditableSpanType> = (
@@ -20,6 +21,7 @@ const EditableSpan: React.FC<SuperEditableSpanType> = (
         onBlur,
         onEnter,
         spanProps,
+        profileName,
 
         ...restProps
     }
@@ -51,22 +53,14 @@ const EditableSpan: React.FC<SuperEditableSpanType> = (
                         onBlur={onBlurCallback}
                         onEnter={onEnterCallback}
                         {...restProps}
-                        // label={'labelName'}
+                        value={profileName}
+                        label={'Nickname'}
                     />
                 ) : (
-                    // <span
-                    //     onDoubleClick={onDoubleClickCallBack}
-                    //     className={spanClassName}
-                    //
-                    //     {...restSpanProps}
-                    // >
-                    //     {/*<img*/}
-                    //     {/*// src="https://w7.pngwing.com/pngs/122/292/png-transparent-black-and-white-pencil-silhouette-drawing-pencil-angle-white-pencil.png"/>*/}
-                    //     {children || restProps.value}
-                    // </span>
                     <Input onDoubleClick={onDoubleClickCallBack}
                            className={s.superInput}
-                           // label={'labelName'}
+                           value={profileName}
+                           label={'Nickname'}
                     />
                 )
             }

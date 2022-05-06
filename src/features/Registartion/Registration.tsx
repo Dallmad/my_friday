@@ -60,6 +60,7 @@ export const Registration = () => {
                         <Input
                             type="Email"
                             {...formik.getFieldProps('email')}
+                            // label={''}
                         />
                         {formik.touched.email && formik.errors.email
                             && <div style={{color: 'red'}}>{formik.errors.email}</div>}
@@ -69,6 +70,7 @@ export const Registration = () => {
                         <Input
                             type="password"
                             {...formik.getFieldProps('password')}
+                            // label={''}
                         />
                         {formik.touched.password && formik.errors.password
                             && <div style={{color: 'red'}}>{formik.errors.password}</div>}

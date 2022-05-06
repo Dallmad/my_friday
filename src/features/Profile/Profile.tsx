@@ -9,7 +9,6 @@ import ava from '../../assets/images/avatar.jpg';
 import icon from '../../assets/images/img_icon.png';
 import EditableSpan from "../../components/EditableSpan/EditableSpan";
 import Input from "../../components/Input/Input";
-// import '../../index.css'
 
 export const Profile = () => {
 
@@ -37,9 +36,13 @@ export const Profile = () => {
                 Personal Information
             </h2>
             <div className={s.profile_img}>
-                <img src={ava} alt="Avatar" className={s.profile_avatar}/>
+                <img src={ava}
+                     alt="Avatar"
+                     className={s.profile_avatar}/>
                 <div className={s.icon}>
-                    <img src={icon} alt="Img-Icon" className={s.icon_img}/>
+                    <img src={icon}
+                         alt="Img-Icon"
+                         className={s.icon_img}/>
                 </div>
             </div>
             <form className={s.profile_input}>
@@ -47,12 +50,9 @@ export const Profile = () => {
                               onChangeText={setNewName}
                               onBlur={changeName}
                               onEnter={changeName}
+                              profileName={newName}
                 />
-
-                <Input
-                    // label={'Email'}
-                />
-
+                <Input label={'Email'}/>
             </form>
 
             <div className={s.buttons_container}>
