@@ -12,7 +12,7 @@ export const TestPage = () => {
                 <Button>Some Button</Button>
                 <Checkbox/>
                 <EditableSpan />
-                <Input/>
+                <Input label={'Password'}/>
             </div>
         </div>
     )

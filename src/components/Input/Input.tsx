@@ -39,7 +39,7 @@ const Input: React.FC<SuperInputTextPropsType> = (
             {/*//передать пропсы в имя label*/}
             <label
                 htmlFor={'props.labelName'}
-                   className={s.label}>{label}</label>
+                className={s.label}>{label}</label>
             <input
                 type={'text'}
                 // id={'props.labelName'}
