@@ -8,6 +8,7 @@ import {setUser} from '../../state/auth-reducer';
 import ava from '../../assets/images/ava.png';
 import icon from '../../assets/images/img_icon.png';
 import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
 
 export const Profile = () => {
 
@@ -20,6 +21,7 @@ export const Profile = () => {
 
     useEffect(() => {
         dispatch(setUser())
+        setNewName(userName)
     }, [userName])
 
     const changeName = () => {
@@ -27,6 +29,7 @@ export const Profile = () => {
     }
     const cancelChangeName = () => {
         setNewName(userName)
+        dispatch(setProfileStateThunk(userName))
     }
 
     if (!isLoggedIn) {
@@ -51,14 +54,16 @@ export const Profile = () => {
                     onChangeText={setNewName}
                 />
                 <Input
+                    className={s.editableSpan}
                     label={'email'}
                     value={userEmail}
                 />
 
             </form>
             <div className={s.buttons_container}>
-                <button className={s.button_cancel} onClick={cancelChangeName}>Cancel</button>
-                <button className={s.button_save} onClick={changeName}>Save</button>
+                <Button className={s.button_cancel} onClick={cancelChangeName} >Cancel</Button>
+
+                <Button className={s.button_save} onClick={changeName}>Save</Button>
             </div>
         </div>
     )

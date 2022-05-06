@@ -45,6 +45,7 @@ export const setProfileStateThunk = (name: string) => (dispatch: Dispatch) => {
         })
         .catch(error =>{
             handleServerNetworkError(error.response.data.error, dispatch)
+            dispatch(loading(false))
         })
 }
 

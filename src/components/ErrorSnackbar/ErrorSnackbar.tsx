@@ -1,7 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../state/store';
 import {setErrorAC} from '../../state/profile-reducer';
-import Button from '../Button/Button';
 import s from './ErrorSnackbar.module.css'
 import {useEffect, useState} from 'react';
 import {loading} from '../../state/registration-reducer';
@@ -32,7 +31,7 @@ export const ErrorSnackbar = () => {
 
     return (
         <div className={s.div}>
-            {err && <Button onClick={handleClose} red>{error}</Button>}
+            {err && <div onClick={handleClose} style={{backgroundColor:'red'}}>{error}</div>}
         </div>
     )
 }

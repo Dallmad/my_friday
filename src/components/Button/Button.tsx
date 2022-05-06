@@ -13,7 +13,8 @@ const Button: React.FC<SuperButtonPropsType> = (
         ...restProps
     }
 ) => {
-    const finalClassName = `${red ? s.buttonRed: s.button}`
+
+    const finalClassName = `${className ? className :red ? s.buttonRed: s.button}`
 
     return (
         <button

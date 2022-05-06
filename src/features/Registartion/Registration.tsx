@@ -4,9 +4,10 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import {registrationTC} from "../../state/registration-reducer";
 import {useSelector} from "react-redux";
-import { Navigate } from 'react-router-dom';
+import {Navigate, NavLink} from 'react-router-dom';
 import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import React from 'react';
+import {PATH} from '../../app/Routes/Routes';
 
 
 export const Registration = () => {
@@ -73,10 +74,14 @@ export const Registration = () => {
                             && <div style={{color: 'red'}}>{formik.errors.password}</div>}
                     </div>
                     <div>
-                        <Button type="submit">Sign Up</Button>
+                        <Button type="submit">Register</Button>
+
                     </div>
                 </div>
             </form>
+            <div className={s.link}>
+                <NavLink to={PATH.LOGIN} className={s.link}>Cancel</NavLink>
+            </div>
         </div>
     )
 }

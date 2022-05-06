@@ -41,6 +41,7 @@ export const registrationTC = (obj: RegistrationType) => {
             })
             .catch(error =>{
                 handleServerNetworkError(error.response.data.error, dispatch)
+                dispatch(loading(false))
             })
     }
 }

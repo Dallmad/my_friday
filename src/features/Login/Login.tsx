@@ -77,7 +77,7 @@ export const Login = () => {
                 </div>
             </form>
             <div className={s.link}>
-                <NavLink to={PATH.REGISTRATION} className={`${s.link} ${s.button}`}>Sign Up</NavLink>
+                <NavLink to={PATH.REGISTRATION} className={s.link}>Sign Up</NavLink>
             </div>
         </div>
     )
