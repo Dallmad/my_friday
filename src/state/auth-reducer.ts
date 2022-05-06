@@ -32,6 +32,7 @@ export const login = (data: LoginParamsType) => (dispatch: Dispatch) => {
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
+            dispatch(loading(false))
         })
 }
 
@@ -55,6 +56,7 @@ export const setUser = () => (dispatch: Dispatch) => {
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
+            dispatch(loading(false))
         })
 }
 
