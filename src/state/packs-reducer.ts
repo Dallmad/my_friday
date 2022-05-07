@@ -25,9 +25,9 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
         case FETCH_PACKS:
             return {...state,cardPacks:action.packs.map( p => ({...p}))}
         case CREATE_PACK:
-            return state
+            return {...state,...action.cardsPack}
         case DELETE_PACK:
-            return state
+            return {...state,cardPacks.filter(p => p.id !== action.id)}
         case UPDATED_PACK:
             return state
         default:

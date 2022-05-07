@@ -20,7 +20,7 @@ export const packsAPI = {
         return instance.post<{ cardsPack: RequestCreatePackType }, AxiosResponse<ResponseToCreatePackType>>('cards/pack',{cardsPack})
     },
     deletePack(_id: string) {
-        return instance.delete<{_id: string },AxiosResponse<ResponseDeletePackType>>(`cards/pack?${_id}`)
+        return instance.delete<{_id: string },AxiosResponse<ResponseDeletePackType>>(`cards/pack?id=${_id}`)
     },
     updatedPack(cardsPack: RequestUpdatedPackType) {
         return instance.put<{ cardsPack: RequestUpdatedPackType }, AxiosResponse<ResponseUpdatedPackType>>('cards/pack', {cardsPack})
