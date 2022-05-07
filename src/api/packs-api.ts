@@ -3,17 +3,17 @@ import {instance} from './instance';
 import {ResponsePacksType, ResponsePackType} from '../state/packs-reducer';
 
 
-const params : GetParamsRequestType = {
+/*const params : GetParamsRequestType = {
     packName: 'React',
     min: 1,
     max: 10,
     sortPacks: '0updated',
     page: 1,
     pageCount: 3,
-}
+}*/
 
 export const packsAPI = {
-    getPacks() {
+    getPacks(params?:GetParamsRequestType) {
         return instance.get<GetParamsRequestType,AxiosResponse<ResponsePacksType>>('cards/pack', {params});
     },
     createPack(cardsPack: RequestCreatePackType) {

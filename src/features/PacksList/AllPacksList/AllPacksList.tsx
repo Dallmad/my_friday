@@ -3,29 +3,35 @@ import Button from '../../../components/Button/Button';
 import {useState} from 'react';
 import Input from '../../../components/Input/Input';
 import {Table} from './Table/Table';
+import {useSelector} from 'react-redux';
+import {AppRootStateType} from '../../../state/store';
+import {ResponsePacksType, ResponsePackType} from '../../../state/packs-reducer';
 
 export const AllPacksList = () => {
 
-    const [changePage, setChangePage] = useState(false)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
 
-    const changeOnMyPacksList = () => {
+    const [changePage, setChangePage] = useState<boolean>(false)
+
+    const changePageToMyPacks = () => {
         setChangePage(true)
     }
+    const changePageToAllPacks = () => {
+        setChangePage(false)
+    }
 
-
-
-
-
-    if (changePage) return <Navigate to="/my-packs-list"/>
+    if (!isLoggedIn) {
+        return <Navigate to="/login"/>
+    }
 
     return (
         <>
             <div>
                 <h4>Show packs cards</h4>
-                <Button onClick={changeOnMyPacksList}>
+                <Button onClick={changePageToMyPacks}>
                     My
                 </Button>
-                <Button>
+                <Button onClick={changePageToAllPacks}>
                     All
                 </Button>
                 <p>
@@ -36,7 +42,7 @@ export const AllPacksList = () => {
                 <Button>Search</Button>
                 <Button>Add new pack</Button>
             </div>
-            <Table/>
+            {changePage ? <Table changePage={changePage}/> : <Table changePage={changePage}/>}
         </>
     )
 }

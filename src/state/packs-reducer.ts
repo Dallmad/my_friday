@@ -2,6 +2,7 @@ import {Dispatch} from 'redux';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
 import {packsAPI, RequestCreatePackType, RequestUpdatedPackType} from '../api/packs-api';
+import {AppRootStateType} from './store';
 
 const FETCH_PACKS = 'packs/FETCH_PACKS'
 const CREATE_PACK = 'packs/CREATE_PACK'
@@ -12,10 +13,10 @@ const UPDATED_PACK = 'packs/UPDATED_PACK'
 const initialState = {
     cardPacks: [],
     page: 1,
-    pageCount: 5,
+    pageCount: 8,
     cardPacksTotalCount: 0,
     minCardsCount: 0,
-    maxCardsCount: 0,
+    maxCardsCount: 5,
     token: '',
     tokenDeathTime: 0
 }
@@ -55,7 +56,19 @@ export const fetchPacksTC = () => (dispatch: Dispatch) => {
             dispatch(loading(false))
         })
 }
-
+export const fetchMyPacksTC = (userId:string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    dispatch(loading(true))
+    packsAPI.getPacks()
+        .then((res) => {
+            dispatch(fetchPacksAC(res.data.cardPacks.filter(c=> c.user_id===userId)))
+        })
+        .catch(error => {
+            handleServerNetworkError(error.response.data.error, dispatch)
+        })
+        .finally(() => {
+            dispatch(loading(false))
+        })
+}
 export const createPackTC = (cardsPack: RequestCreatePackType) => (dispatch: Dispatch) => {
     dispatch(loading(true))
     packsAPI.createPack(cardsPack)
