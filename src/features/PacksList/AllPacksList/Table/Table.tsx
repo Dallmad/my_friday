@@ -6,19 +6,20 @@ import {useSelector} from 'react-redux';
 import {TableHeader} from './TableHeader/TableHeader';
 import s from '../AllPacksList.module.css'
 
-export const Table = ({changePage}: ChangePageType) => {
+
+export const Table = () => {
 
     const dispatch = useTypedDispatch()
     const packs = useSelector<AppRootStateType, ResponsePackType[]>(state => state.packs.cardPacks)
     const userId = useSelector<AppRootStateType, string>(state => state.profile._id)
     useEffect(() => {
-        if (!changePage) {
+        if (true) {
             dispatch(fetchPacksTC())//
         } else dispatch(fetchMyPacksTC(userId))//need _id
-    }, [changePage])
+    }, [])
+
 
     return (
-
         <div className={s.table}>
             <TableHeader/>
             {packs.map((p) =>
@@ -33,6 +34,8 @@ export const Table = ({changePage}: ChangePageType) => {
 }
 
 //types
+/*
 type ChangePageType = {
     changePage: boolean
 }
+*/

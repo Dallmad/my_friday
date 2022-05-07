@@ -18,8 +18,8 @@ export const PATH = {
     REGISTRATION: '/registration',
     PASSWORD_RECOVERY: '/password-recovery',
     NEW_PASSWORD: '/new-password',
-    ALL_PACKS_LIST: '/all-packs-list',
-    MY_PACKS_LIST: '/my-packs-list'
+    ALL_PACKS_LIST: '/all-packs-list/*',
+    MY_PACKS_LIST: '/my-packs-list/*'
 }
 
 export const AppRoutes = () => {
@@ -35,7 +35,7 @@ export const AppRoutes = () => {
                 <Route path={PATH.REGISTRATION} element={<Registration/>}/>
                 <Route path={PATH.PASSWORD_RECOVERY} element={<RecoveryPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
-                <Route path={PATH.MY_PACKS_LIST} element={<MyPacksList/>}/>
+                <Route path={PATH.MY_PACKS_LIST} element={<AllPacksList/>}/>
                 <Route path={PATH.ALL_PACKS_LIST} element={<AllPacksList/>}/>
             </Routes>
         </div>

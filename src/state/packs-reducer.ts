@@ -60,7 +60,9 @@ export const fetchMyPacksTC = (userId:string) => (dispatch: Dispatch, getState: 
     dispatch(loading(true))
     packsAPI.getPacks()
         .then((res) => {
-            dispatch(fetchPacksAC(res.data.cardPacks.filter(c=> c.user_id===userId)))
+            dispatch(fetchPacksAC(
+                res.data.cardPacks//.filter(c=> c.user_id===userId)
+            ))
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)

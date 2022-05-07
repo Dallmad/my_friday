@@ -1,20 +1,23 @@
-import {AxiosResponse} from 'axios'
+import {AxiosRequestConfig, AxiosResponse} from 'axios'
 import {instance} from './instance';
 import {ResponsePacksType, ResponsePackType} from '../state/packs-reducer';
+import {useSelector} from 'react-redux';
+import {AppRootStateType} from '../state/store';
 
 
 /*const params : GetParamsRequestType = {
-    packName: 'React',
-    min: 1,
-    max: 10,
+    packName: '',
+    min: 0,
+    max: 7,
     sortPacks: '0updated',
     page: 1,
     pageCount: 3,
+    user_id: '626d6634194ed00ba8c586d3'
 }*/
 
 export const packsAPI = {
     getPacks(params?:GetParamsRequestType) {
-        return instance.get<GetParamsRequestType,AxiosResponse<ResponsePacksType>>('cards/pack', {params});
+        return instance.get<GetParamsRequestType,AxiosResponse<ResponsePacksType>>(`cards/pack`,{params});
     },
     createPack(cardsPack: RequestCreatePackType) {
         return instance.post<{ cardsPack: RequestCreatePackType }, AxiosResponse<ResponseToCreatePackType>>('cards/pack',{cardsPack})
