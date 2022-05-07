@@ -22,7 +22,7 @@ const initialState = {
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
     switch (action.type) {
         case SET_PACKS:
-            return {...state, ...action.packs}
+            return {...state,cardPacks:action.packs.map( p => ({...p}))}
         default:
             return state
     }
@@ -30,19 +30,17 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
 
 
 // actions
-export const setPacksAC = (packs: ResponsePacksType) => ({type: SET_PACKS, packs} as const)
+export const setPacksAC = (packs: ResponsePackType[]) => ({type: SET_PACKS, packs} as const)
 
 // thunk
-export const setPacksThunk = () => (dispatch: Dispatch) => {
+export const fetchPacksTC = () => (dispatch: Dispatch) => {
     dispatch(loading(true))
     packsAPI.getPacks()
-        .then(res => {
-            //dispatch(loading(false))
-            dispatch(setPacksAC(res.data))
+        .then((res) => {
+            dispatch(setPacksAC(res.data.cardPacks))
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
-            //dispatch(loading(false))
         })
         .finally(() => {
             dispatch(loading(false))

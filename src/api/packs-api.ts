@@ -9,7 +9,7 @@ const params : ParamsType = {
     max: 10,
     sortPacks: '0updated',
     page: 1,
-    pageCount: 5,
+    pageCount: 8,
 }
 
 export const packsAPI = {
