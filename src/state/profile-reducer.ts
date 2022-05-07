@@ -1,6 +1,7 @@
 import {ResponseUserType} from '../api/auth-api';
 import {Dispatch} from 'redux';
 import {profileAPI} from '../api/profile-api';
+import {setIsLoggedIn} from "./auth-reducer";
 
 const SET_NEW_NAME = 'profile/SET-NEW-NAME'
 
@@ -36,7 +37,10 @@ export const setProfileStateThunk = (name: string) => (dispatch: Dispatch) => {
         .then(res => {
             dispatch(setProfileStateAC(res.data))
         })
-        .catch(error => console.log(error.message))
+        .catch(error => {
+                console.log(error.message)
+            }
+        )
 }
 
 //types

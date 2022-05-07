@@ -4,10 +4,11 @@ import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import {setProfileStateThunk} from '../../state/profile-reducer';
 import {useEffect, useState} from 'react';
-import {setUser} from '../../state/auth-reducer';
+import {authReducer, login, setIsLoggedIn, setUser} from '../../state/auth-reducer';
 import EditableSpan from '../../components/EditableSpan/EditableSpan';
 import ava from '../../assets/images/ava.png'
 import {Logout} from "../../components/Logout/Logout";
+import {authAPI} from "../../api/auth-api";
 
 export const Profile = () => {
 
@@ -16,10 +17,6 @@ export const Profile = () => {
     const dispatch = useTypedDispatch()
 
     const [newName, setNewName] = useState<string>(userName)
-
-    useEffect(() => {
-        dispatch(setUser())
-    }, [userName])
 
     const changeName = () => {
         dispatch(setProfileStateThunk(newName))

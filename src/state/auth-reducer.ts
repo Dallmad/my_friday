@@ -53,10 +53,12 @@ export const logout = () => (dispatch: Dispatch<LoginActionsType>) => {
 export const setUser = () => (dispatch: Dispatch) => {
     authAPI.me()
         .then(res => {
+            dispatch(setIsLoggedIn(true))
             dispatch(setProfileStateAC(res.data))
         })
         .catch((e) => {
             const error = e.res ? e.res.data.error : e.message
+            dispatch(setIsLoggedIn(false))
         })
 }
 // types
