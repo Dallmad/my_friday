@@ -4,7 +4,7 @@ import {ResponsePacksType} from '../state/packs-reducer';
 
 
 const params : ParamsType = {
-    packName: 'english',
+    packName: 'redux',
     min: 3,
     max: 10,
     sortPacks: '0updated',

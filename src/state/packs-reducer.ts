@@ -28,7 +28,6 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
     }
 }
 
-
 // actions
 export const setPacksAC = (packs: ResponsePackType[]) => ({type: SET_PACKS, packs} as const)
 

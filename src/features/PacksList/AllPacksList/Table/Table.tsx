@@ -16,7 +16,7 @@ export const Table = () => {
     }, [])
 
     return (
-        packs ?
+
     <div className={s.table}>
         <TableHeader/>
         {packs.map((cardPacks) => <TableRow
@@ -24,7 +24,7 @@ export const Table = () => {
                 cardPacks={cardPacks}
             />
         )}
-    </div>: <div>&&&&&</div>
+    </div>
 
     )
 }
