@@ -1,11 +1,14 @@
 import {TableRow} from './TableRow/TableRow';
-import {useTypedDispatch} from '../../../../state/store';
+import {AppRootStateType, useTypedDispatch} from '../../../../state/store';
 import {useEffect} from 'react';
-import {setPacksThunk} from '../../../../state/packs-reducer';
+import {ResponsePackType, setPacksThunk} from '../../../../state/packs-reducer';
+import {useSelector} from 'react-redux';
+import {TableHeader} from './TableHeader/TableHeader';
 
 export const Table = () => {
 
     const dispatch = useTypedDispatch()
+    const packs = useSelector<AppRootStateType, ResponsePackType[]>(state => state.packs.cardPacks)
 
     useEffect(() => {
         dispatch(setPacksThunk())
@@ -13,12 +16,12 @@ export const Table = () => {
 
     return (
         <div>
-            <div>
-                <div>
-                    Name Cell
-                </div>
-            </div>
-            <TableRow/>
+            <TableHeader/>
+            {packs.map((cardPacks) => <TableRow
+                        key={cardPacks._id + cardPacks.user_id}
+                        cardPacks={cardPacks}
+                    />
+            )}
         </div>
     )
 }

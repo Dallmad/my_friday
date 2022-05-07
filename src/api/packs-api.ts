@@ -14,7 +14,7 @@ const params : ParamsType = {
 
 export const packsAPI = {
     getPacks() {
-        return instance.get<any,AxiosResponse<ResponsePacksType>>('cards/pack', {params: params});
+        return instance.get<ParamsType,AxiosResponse<ResponsePacksType>>('cards/pack', {params});
     }
 }
 

@@ -50,8 +50,7 @@ export const setPacksThunk = () => (dispatch: Dispatch) => {
 }
 
 //types
-
-type ResponsePackType = {
+export type ResponsePackType = {
     _id: string
     user_id: string
     user_name: string
