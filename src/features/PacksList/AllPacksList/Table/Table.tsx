@@ -1,13 +1,14 @@
 import {TableRow} from './TableRow/TableRow';
 import {useTypedDispatch} from '../../../../state/store';
 import {useEffect} from 'react';
+import {setPacksThunk} from '../../../../state/packs-reducer';
 
 export const Table = () => {
 
     const dispatch = useTypedDispatch()
 
     useEffect(() => {
-        dispatch()
+        dispatch(setPacksThunk())
     }, [])
 
     return (

@@ -1,31 +1,28 @@
-/*import {Dispatch} from 'redux';
+import {Dispatch} from 'redux';
 
 import {handleServerNetworkError} from '../utils/error-utils';
+import {loading} from './registration-reducer';
+import {packsAPI} from '../api/packs-api';
 
 
-const SET_NEW_NAME = 'profile/SET-NEW-NAME'
-const SET_ERROR = 'profile/SET-ERROR'
+const SET_PACKS = 'packs/SET_PACKS'
+
 
 const initialState = {
-    _id: '',
-    email: '',
-    name: '',
-    avatar: '',
-    publicCardPacksCount: 0,
-    created: Date,
-    updated: Date,
-    isAdmin: false,
-    verified: false,
-    rememberMe: false,
-    error: '',
+    cardPacks: [],
+    page: 1,
+    pageCount: 5,
+    cardPacksTotalCount: 0,
+    minCardsCount: 0,
+    maxCardsCount: 0,
+    token: '',
+    tokenDeathTime: 0
 }
 
-export const packsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
     switch (action.type) {
-        case SET_NEW_NAME:
-            return {...state,...action.profile}
-        case SET_ERROR:
-            return {...state, error: action.error}
+        case SET_PACKS:
+            return {...state, ...action.packs}
         default:
             return state
     }
@@ -33,26 +30,56 @@ export const packsReducer = (state: InitialStateType = initialState, action: Act
 
 
 // actions
-export const setProfileStateAC = (profile: ResponseUserType) => ({type: SET_NEW_NAME, profile} as const)
-export const setErrorAC = (error: string) => ({type: SET_ERROR, error}as const)
+export const setPacksAC = (packs: ResponsePacksType) => ({type: SET_PACKS, packs} as const)
 
 // thunk
-export const setProfileStateThunk = (name: string) => (dispatch: Dispatch) => {
+export const setPacksThunk = () => (dispatch: Dispatch) => {
     dispatch(loading(true))
-    profileAPI.changeUserName(name)
+    packsAPI.getPacks()
         .then(res => {
-            dispatch(loading(false))
-            dispatch(setProfileStateAC(res.data))
+            //dispatch(loading(false))
+            dispatch(setPacksAC(res.data))
         })
-        .catch(error =>{
+        .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
+            //dispatch(loading(false))
+        })
+        .finally(() => {
             dispatch(loading(false))
         })
 }
 
 //types
-type InitialStateType = typeof initialState
-export type setProfileStateActionType = ReturnType<typeof setProfileStateAC>
-export type setErrorActionType = ReturnType<typeof setErrorAC>
 
-type ActionsType = setProfileStateActionType | setErrorActio*/nType
+type ResponsePackType = {
+    _id: string
+    user_id: string
+    user_name: string
+    private: boolean
+    name: string
+    path: string
+    grade: number
+    shots: number
+    cardsCount: number
+    type: string
+    rating: number
+    created: string
+    updated: string
+    more_id: string
+    __v: number
+}
+export type ResponsePacksType = {
+    cardPacks: ResponsePackType[]
+    page: number
+    pageCount: number
+    cardPacksTotalCount: number
+    minCardsCount: number
+    maxCardsCount: number
+    token: string
+    tokenDeathTime: number
+}
+
+//export type ResponsePacksType = typeof initialState
+export type setPacksActionType = ReturnType<typeof setPacksAC>
+
+type ActionsType = setPacksActionType
