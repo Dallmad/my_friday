@@ -11,6 +11,11 @@ export const AllPacksList = () => {
     const changeOnMyPacksList = () => {
         setChangePage(true)
     }
+
+
+
+
+
     if (changePage) return <Navigate to="/my-packs-list"/>
 
     return (
