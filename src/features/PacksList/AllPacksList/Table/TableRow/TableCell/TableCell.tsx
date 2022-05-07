@@ -10,6 +10,7 @@ export const TableCell = ({packValue}: PackValueType) => {
         </div>
     )
 }
+
 //types
 type PackValueType = {
     packValue: string | number

@@ -3,8 +3,8 @@ import Input from '../../../../../components/Input/Input';
 
 
 export const TableHeader = () => {
-    const headersName = ['Name', 'Cards', 'Last Updates', 'Created by', 'Actions']
 
+    const headersName = ['Name', 'Cards', 'Last Updates', 'Created by', 'Actions']
 
     return (
         <div className={s.table_row}>

@@ -1,11 +1,12 @@
 import {Dispatch} from 'redux';
-
 import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
-import {packsAPI} from '../api/packs-api';
+import {packsAPI, RequestCreatePackType, RequestUpdatedPackType} from '../api/packs-api';
 
-
-const SET_PACKS = 'packs/SET_PACKS'
+const FETCH_PACKS = 'packs/FETCH_PACKS'
+const CREATE_PACK = 'packs/CREATE_PACK'
+const DELETE_PACK = 'packs/DELETE_PACK'
+const UPDATED_PACK = 'packs/UPDATED_PACK'
 
 
 const initialState = {
@@ -21,22 +22,31 @@ const initialState = {
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
     switch (action.type) {
-        case SET_PACKS:
+        case FETCH_PACKS:
             return {...state,cardPacks:action.packs.map( p => ({...p}))}
+        case CREATE_PACK:
+            return state
+        case DELETE_PACK:
+            return state
+        case UPDATED_PACK:
+            return state
         default:
             return state
     }
 }
 
 // actions
-export const setPacksAC = (packs: ResponsePackType[]) => ({type: SET_PACKS, packs} as const)
+export const fetchPacksAC = (packs: ResponsePackType[]) => ({type: FETCH_PACKS, packs} as const)
+export const createPackAC = (cardsPack: RequestCreatePackType) => ({type:CREATE_PACK, cardsPack} as const)
+export const deletePackAC = (_id: string) => ({type:DELETE_PACK, _id} as const)
+export const updatedPackAC = (cardsPack: RequestUpdatedPackType) => ({type:UPDATED_PACK, cardsPack} as const)
 
 // thunk
 export const fetchPacksTC = () => (dispatch: Dispatch) => {
     dispatch(loading(true))
     packsAPI.getPacks()
         .then((res) => {
-            dispatch(setPacksAC(res.data.cardPacks))
+            dispatch(fetchPacksAC(res.data.cardPacks))
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
@@ -46,6 +56,46 @@ export const fetchPacksTC = () => (dispatch: Dispatch) => {
         })
 }
 
+export const createPackTC = (cardsPack: RequestCreatePackType) => (dispatch: Dispatch) => {
+    dispatch(loading(true))
+    packsAPI.createPack(cardsPack)
+        .then((res) => {
+            dispatch(createPackAC(res.data.newCardsPack))
+        })
+        .catch(error => {
+            handleServerNetworkError(error.response.data.error, dispatch)
+        })
+        .finally(() => {
+            dispatch(loading(false))
+        })
+}
+
+export const deletePackTC = (_id: string) => (dispatch: Dispatch) => {
+    dispatch(loading(true))
+    packsAPI.deletePack(_id)
+        .then((res)=> {
+            dispatch(deletePackAC(res.data.deletedCardsPack._id))
+        })
+        .catch(error => {
+            handleServerNetworkError(error.response.data.error, dispatch)
+        })
+        .finally(() => {
+            dispatch(loading(false))
+        })
+}
+export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: Dispatch) => {
+    dispatch(loading(true))
+    packsAPI.updatedPack(cardsPack)
+        .then((res) => {
+            dispatch(updatedPackAC(res.data.updatedCardsPack))
+        })
+        .catch(error => {
+            handleServerNetworkError(error.response.data.error, dispatch)
+        })
+        .finally(() => {
+            dispatch(loading(false))
+        })
+}
 //types
 export type ResponsePackType = {
     _id: string
@@ -63,6 +113,7 @@ export type ResponsePackType = {
     updated: string
     more_id: string
     __v: number
+    deckCover: string
 }
 export type ResponsePacksType = {
     cardPacks: ResponsePackType[]
@@ -76,6 +127,12 @@ export type ResponsePacksType = {
 }
 
 //export type ResponsePacksType = typeof initialState
-export type setPacksActionType = ReturnType<typeof setPacksAC>
+export type fetchPacksActionType = ReturnType<typeof fetchPacksAC>
+export type createPackActionType = ReturnType<typeof createPackAC>
+export type deletePackActionType = ReturnType<typeof deletePackAC>
+export type updatePackActionType = ReturnType<typeof updatedPackAC>
 
-type ActionsType = setPacksActionType
+type ActionsType = fetchPacksActionType
+    | createPackActionType
+    | deletePackActionType
+    | updatePackActionType
