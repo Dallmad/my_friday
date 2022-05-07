@@ -4,6 +4,7 @@ import {useEffect} from 'react';
 import {ResponsePackType, setPacksThunk} from '../../../../state/packs-reducer';
 import {useSelector} from 'react-redux';
 import {TableHeader} from './TableHeader/TableHeader';
+import s from '../AllPacksList.module.css'
 
 export const Table = () => {
 
@@ -15,7 +16,7 @@ export const Table = () => {
     }, [])
 
     return (
-        <div>
+        <div className={s.table}>
             <TableHeader/>
             {packs.map((cardPacks) => <TableRow
                         key={cardPacks._id + cardPacks.user_id}

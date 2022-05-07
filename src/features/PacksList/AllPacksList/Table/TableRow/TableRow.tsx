@@ -1,5 +1,6 @@
 import {TableCell} from './TableCell/TableCell';
 import {ResponsePackType} from '../../../../../state/packs-reducer';
+import s from '../../AllPacksList.module.css'
 
 
 export const TableRow = ({cardPacks}: ResponseCardPackType) => {
@@ -7,7 +8,7 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
 const {name, cardsCount, updated, user_name} = cardPacks
 
     return (
-        <div>
+        <div className={s.table_row}>
             <TableCell packValue={name} />
             <TableCell packValue={cardsCount} />
             <TableCell packValue={updated} />
