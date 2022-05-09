@@ -1,13 +1,14 @@
-import Input from '../../../../../../components/Input/Input';
-import s from '../../../AllPacksList.module.css'
+
+import '../../../AllPacksList.module.css'
+import Button from '../../../../../../components/Button/Button';
 
 
 export const TableCell = ({packValue}: PackValueType) => {
 
     return (
-        <div className={s.table_cell}>
-            <Input value={packValue}/>
-        </div>
+        <>
+            <td>{packValue}</td>
+        </>
     )
 }
 

@@ -1,8 +1,6 @@
-import {AxiosRequestConfig, AxiosResponse} from 'axios'
+import {AxiosResponse} from 'axios'
 import {instance} from './instance';
 import {ResponsePacksType, ResponsePackType} from '../state/packs-reducer';
-import {useSelector} from 'react-redux';
-import {AppRootStateType} from '../state/store';
 
 
 /*const params : GetParamsRequestType = {

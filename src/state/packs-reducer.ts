@@ -12,6 +12,7 @@ const CREATE_PACK = 'packs/CREATE_PACK'
 const DELETE_PACK = 'packs/DELETE_PACK'
 const UPDATED_PACK = 'packs/UPDATED_PACK'
 const SET_IS_MY_PAGE = 'packs/SET_IS_MY_PAGE'
+const SET_SORT_PACKS = 'packs/SET_SORT_PACKS'
 
 
 const initialState = {
@@ -23,7 +24,8 @@ const initialState = {
     maxCardsCount: 5,
     token: '',
     tokenDeathTime: 0,
-    isMyPage: false
+    isMyPage: false,
+    sortPacks: '0updated',
 }
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
@@ -38,6 +40,8 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
             return {...state, ...action.cardsPack}
         case SET_IS_MY_PAGE:
             return {...state, isMyPage: action.value}
+        case SET_SORT_PACKS:
+            return {...state, sortPacks: action.sortPacks}
         default:
             return state
     }
@@ -50,6 +54,8 @@ export const deletePackAC = (_id: string) => ({type: DELETE_PACK, _id} as const)
 export const updatedPackAC = (cardsPack: RequestUpdatedPackType) => ({type: UPDATED_PACK, cardsPack} as const)
 export const setIsMyPageAC = (value: boolean) =>
     ({type: SET_IS_MY_PAGE, value} as const)
+export const setSortPacksAC = (sortPacks: string) =>
+    ({type: SET_SORT_PACKS, sortPacks} as const)
 
 // thunk
 export const fetchPacksTC = () => (dispatch: Dispatch) => {
@@ -67,7 +73,7 @@ export const fetchPacksTC = () => (dispatch: Dispatch) => {
 }
 export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
-    packsAPI.getPacks({user_id:userId})
+    packsAPI.getPacks({user_id: userId})
         .then((res) => {
             dispatch(fetchPacksAC(
                 res.data.cardPacks//.filter(c=> c.user_id===userId)
@@ -161,7 +167,8 @@ export type ResponsePacksType = {
     tokenDeathTime: number
 } & IsMyPageType
 type IsMyPageType = {
-isMyPage: boolean
+    isMyPage: boolean
+    sortPacks: string
 }
 //export type initialStateType = typeof initialState
 export type fetchPacksActionType = ReturnType<typeof fetchPacksAC>
@@ -169,9 +176,11 @@ export type createPackActionType = ReturnType<typeof createPackAC>
 export type deletePackActionType = ReturnType<typeof deletePackAC>
 export type updatePackActionType = ReturnType<typeof updatedPackAC>
 export type setIsMyPageActionType = ReturnType<typeof setIsMyPageAC>
+export type setSortPacksActionType = ReturnType<typeof setSortPacksAC>
 
 type ActionsType = fetchPacksActionType
     | createPackActionType
     | deletePackActionType
     | updatePackActionType
     | setIsMyPageActionType
+    | setSortPacksActionType

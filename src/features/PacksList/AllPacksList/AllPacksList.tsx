@@ -6,7 +6,7 @@ import {Table} from './Table/Table';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from '../../../state/store';
 import {fetchParamsTC} from '../../../state/params-reducer';
-import {setIsMyPageAC} from '../../../state/packs-reducer';
+import {createPackTC, setIsMyPageAC} from '../../../state/packs-reducer';
 
 export const AllPacksList = () => {
 
@@ -36,7 +36,9 @@ export const AllPacksList = () => {
         dispatch(fetchParamsTC(searchPacks))
         setSearchPacks('')
     }
-
+    const addNewPackHandler = (cardsPack:any) => {
+        dispatch(createPackTC(cardsPack))
+    }
     if (!isLoggedIn) {
         return <Navigate to="/login"/>
     }
@@ -55,7 +57,7 @@ export const AllPacksList = () => {
                 <h2>Packs list</h2>
                 <Input value={searchPacks} onChange={(e) => setSearchPacks(e.currentTarget.value)}/>
                 <Button onClick={searchPacksHandler}>Search</Button>
-                <Button>Add new pack</Button>
+                <Button onClick={addNewPackHandler}>Add new pack</Button>
             </div>
             <Table/>
         </>
