@@ -57,7 +57,7 @@ export const AllPacksList = () => {
                 <h2>Packs list</h2>
                 <Input value={searchPacks} onChange={(e) => setSearchPacks(e.currentTarget.value)}/>
                 <Button onClick={searchPacksHandler}>Search</Button>
-                <Button onClick={addNewPackHandler}>Add new pack</Button>
+                <Button onClick={()=>addNewPackHandler(searchPacks)}>Add new pack</Button>
             </div>
             <Table/>
         </>
