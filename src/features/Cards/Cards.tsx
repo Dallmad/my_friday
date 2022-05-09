@@ -34,7 +34,7 @@ export const Cards = () => {
 
     useEffect(() => {
         dispatch(setCardsTC())
-    }, [cardsPack_id, currentPage, sortCards])
+    }, [cardsPack_id, currentPage, sortCards, cardsTotalCount])
 
     const addCard = () => {
         dispatch(addCardTC())
@@ -55,9 +55,9 @@ export const Cards = () => {
 
     const onSortCards = (value: string) => {
         let direction = sortCards.slice(0, 1)
-        let num = +!+direction.slice(0, 1)+value
-        setSortCards(num)
-        dispatch(setSortCardsAC(num))
+        let sort = +!+direction.slice(0, 1)+value
+        setSortCards(sort)
+        dispatch(setSortCardsAC(sort))
     }
 
     const onChangeTitleAnswer = (e: ChangeEvent<HTMLInputElement>, ) => {
@@ -76,18 +76,19 @@ export const Cards = () => {
         dispatch(setSearchCardsQuestionAC(titleQuestion))
     }
 
-    // const onClickCancelSearch = () => {
-    //     dispatch(setSearchCardsAnswerAC(''))
-    //     dispatch(setSearchCardsQuestionAC(''))
-    // }
+    const onClickCancelSearch = () => {
+        setTitleAnswer('')
+        setTitleQuestion('')
+        dispatch(setCardsTC())
+    }
 
     return (
         <div className={s.container}>
-            <Input type="text" onChange={(e) => onChangeTitleAnswer(e)}/>
+            <Input type="text" value={titleAnswer} onChange={(e) => onChangeTitleAnswer(e)}/>
             <Button onClick={onClickTitleAnswer}>Search answer</Button>
-            <Input type="text" onChange={(e) => onChangeTitleQuestion(e)}/>
+            <Input type="text" value={titleQuestion} onChange={(e) => onChangeTitleQuestion(e)}/>
             <Button onClick={onClickTitleQuestion}>Search question</Button>
-            {/*<Button onClick={onClickCancelSearch}>Search cancel</Button>*/}
+            <Button onClick={onClickCancelSearch}>Search cancel</Button>
             <table className="table">
                 <thead>
                 <tr>

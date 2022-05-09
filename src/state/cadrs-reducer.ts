@@ -78,11 +78,9 @@ export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRoo
     let page = getState().cards.page
     let pageCount = getState().cards.pageCount
 
-    cardsAPI.getCards(cardsPack_id, page, pageCount, sortCards)
+    cardsAPI.getCards({cardsPack_id, page, pageCount, sortCards})
         .then(res => {
             dispatch(loading(false))
-            // setPageCardsAC(page)
-            // setSortCardsAC(sortCards)
             dispatch(setCardsAC(res.data))
         })
         .catch(error => {
@@ -91,9 +89,10 @@ export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRoo
         })
 }
 
-export const addCardTC = () => (dispatch: TypedDispatch) => {
+export const addCardTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
-    cardsAPI.updateCards()
+    let cardsPack_id = getState().cards.cardsPack_id
+    cardsAPI.addCard({cardsPack_id, question: "new question", answer: "new answer", grade: 3})
         .then(res => {
             dispatch(loading(false))
             dispatch(setCardsTC())
@@ -106,7 +105,7 @@ export const addCardTC = () => (dispatch: TypedDispatch) => {
 
 export const deleteCardTC = (id: string) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
-    cardsAPI.deleteCards(id)
+    cardsAPI.deleteCard(id)
         .then(res => {
             dispatch(loading(false))
             dispatch(setCardsTC())
@@ -119,7 +118,7 @@ export const deleteCardTC = (id: string) => (dispatch: TypedDispatch) => {
 
 export const editCardTC = (id: string) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
-    cardsAPI.editCards(id)
+    cardsAPI.editCard({_id: id, question: "new edit question"})
         .then(res => {
             dispatch(loading(false))
             dispatch(setCardsTC())
