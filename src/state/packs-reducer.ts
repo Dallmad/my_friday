@@ -2,10 +2,9 @@ import {Dispatch} from 'redux';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
 import {packsAPI, RequestCreatePackType, RequestUpdatedPackType} from '../api/packs-api';
-import {AppRootStateType} from './store';
-import {authAPI, LoginParamsType} from '../api/auth-api';
-import {setIsLoggedIn} from './auth-reducer';
-import {Navigate} from 'react-router-dom';
+import {AppActionType, AppDispatch, AppRootStateType, TypedDispatch} from './store';
+import {ThunkDispatch} from 'redux-thunk';
+
 
 const FETCH_PACKS = 'packs/FETCH_PACKS'
 const CREATE_PACK = 'packs/CREATE_PACK'
@@ -28,7 +27,7 @@ const initialState = {
     sortPacks: '0updated',
 }
 
-export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
+export const packsReducer = (state: ResponsePacksType = initialState, action: PacksActionsType): ResponsePacksType => {
     switch (action.type) {
         case FETCH_PACKS:
             return {...state, cardPacks: action.packs.map(p => ({...p}))}
@@ -58,7 +57,7 @@ export const setSortPacksAC = (sortPacks: string) =>
     ({type: SET_SORT_PACKS, sortPacks} as const)
 
 // thunk
-export const fetchPacksTC = () => (dispatch: Dispatch) => {
+export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>) => {
     dispatch(loading(true))
     packsAPI.getPacks()
         .then((res) => {
@@ -71,7 +70,7 @@ export const fetchPacksTC = () => (dispatch: Dispatch) => {
             dispatch(loading(false))
         })
 }
-export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch<AppActionType>) => {
     dispatch(loading(true))
     packsAPI.getPacks({user_id: userId})
         .then((res) => {
@@ -86,11 +85,13 @@ export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch, getState:
             dispatch(loading(false))
         })
 }
-export const createPackTC = (cardsPack: RequestCreatePackType) => (dispatch: Dispatch) => {
+export const createPackTC = (name?: string, deckCover?: string) => (dispatch: Dispatch<AppActionType>) => {
     dispatch(loading(true))
-    packsAPI.createPack(cardsPack)
+    packsAPI.createPack
+    ({name, deckCover, private: false})
         .then((res) => {
             dispatch(createPackAC(res.data.newCardsPack))
+            dispatch(fetchPacksTC() as any )
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
@@ -100,7 +101,7 @@ export const createPackTC = (cardsPack: RequestCreatePackType) => (dispatch: Dis
         })
 }
 
-export const deletePackTC = (_id: string) => (dispatch: Dispatch) => {
+export const deletePackTC = (_id: string) => (dispatch: Dispatch<AppActionType>) => {
     dispatch(loading(true))
     packsAPI.deletePack(_id)
         .then((res) => {
@@ -113,7 +114,7 @@ export const deletePackTC = (_id: string) => (dispatch: Dispatch) => {
             dispatch(loading(false))
         })
 }
-export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: Dispatch) => {
+export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: Dispatch<AppActionType>) => {
     dispatch(loading(true))
     packsAPI.updatedPack(cardsPack)
         .then((res) => {
@@ -127,16 +128,6 @@ export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: D
         })
 }
 
-//
-/*
-export const setMyPage = (dispatch: Dispatch) => {
-    dispatch(setIsMyPageAC(true))
-}
-
-export const setAllPage = (dispatch: Dispatch) => {
-dispatch(setIsMyPageAC(false))
-
-}*/
 //types
 export type ResponsePackType = {
     _id: string
@@ -178,9 +169,12 @@ export type updatePackActionType = ReturnType<typeof updatedPackAC>
 export type setIsMyPageActionType = ReturnType<typeof setIsMyPageAC>
 export type setSortPacksActionType = ReturnType<typeof setSortPacksAC>
 
-type ActionsType = fetchPacksActionType
+export type fetchPacksTCAT = ReturnType<typeof setSortPacksAC>
+
+export type PacksActionsType = fetchPacksActionType
     | createPackActionType
     | deletePackActionType
     | updatePackActionType
     | setIsMyPageActionType
     | setSortPacksActionType
+    | fetchPacksTCAT

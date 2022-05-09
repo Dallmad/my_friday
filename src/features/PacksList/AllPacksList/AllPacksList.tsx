@@ -6,7 +6,7 @@ import {Table} from './Table/Table';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from '../../../state/store';
 import {fetchParamsTC} from '../../../state/params-reducer';
-import {createPackTC, setIsMyPageAC} from '../../../state/packs-reducer';
+import {createPackTC, fetchPacksTC, setIsMyPageAC} from '../../../state/packs-reducer';
 
 export const AllPacksList = () => {
 
@@ -20,10 +20,8 @@ export const AllPacksList = () => {
 
     const dispatch = useTypedDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
-    const isMyPage = useSelector<AppRootStateType, boolean>(state => state.packs.isMyPage)
 
     const [searchPacks, setSearchPacks] = useState('')
-    //const [changePage, setChangePage] = useState(false)
 
     const changePageToMyHandler = () => {
         dispatch(setIsMyPageAC(true))
@@ -36,8 +34,9 @@ export const AllPacksList = () => {
         dispatch(fetchParamsTC(searchPacks))
         setSearchPacks('')
     }
-    const addNewPackHandler = (cardsPack:any) => {
-        dispatch(createPackTC(cardsPack))
+    const addNewPackHandler = (title:string) => {
+        dispatch(createPackTC(title))
+        setSearchPacks('')
     }
     if (!isLoggedIn) {
         return <Navigate to="/login"/>

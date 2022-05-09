@@ -9,15 +9,12 @@ export const ErrorSnackbar = () => {
     const error = useSelector<AppRootStateType, string>(state => state.profile.error)
     const dispatch = useDispatch()
 
-    const [err, setErr] = useState(false)
-
     useEffect(() => {
         if (error) {
-            setErr(true)
             const timer = setTimeout(() => {
-                dispatch(setErrorAC(error))
+                dispatch(setErrorAC(''))
                 dispatch(loading(false))
-                setErr(false)
+             //   setErr(false)
             }, 4500)
             return () => clearTimeout(timer)
         }
@@ -26,12 +23,11 @@ export const ErrorSnackbar = () => {
     const handleClose = () => {
         dispatch(setErrorAC(''))
         dispatch(loading(false))
-        setErr(false)
     }
 
     return (
         <div className={s.div}>
-            {err && <div onClick={handleClose} style={{backgroundColor:'red'}}>{error}</div>}
+            {error && <div onClick={handleClose} style={{backgroundColor:'red'}}>{error}</div>}
         </div>
     )
 }

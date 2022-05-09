@@ -41,7 +41,7 @@ type GetParamsRequestType = {
 export type RequestCreatePackType = {
     name?: string
     deckCover?: string
-    private?: boolean
+    private: boolean
 }
 type ResponseToCreatePackType = {
     newCardsPack: ResponsePackType
