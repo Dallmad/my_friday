@@ -6,21 +6,31 @@ import {Table} from './Table/Table';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from '../../../state/store';
 import {fetchParamsTC} from '../../../state/params-reducer';
+import {setIsMyPageAC} from '../../../state/packs-reducer';
 
 export const AllPacksList = () => {
 
-/*
-    const params = useParams<'*'>()
+    /*
+        const params = useParams<'*'>()
 
-    const queryParametr = params['*']
+        const queryParametr = params['*']
 
-    const s = queryParametr?.split('&')
-*/
+        const s = queryParametr?.split('&')
+    */
 
     const dispatch = useTypedDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
+    const isMyPage = useSelector<AppRootStateType, boolean>(state => state.packs.isMyPage)
 
     const [searchPacks, setSearchPacks] = useState('')
+    //const [changePage, setChangePage] = useState(false)
+
+    const changePageToMyHandler = () => {
+        dispatch(setIsMyPageAC(true))
+    }
+    const changePageToAllHandler = () => {
+        dispatch(setIsMyPageAC(false))
+    }
 
     const searchPacksHandler = () => {
         dispatch(fetchParamsTC(searchPacks))
@@ -35,13 +45,15 @@ export const AllPacksList = () => {
         <>
             <div>
                 <h4>Show packs cards</h4>
-                <NavLink to={'/my-packs-list'}>My</NavLink>
-                <NavLink to={'/all-packs-list'}>All</NavLink>
+                <Button onClick={changePageToMyHandler}>My</Button>
+                <Button onClick={changePageToAllHandler}>All</Button>
+                {/*<NavLink to={'/my-packs-list'}>My</NavLink>
+                <NavLink to={'/all-packs-list'}>All</NavLink>*/}
                 <p>
                     Number of cards
                 </p>
                 <h2>Packs list</h2>
-                <Input value={searchPacks} onChange={(e)=>setSearchPacks(e.currentTarget.value)}/>
+                <Input value={searchPacks} onChange={(e) => setSearchPacks(e.currentTarget.value)}/>
                 <Button onClick={searchPacksHandler}>Search</Button>
                 <Button>Add new pack</Button>
             </div>

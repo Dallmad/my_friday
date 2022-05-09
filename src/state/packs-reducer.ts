@@ -3,11 +3,15 @@ import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
 import {packsAPI, RequestCreatePackType, RequestUpdatedPackType} from '../api/packs-api';
 import {AppRootStateType} from './store';
+import {authAPI, LoginParamsType} from '../api/auth-api';
+import {setIsLoggedIn} from './auth-reducer';
+import {Navigate} from 'react-router-dom';
 
 const FETCH_PACKS = 'packs/FETCH_PACKS'
 const CREATE_PACK = 'packs/CREATE_PACK'
 const DELETE_PACK = 'packs/DELETE_PACK'
 const UPDATED_PACK = 'packs/UPDATED_PACK'
+const SET_IS_MY_PAGE = 'packs/SET_IS_MY_PAGE'
 
 
 const initialState = {
@@ -18,19 +22,22 @@ const initialState = {
     minCardsCount: 0,
     maxCardsCount: 5,
     token: '',
-    tokenDeathTime: 0
+    tokenDeathTime: 0,
+    isMyPage: false
 }
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
     switch (action.type) {
         case FETCH_PACKS:
-            return {...state,cardPacks:action.packs.map( p => ({...p}))}
+            return {...state, cardPacks: action.packs.map(p => ({...p}))}
         case CREATE_PACK:
-            return {...state,...action.cardsPack}
+            return {...state, ...action.cardsPack}
         case DELETE_PACK:
-            return {...state,cardPacks:state.cardPacks.filter(p => p._id !== action._id)}
+            return {...state, cardPacks: state.cardPacks.filter(p => p._id !== action._id)}
         case UPDATED_PACK:
-            return {...state,...action.cardsPack}
+            return {...state, ...action.cardsPack}
+        case SET_IS_MY_PAGE:
+            return {...state, isMyPage: action.value}
         default:
             return state
     }
@@ -38,9 +45,11 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
 
 // actions
 export const fetchPacksAC = (packs: ResponsePackType[]) => ({type: FETCH_PACKS, packs} as const)
-export const createPackAC = (cardsPack: RequestCreatePackType) => ({type:CREATE_PACK, cardsPack} as const)
-export const deletePackAC = (_id: string) => ({type:DELETE_PACK, _id} as const)
-export const updatedPackAC = (cardsPack: RequestUpdatedPackType) => ({type:UPDATED_PACK, cardsPack} as const)
+export const createPackAC = (cardsPack: RequestCreatePackType) => ({type: CREATE_PACK, cardsPack} as const)
+export const deletePackAC = (_id: string) => ({type: DELETE_PACK, _id} as const)
+export const updatedPackAC = (cardsPack: RequestUpdatedPackType) => ({type: UPDATED_PACK, cardsPack} as const)
+export const setIsMyPageAC = (value: boolean) =>
+    ({type: SET_IS_MY_PAGE, value} as const)
 
 // thunk
 export const fetchPacksTC = () => (dispatch: Dispatch) => {
@@ -56,9 +65,9 @@ export const fetchPacksTC = () => (dispatch: Dispatch) => {
             dispatch(loading(false))
         })
 }
-export const fetchMyPacksTC = (userId:string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
-    packsAPI.getPacks()
+    packsAPI.getPacks({user_id:userId})
         .then((res) => {
             dispatch(fetchPacksAC(
                 res.data.cardPacks//.filter(c=> c.user_id===userId)
@@ -88,7 +97,7 @@ export const createPackTC = (cardsPack: RequestCreatePackType) => (dispatch: Dis
 export const deletePackTC = (_id: string) => (dispatch: Dispatch) => {
     dispatch(loading(true))
     packsAPI.deletePack(_id)
-        .then((res)=> {
+        .then((res) => {
             dispatch(deletePackAC(res.data.deletedCardsPack._id))
         })
         .catch(error => {
@@ -111,6 +120,17 @@ export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: D
             dispatch(loading(false))
         })
 }
+
+//
+/*
+export const setMyPage = (dispatch: Dispatch) => {
+    dispatch(setIsMyPageAC(true))
+}
+
+export const setAllPage = (dispatch: Dispatch) => {
+dispatch(setIsMyPageAC(false))
+
+}*/
 //types
 export type ResponsePackType = {
     _id: string
@@ -139,15 +159,19 @@ export type ResponsePacksType = {
     maxCardsCount: number
     token: string
     tokenDeathTime: number
+} & IsMyPageType
+type IsMyPageType = {
+isMyPage: boolean
 }
-
-//export type ResponsePacksType = typeof initialState
+//export type initialStateType = typeof initialState
 export type fetchPacksActionType = ReturnType<typeof fetchPacksAC>
 export type createPackActionType = ReturnType<typeof createPackAC>
 export type deletePackActionType = ReturnType<typeof deletePackAC>
 export type updatePackActionType = ReturnType<typeof updatedPackAC>
+export type setIsMyPageActionType = ReturnType<typeof setIsMyPageAC>
 
 type ActionsType = fetchPacksActionType
     | createPackActionType
     | deletePackActionType
     | updatePackActionType
+    | setIsMyPageActionType
