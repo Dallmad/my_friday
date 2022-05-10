@@ -42,12 +42,12 @@ export const cardsReducer = (state: InitialStateType = initialState, action:
         case SET_SEARCH_ANSWER:
             return {
                 ...state,
-                cards: state.cards.filter((str: CardType)  => !(str.answer.search(action.title)) )
+                cards: state.cards.filter((card: CardType)  => !!(card.answer.search(action.title)+1) )
             }
         case SET_SEARCH_QUESTION:
             return {
                 ...state,
-                cards: state.cards.filter((str: CardType)  => !(str.question.search(action.title)) )
+                cards: state.cards.filter((card: CardType)  => !!(card.question.search(action.title)+1) )
             }
         default:
             return state
