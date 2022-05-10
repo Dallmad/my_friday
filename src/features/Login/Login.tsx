@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navigate} from 'react-router-dom';
+import {Navigate, NavLink} from 'react-router-dom';
 import s from './Login.module.css'
 import {useFormik} from 'formik';
 import {useSelector} from 'react-redux';
@@ -8,6 +8,8 @@ import {login} from '../../state/auth-reducer';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
+import {PATH} from '../../app/Routes/Routes';
+
 
 export const Login = () => {
 
@@ -46,6 +48,7 @@ export const Login = () => {
 
     return (
         <div className={s.div}>
+            <div className={s.title}>Sign In</div>
             <form onSubmit={formik.handleSubmit}>
                 <div className={s.container}>
                     <Input
@@ -64,7 +67,7 @@ export const Login = () => {
                     />
                     {formik.touched.password && formik.errors.password
                         && <div style={{color: 'red'}}>{formik.errors.password}</div>}
-                    <div>
+                    <div className={s.checkbox}>
                         <label>Remember me</label>
                         <Checkbox
                             {...formik.getFieldProps('rememberMe')}
@@ -75,6 +78,9 @@ export const Login = () => {
                     </Button>
                 </div>
             </form>
+            <div className={s.link}>
+                <NavLink to={PATH.REGISTRATION} className={s.link}>Sign Up</NavLink>
+            </div>
         </div>
     )
 }

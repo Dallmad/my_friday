@@ -5,25 +5,31 @@ import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import {setProfileStateThunk} from '../../state/profile-reducer';
 import {useEffect, useState} from 'react';
 import {setUser} from '../../state/auth-reducer';
-import ava from '../../assets/images/avatar.jpg';
+import ava from '../../assets/images/ava.png';
 import icon from '../../assets/images/img_icon.png';
-import EditableSpan from "../../components/EditableSpan/EditableSpan";
-import Input from "../../components/Input/Input";
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
 
 export const Profile = () => {
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const userName = useSelector<AppRootStateType, string>((state) => state.profile.name)
+    const userEmail = useSelector<AppRootStateType, string>((state) => state.profile.email)
     const dispatch = useTypedDispatch()
 
     const [newName, setNewName] = useState<string>(userName)
 
     useEffect(() => {
         dispatch(setUser())
+        setNewName(userName)
     }, [userName])
 
     const changeName = () => {
         dispatch(setProfileStateThunk(newName))
+    }
+    const cancelChangeName = () => {
+        setNewName(userName)
+        dispatch(setProfileStateThunk(userName))
     }
 
     if (!isLoggedIn) {
@@ -32,32 +38,32 @@ export const Profile = () => {
 
     return (
         <div className={s.div}>
-            <h2 className={s.profile_name}>
+            <div className={s.profile_name}>
                 Personal Information
-            </h2>
+            </div>
             <div className={s.profile_img}>
-                <img src={ava}
-                     alt="Avatar"
-                     className={s.profile_avatar}/>
+                <img src={ava} alt="Avatar" className={s.profile_avatar}/>
                 <div className={s.icon}>
-                    <img src={icon}
-                         alt="Img-Icon"
-                         className={s.icon_img}/>
+                    <img src={icon} alt="Img-Icon" className={s.icon_img}/>
                 </div>
             </div>
             <form className={s.profile_input}>
-                <EditableSpan value={newName}
-                              onChangeText={setNewName}
-                              onBlur={changeName}
-                              onEnter={changeName}
-                              profileName={newName}
+                <Input
+                    label={'Nickname'}
+                    value={newName}
+                    onChangeText={setNewName}
                 />
-                <Input label={'Email'}/>
-            </form>
+                <Input
+                    className={s.editableSpan}
+                    label={'email'}
+                    value={userEmail}
+                />
 
+            </form>
             <div className={s.buttons_container}>
-                <button className={s.button_cancel}>Cancel</button>
-                <button className={s.button_save}>Save</button>
+                <Button className={s.button_cancel} onClick={cancelChangeName} >Cancel</Button>
+
+                <Button className={s.button_save} onClick={changeName}>Save</Button>
             </div>
         </div>
     )

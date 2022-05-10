@@ -2,22 +2,18 @@ import {useFormik} from 'formik';
 import s from './Registration.module.css'
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import {RegistrationType} from "../../api/registration-api";
 import {registrationTC} from "../../state/registration-reducer";
 import {useSelector} from "react-redux";
-import { Navigate } from 'react-router-dom';
+import {Navigate, NavLink} from 'react-router-dom';
 import {AppRootStateType, useTypedDispatch} from '../../state/store';
 import React from 'react';
+import {PATH} from '../../app/Routes/Routes';
 
-
-interface MyFormValues {
-    email?: string
-    password?: string
-}
 
 export const Registration = () => {
 
     const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isRegistration)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     const dispatch = useTypedDispatch()
 
@@ -50,14 +46,18 @@ export const Registration = () => {
         return <Navigate to='/login'/>
     }
 
+    if (isLoggedIn) {
+        return <Navigate to="/"/>
+    }
+
     return (
         <div className={s.div}>
-            <div>Registration form</div>
+            <div className={s.title}>Registration form</div>
             <form onSubmit={formik.handleSubmit}>
                 <div className={s.form}>
                     <div>
-                        <label htmlFor="email">email</label>
                         <Input
+                            label={'email'}
                             type="Email"
                             {...formik.getFieldProps('email')}
                             // label={''}
@@ -66,8 +66,8 @@ export const Registration = () => {
                             && <div style={{color: 'red'}}>{formik.errors.email}</div>}
                     </div>
                     <div>
-                        <label htmlFor="password">password</label>
                         <Input
+                            label={'password'}
                             type="password"
                             {...formik.getFieldProps('password')}
                             // label={''}
@@ -76,10 +76,14 @@ export const Registration = () => {
                             && <div style={{color: 'red'}}>{formik.errors.password}</div>}
                     </div>
                     <div>
-                        <Button type="submit">sing up</Button>
+                        <Button type="submit">Register</Button>
+
                     </div>
                 </div>
             </form>
+            <div className={s.link}>
+                <NavLink to={PATH.LOGIN} className={s.link}>Cancel</NavLink>
+            </div>
         </div>
     )
 }

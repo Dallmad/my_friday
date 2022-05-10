@@ -1,14 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Titillium+Web:wght@200;400&display=swap');
 .div {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    position: absolute;
     width: 413px;
     height: 540px;
-    left: 434px;
-    top: 84px;
     background: #F9F9FE;
     border-radius: 8px;
 }
@@ -18,13 +14,11 @@
     max-width: 236px;
     height: 33px;
     margin: 36px 0 15px 0;
-
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
     font-size: 22px;
     line-height: 33px;
-    text-align: right;
     color: #2D2E46;
 }
 
@@ -63,8 +57,7 @@
 .profile_input {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
+    justify-content: center;
 }
 
 .profile_textfield {
@@ -75,8 +68,7 @@
     opacity: 0.2;
     margin-bottom: 24px;
     outline: none;
-
-    font-family: 'Poppins';
+    font-family: 'SF UI Display';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -90,20 +82,15 @@
     background: #21268F;
     box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
     border-radius: 30px;
-    font-family: 'Poppins';
+    font-family: 'SF UI Display';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-    /* identical to box height */
-
     text-align: center;
     letter-spacing: 0.01em;
-
     color: #ECECF9;
-
     text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-
     border: none;
 }
 
@@ -113,27 +100,33 @@
     height: 36px;
     background: #D7D8EF;
     border-radius: 30px;
-    font-family: 'Poppins';
+    font-family: 'SF UI Display';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-
     text-align: center;
     letter-spacing: 0.01em;
-
     color: #21268F;
-
     border: none;
-
     opacity: 0.8;
     text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 .buttons_container {
-    margin-top: 82px;
-    width: 347px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 347px;
 }
+/*
 
+.label {
+    font-family: 'SF UI Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: #24254A;
+    opacity: 0.7;
+}*/

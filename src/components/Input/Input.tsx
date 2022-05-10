@@ -36,13 +36,10 @@ const Input: React.FC<SuperInputTextPropsType> = (
 
     return (
         <>
-            {/*//передать пропсы в имя label*/}
-            <label
-                htmlFor={'props.labelName'}
-                className={s.label}>{label}</label>
+            <label htmlFor={`${label}`} className={s.label}>{label}</label>
             <input
                 type={'text'}
-                // id={'props.labelName'}
+                id={'props.labelName'}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
