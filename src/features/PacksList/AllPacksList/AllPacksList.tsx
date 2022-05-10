@@ -5,8 +5,8 @@ import Input from '../../../components/Input/Input';
 import {Table} from './Table/Table';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from '../../../state/store';
-import {fetchParamsTC} from '../../../state/params-reducer';
-import {createPackTC, setIsMyPageAC} from '../../../state/packs-reducer';
+
+import {createPackTC, setIsMyPageAC, setSearchPackAC} from '../../../state/packs-reducer';
 
 export const AllPacksList = () => {
 
@@ -31,7 +31,7 @@ export const AllPacksList = () => {
     }
 
     const searchPacksHandler = () => {
-        dispatch(fetchParamsTC(searchPacks))
+        dispatch(setSearchPackAC(searchPacks))
         setSearchPacks('')
     }
     const addNewPackHandler = (title:string) => {

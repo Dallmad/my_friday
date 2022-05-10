@@ -18,8 +18,8 @@ export const PATH = {
     REGISTRATION: '/registration',
     PASSWORD_RECOVERY: '/password-recovery',
     NEW_PASSWORD: '/new-password',
-    ALL_PACKS_LIST: '/all-packs-list/*',
-    MY_PACKS_LIST: '/my-packs-list/*',
+    ALL_PACKS_LIST: '/all-packs-list',
+    MY_PACKS_LIST: '/my-packs-list',
     CARDS: '/cards',
 }
 

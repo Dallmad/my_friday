@@ -17,15 +17,15 @@ const initialState = {
     //user_id: ''
 }
 
-export const paramsReducer = (state: GetParamsRequestType = initialState, action: ActionsType): GetParamsRequestType => {
+export const paramsReducer = (state: any = initialState, action: any): any => {
     switch (action.type) {
         case FETCH_PARAMS:
-            return {...state,...action.params}
+            return state
         default:
             return state
     }
 }
-
+/*
 //actions
 export const fetchParamsAC = (params: GetParamsRequestType) => ({type: FETCH_PARAMS, params} as const)
 
@@ -57,7 +57,7 @@ export type GetParamsRequestType = {
 }
 export type fetchParamsActionType = ReturnType<typeof fetchParamsAC>
 
-type ActionsType = fetchParamsActionType
+type ActionsType = fetchParamsActionType*/
 
 
 

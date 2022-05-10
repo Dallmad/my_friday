@@ -4,6 +4,7 @@ import {loading} from './registration-reducer';
 import {packsAPI, RequestCreatePackType, RequestUpdatedPackType} from '../api/packs-api';
 import {AppActionType, AppDispatch, AppRootStateType, TypedDispatch} from './store';
 import {ThunkDispatch} from 'redux-thunk';
+import {CardType} from './cadrs-reducer';
 
 
 const FETCH_PACKS = 'packs/FETCH_PACKS'
@@ -12,6 +13,7 @@ const DELETE_PACK = 'packs/DELETE_PACK'
 const UPDATED_PACK = 'packs/UPDATED_PACK'
 const SET_IS_MY_PAGE = 'packs/SET_IS_MY_PAGE'
 const SET_SORT_PACKS = 'packs/SET_SORT_PACKS'
+const SET_SEARCH_PACK = 'packs/SET_SEARCH_PACK'
 
 
 const initialState = {
@@ -41,6 +43,10 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Pa
             return {...state, isMyPage: action.value}
         case SET_SORT_PACKS:
             return {...state, sortPacks: action.sortPacks}
+        case SET_SEARCH_PACK:
+            return {...state, cardPacks: state.cardPacks.filter((p => !!(p.name.search(action.title) + 1)))
+                /* cards: state.cards.filter((card: CardType)  => !!(card.answer.search(action.title)+1) )*/
+            }
         default:
             return state
     }
@@ -55,6 +61,8 @@ export const setIsMyPageAC = (value: boolean) =>
     ({type: SET_IS_MY_PAGE, value} as const)
 export const setSortPacksAC = (sortPacks: string) =>
     ({type: SET_SORT_PACKS, sortPacks} as const)
+export const setSearchPackAC = (title: string) =>
+    ({type: SET_SEARCH_PACK, title} as const)
 
 // thunk
 export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
@@ -62,7 +70,7 @@ export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>, getState: 
     let page = getState().packs.page
     let pageCount = getState().packs.pageCount
     dispatch(loading(true))
-    packsAPI.getPacks({sortPacks,page,pageCount})
+    packsAPI.getPacks({sortPacks, page, pageCount})
         .then((res) => {
             dispatch(fetchPacksAC(res.data.cardPacks))
         })
@@ -78,11 +86,9 @@ export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch<AppActionT
     let page = getState().packs.page
     let pageCount = getState().packs.pageCount
     dispatch(loading(true))
-    packsAPI.getPacks({user_id: userId,sortPacks,page,pageCount})
+    packsAPI.getPacks({user_id: userId, sortPacks, page, pageCount})
         .then((res) => {
-            dispatch(fetchPacksAC(
-                res.data.cardPacks//.filter(c=> c.user_id===userId)
-            ))
+            dispatch(fetchPacksAC(res.data.cardPacks))
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
@@ -97,7 +103,7 @@ export const createPackTC = (name?: string, deckCover?: string) => (dispatch: Di
     ({name, deckCover, private: false})
         .then((res) => {
             dispatch(createPackAC(res.data.newCardsPack))
-            dispatch(fetchPacksTC() as any )
+            dispatch(fetchPacksTC() as any)
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
@@ -174,6 +180,7 @@ export type deletePackActionType = ReturnType<typeof deletePackAC>
 export type updatePackActionType = ReturnType<typeof updatedPackAC>
 export type setIsMyPageActionType = ReturnType<typeof setIsMyPageAC>
 export type setSortPacksActionType = ReturnType<typeof setSortPacksAC>
+export type setSearchPackActionType = ReturnType<typeof setSearchPackAC>
 
 //export type fetchPacksTCAT = ReturnType<typeof setSortPacksAC>
 
@@ -183,4 +190,5 @@ export type PacksActionsType = fetchPacksActionType
     | updatePackActionType
     | setIsMyPageActionType
     | setSortPacksActionType
-    //| fetchPacksTCAT
+    | setSearchPackActionType
+//| fetchPacksTCAT
