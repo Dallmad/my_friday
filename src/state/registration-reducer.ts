@@ -10,7 +10,7 @@ const initialState = {
 }
 
 export const registrationReducer = (state: InitialStateType = initialState, action:
-    RegistrationActionsType): InitialStateType => {
+    RegisActionsType): InitialStateType => {
     switch (action.type) {
         case REGISTRATION:
             return {...state, isRegistration: true}
@@ -48,4 +48,4 @@ export const registrationTC = (obj: RegistrationType) => {
 
 // types
 type InitialStateType = typeof initialState
-export type RegistrationActionsType = ReturnType<typeof registration> | ReturnType<typeof loading>
+export type RegisActionsType = ReturnType<typeof registration> | ReturnType<typeof loading>
