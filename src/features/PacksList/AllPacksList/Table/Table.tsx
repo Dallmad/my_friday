@@ -16,17 +16,18 @@ export const Table = () => {
 
     const packs = useSelector<AppRootStateType, ResponsePackType[]>(state => state.packs.cardPacks)
     const userId = useSelector<AppRootStateType, string>(state => state.profile._id)
+
     useEffect(() => {
         if (!isMyPage) {
             dispatch(fetchPacksTC())
         } else dispatch(fetchMyPacksTC(userId))
-    }, [isMyPage, sortPacks,createPackTC])
+    }, [isMyPage, sortPacks])
 
     return (
         <div>
             <table className='table'>
             <thead>
-                <TableHeader/>
+                <TableHeader sortPacks={sortPacks}/>
             </thead>
             <tbody>
                 {packs.map((p) =>

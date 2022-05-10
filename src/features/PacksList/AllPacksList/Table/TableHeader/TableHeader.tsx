@@ -6,23 +6,27 @@ import {useEffect, useState} from 'react';
 import {setSortPacksAC} from '../../../../../state/packs-reducer';
 import Button from '../../../../../components/Button/Button';
 
+type PropsType = {
+    sortPacks:string
+}
 
-export const TableHeader = () => {
+export const TableHeader = ({sortPacks}:PropsType) => {
 
-    const headersName = ['Name', 'Cards', 'Last Updates', 'Created by', 'Actions']
     const dispatch = useDispatch()
-    const sortPacks = useSelector<AppRootStateType, string>(state => state.packs.sortPacks)
-/*
+   /* const sortPacks = useSelector<AppRootStateType, string>(state => state.packs.sortPacks)*/
+    //const [newSortPacks, setNewSortPacks] = useState(sortPacks)
 
+/*
     useEffect(() => {
         dispatch(setSortPacksAC(sortPacks))
-    }, [])
+    }, [newSortPacks])
 */
-    const [newSortPacks, setNewSortPacks] = useState(sortPacks)
+
+
     const onSortPacks = (value: string) => {
-        let direction = sortPacks.slice(0, 1)
-        let sort = +!+direction.slice(0, 1)+value
-        setNewSortPacks(sort)
+        //let direction = sortPacks.slice(0, 1)
+        let sort = +!+sortPacks.slice(0, 1)+value
+        //setNewSortPacks(sort)
         dispatch(setSortPacksAC(sort))
     }
 

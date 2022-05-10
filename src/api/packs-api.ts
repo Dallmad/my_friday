@@ -14,7 +14,7 @@ import {ResponsePacksType, ResponsePackType} from '../state/packs-reducer';
 }*/
 
 export const packsAPI = {
-    getPacks(params?:GetParamsRequestType) {
+    getPacks(params:GetParamsRequestType) {
         return instance.get<GetParamsRequestType,AxiosResponse<ResponsePacksType>>(`cards/pack`,{params});
     },
     createPack(cardsPack: RequestCreatePackType) {

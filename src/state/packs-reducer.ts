@@ -57,9 +57,12 @@ export const setSortPacksAC = (sortPacks: string) =>
     ({type: SET_SORT_PACKS, sortPacks} as const)
 
 // thunk
-export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>) => {
+export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
+    let sortPacks = getState().packs.sortPacks
+    let page = getState().packs.page
+    let pageCount = getState().packs.pageCount
     dispatch(loading(true))
-    packsAPI.getPacks()
+    packsAPI.getPacks({sortPacks,page,pageCount})
         .then((res) => {
             dispatch(fetchPacksAC(res.data.cardPacks))
         })
@@ -70,9 +73,12 @@ export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>) => {
             dispatch(loading(false))
         })
 }
-export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch<AppActionType>) => {
+export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
+    let sortPacks = getState().packs.sortPacks
+    let page = getState().packs.page
+    let pageCount = getState().packs.pageCount
     dispatch(loading(true))
-    packsAPI.getPacks({user_id: userId})
+    packsAPI.getPacks({user_id: userId,sortPacks,page,pageCount})
         .then((res) => {
             dispatch(fetchPacksAC(
                 res.data.cardPacks//.filter(c=> c.user_id===userId)
@@ -169,7 +175,7 @@ export type updatePackActionType = ReturnType<typeof updatedPackAC>
 export type setIsMyPageActionType = ReturnType<typeof setIsMyPageAC>
 export type setSortPacksActionType = ReturnType<typeof setSortPacksAC>
 
-export type fetchPacksTCAT = ReturnType<typeof setSortPacksAC>
+//export type fetchPacksTCAT = ReturnType<typeof setSortPacksAC>
 
 export type PacksActionsType = fetchPacksActionType
     | createPackActionType
@@ -177,4 +183,4 @@ export type PacksActionsType = fetchPacksActionType
     | updatePackActionType
     | setIsMyPageActionType
     | setSortPacksActionType
-    | fetchPacksTCAT
+    //| fetchPacksTCAT

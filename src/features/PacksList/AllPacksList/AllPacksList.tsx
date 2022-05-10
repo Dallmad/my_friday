@@ -1,4 +1,4 @@
-import {Navigate, NavLink, useParams} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import Button from '../../../components/Button/Button';
 import {useState} from 'react';
 import Input from '../../../components/Input/Input';
@@ -6,7 +6,7 @@ import {Table} from './Table/Table';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from '../../../state/store';
 import {fetchParamsTC} from '../../../state/params-reducer';
-import {createPackTC, fetchPacksTC, setIsMyPageAC} from '../../../state/packs-reducer';
+import {createPackTC, setIsMyPageAC} from '../../../state/packs-reducer';
 
 export const AllPacksList = () => {
 
@@ -48,8 +48,6 @@ export const AllPacksList = () => {
                 <h4>Show packs cards</h4>
                 <Button onClick={changePageToMyHandler}>My</Button>
                 <Button onClick={changePageToAllHandler}>All</Button>
-                {/*<NavLink to={'/my-packs-list'}>My</NavLink>
-                <NavLink to={'/all-packs-list'}>All</NavLink>*/}
                 <p>
                     Number of cards
                 </p>
