@@ -1,6 +1,5 @@
-
 import '../../../AllPacksList.module.css'
-import Button from '../../../../../../components/Button/Button';
+
 
 
 export const TableCell = ({packValue}: PackValueType) => {

@@ -44,9 +44,7 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Pa
         case SET_SORT_PACKS:
             return {...state, sortPacks: action.sortPacks}
         case SET_SEARCH_PACK:
-            return {...state, cardPacks: state.cardPacks.filter((p => !!(p.name.search(action.title) + 1)))
-                /* cards: state.cards.filter((card: CardType)  => !!(card.answer.search(action.title)+1) )*/
-            }
+            return {...state, cardPacks: state.cardPacks.filter((p => !!(p.name.search(action.title) + 1)))}
         default:
             return state
     }
@@ -86,7 +84,7 @@ export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch<AppActionT
     let page = getState().packs.page
     let pageCount = getState().packs.pageCount
     dispatch(loading(true))
-    packsAPI.getPacks({user_id: userId, sortPacks, page, pageCount})
+    packsAPI.getPacks({user_id:userId, sortPacks, page, pageCount})
         .then((res) => {
             dispatch(fetchPacksAC(res.data.cardPacks))
         })

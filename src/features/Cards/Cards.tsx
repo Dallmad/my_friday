@@ -11,7 +11,7 @@ import {
     setCardsTC,
     setPageCardsAC, setSearchCardsAnswerAC, setSearchCardsQuestionAC,
     setSortCardsAC
-} from "../../state/cadrs-reducer";
+} from '../../state/cadrs-reducer';
 import {Card} from './Card/Card';
 import Input from "../../components/Input/Input";
 import {Paginator} from "../../components/Paginator/Paginator";
