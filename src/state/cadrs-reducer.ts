@@ -17,7 +17,7 @@ const initialState = {
     page: 1,
     pageCount: 10,
     packUserId: "",
-    cardsPack_id: '627628a08c77230004880ae3',
+    cardsPack_id: '',
     sortCards: '0grade',
 }
 
@@ -27,7 +27,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action:
         case SET_USER:
             return {
                 ...state,
-                ...action.state,
+                ...action.state
             }
         case SET_PAGE:
             return {
@@ -74,6 +74,23 @@ export const setSearchCardsQuestionAC = (title: string) =>
 export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
     let cardsPack_id = getState().cards.cardsPack_id
+    let sortCards = getState().cards.sortCards
+    let page = getState().cards.page
+    let pageCount = getState().cards.pageCount
+
+    cardsAPI.getCards({cardsPack_id, page, pageCount, sortCards})
+        .then(res => {
+            dispatch(loading(false))
+            dispatch(setCardsAC(res.data))
+        })
+        .catch(error => {
+            handleServerNetworkError(error.response.data.error, dispatch)
+            dispatch(loading(false))
+        })
+}
+export const setCardsIdTC = (cardsPack_id:string) => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
+    dispatch(loading(true))
+    //let id=(cardsPack_id ? cardsPack_id :getState().cards.cardsPack_id)
     let sortCards = getState().cards.sortCards
     let page = getState().cards.page
     let pageCount = getState().cards.pageCount
