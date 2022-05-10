@@ -8,7 +8,6 @@ import {Registration} from '../../features/Registartion/Registration';
 import {NewPassword} from '../../features/Registartion/New-password/NewPassword';
 import {RecoveryPassword} from '../../features/Registartion/Recovery-password/RecoveryPassword';
 import {Cards} from "../../features/Cards/Cards";
-import {MyPacksList} from '../../features/PacksList/MyPacksList/MyPacksList';
 import {AllPacksList} from '../../features/PacksList/AllPacksList/AllPacksList';
 
 export const PATH = {
@@ -20,8 +19,7 @@ export const PATH = {
     PASSWORD_RECOVERY: '/password-recovery',
     NEW_PASSWORD: '/new-password',
     ALL_PACKS_LIST: '/all-packs-list/*',
-    MY_PACKS_LIST: '/my-packs-list/*'
-    NEW_PASSWORD: '/new-password',
+    MY_PACKS_LIST: '/my-packs-list/*',
     CARDS: '/cards',
 }
 
