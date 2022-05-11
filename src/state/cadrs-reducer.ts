@@ -97,23 +97,6 @@ export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRoo
             dispatch(loading(false))
         })
 }
-export const setCardsIdTC = (cardsPack_id: string) => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
-    dispatch(loading(true))
-    //let id=(cardsPack_id ? cardsPack_id :getState().cards.cardsPack_id)
-    let sortCards = getState().cards.sortCards
-    let page = getState().cards.page
-    let pageCount = getState().cards.pageCount
-
-    cardsAPI.getCards({cardsPack_id, page, pageCount, sortCards})
-        .then(res => {
-            dispatch(loading(false))
-            dispatch(setCardsAC(res.data))
-        })
-        .catch(error => {
-            handleServerNetworkError(error.response.data.error, dispatch)
-            dispatch(loading(false))
-        })
-}
 
 export const addCardTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))

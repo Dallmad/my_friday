@@ -17,6 +17,7 @@ import Input from "../../components/Input/Input";
 import {Paginator} from "../../components/Paginator/Paginator";
 import {useParams} from "react-router-dom";
 
+
 export const Cards = () => {
 
     const dispatch = useTypedDispatch()
@@ -40,6 +41,7 @@ export const Cards = () => {
         dispatch(setPackAC(pack_id))
         }
         dispatch(setCardsTC())
+
     }, [cardsPack_id, currentPage, sortCards, cardsTotalCount])
 
     const addCard = () => {
