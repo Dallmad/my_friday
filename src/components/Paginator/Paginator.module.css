@@ -1,3 +1,24 @@
+.container {
+    display: flex;
+    justify-content: center;
+
+}
+
 .selectedPage {
     font-weight: bold;
+    margin: 0 10px;
+    border: #4a5057 1px solid;
+    width: 20px;
+    text-align: center;
+    background-color: #979b9f;
+}
+
+.simplePage {
+    margin: 0 10px;
+    border: #4a5057 1px solid;
+    width: 20px;
+    text-align: center;
+}
+button {
+    margin: 0 10px;
 }
