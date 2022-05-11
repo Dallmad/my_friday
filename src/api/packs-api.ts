@@ -2,17 +2,6 @@ import {AxiosResponse} from 'axios'
 import {instance} from './instance';
 import {ResponsePacksType, ResponsePackType} from '../state/packs-reducer';
 
-
-/*const params : GetParamsRequestType = {
-    packName: '',
-    min: 0,
-    max: 7,
-    sortPacks: '0updated',
-    page: 1,
-    pageCount: 3,
-    user_id: '626d6634194ed00ba8c586d3'
-}*/
-
 export const packsAPI = {
     getPacks(params:GetParamsRequestType) {
         return instance.get<GetParamsRequestType,AxiosResponse<ResponsePacksType>>(`cards/pack`,{params});

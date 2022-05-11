@@ -45,6 +45,7 @@ export const logout = () => (dispatch: Dispatch) => {
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
+            dispatch(loading(false))
         })
 }
 export const setUser = () => (dispatch: Dispatch) => {

@@ -1,9 +1,10 @@
 import {AxiosResponse} from 'axios'
 import {instance} from './instance';
+import {InitialStateType} from "../state/cadrs-reducer";
 
 export const cardsAPI = {
-    getCards(params: any) {
-        return instance.get<any>('cards/card/', {params})
+    getCards(params: GetParamsRequestType) {
+        return instance.get<GetParamsRequestType,AxiosResponse<InitialStateType>>('cards/card/', {params})
     },
     addCard(card: any) {
         return instance.post<AxiosResponse<ResponseType>>('cards/card/', {card});
@@ -18,3 +19,13 @@ export const cardsAPI = {
 
 //types
 
+type GetParamsRequestType = {
+    cardAnswer?: string
+    cardQuestion?: string
+    cardsPack_id?: string
+    min?: number
+    max?: number
+    sortCards?: string
+    page?: number
+    pageCount?: number
+}
