@@ -2,10 +2,11 @@ import {applyMiddleware, combineReducers, createStore} from 'redux'
 import thunkMiddleware, {ThunkDispatch} from 'redux-thunk'
 import {authReducer, LoginActionsType} from './auth-reducer';
 import {profileReducer} from './profile-reducer';
-import {registrationReducer} from './registration-reducer';
+import {RegisActionsType, registrationReducer} from './registration-reducer';
 import {recoveryPasswordReducer} from './recovery-password-reducer';
 import {newPasswordReducer} from './new-password-reducer';
 import {useDispatch} from 'react-redux';
+import {CardsActionsType, cardsReducer} from "./cadrs-reducer";
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     registration: registrationReducer,
     recoveryPassword: recoveryPasswordReducer,
-    newPassword: newPasswordReducer
+    newPassword: newPasswordReducer,
+    cards: cardsReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
@@ -22,7 +24,7 @@ export const useTypedDispatch = () => useDispatch<TypedDispatch>();
 
 //types
 export type AppRootStateType = ReturnType<typeof rootReducer>//
-export type AppActionType = LoginActionsType
+export type AppActionType = LoginActionsType | CardsActionsType | RegisActionsType
 export type AppDispatch = typeof store.dispatch;//
 export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>;
 
