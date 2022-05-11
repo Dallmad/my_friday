@@ -27,7 +27,7 @@ const initialState = {
 export const packsReducer = (state: ResponsePacksType = initialState, action: PacksActionsType): ResponsePacksType => {
     switch (action.type) {
         case FETCH_PACKS:
-            return {...state, cardPacks: action.packs.map(p => ({...p}))}
+            return {...state, ...action.packs}
         case CREATE_PACK:
             return {...state, ...action.cardsPack}
         case DELETE_PACK:
@@ -47,7 +47,7 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Pa
 }
 
 // actions
-export const fetchPacksAC = (packs: ResponsePackType[]) => ({type: FETCH_PACKS, packs} as const)
+export const fetchPacksAC = (packs: ResponsePacksType) => ({type: FETCH_PACKS, packs} as const)
 export const createPackAC = (cardsPack: RequestCreatePackType) => ({type: CREATE_PACK, cardsPack} as const)
 export const deletePackAC = (_id: string) => ({type: DELETE_PACK, _id} as const)
 export const updatedPackAC = (cardsPack: RequestUpdatedPackType) => ({type: UPDATED_PACK, cardsPack} as const)
@@ -65,7 +65,7 @@ export const fetchPacksTC = (userId?: string) => (dispatch: Dispatch<AppActionTy
     dispatch(loading(true))
     packsAPI.getPacks({user_id:userId,sortPacks, page, pageCount})
         .then((res) => {
-            dispatch(fetchPacksAC(res.data.cardPacks))
+            dispatch(fetchPacksAC(res.data))
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)

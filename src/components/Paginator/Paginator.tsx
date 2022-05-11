@@ -42,6 +42,7 @@ export const Paginator: React.FC<PaginatorTypeProps> = ({totalCount, pageSize, c
             <button onClick={() => {
                 setPortionNumber(portionNumber + 1)
             }} disabled={portionCount <= portionNumber}>{'>'}</button>
+            <div>{`${pagesCount} pages total`}</div>
         </div>
     )
 }
