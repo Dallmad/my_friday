@@ -4,15 +4,13 @@ import {loading} from './registration-reducer';
 import {packsAPI, RequestCreatePackType, RequestUpdatedPackType} from '../api/packs-api';
 import {AppActionType, AppRootStateType, TypedDispatch} from './store';
 
-
 const FETCH_PACKS = 'packs/FETCH_PACKS'
 const CREATE_PACK = 'packs/CREATE_PACK'
 const DELETE_PACK = 'packs/DELETE_PACK'
 const UPDATED_PACK = 'packs/UPDATED_PACK'
-const SET_IS_MY_PAGE = 'packs/SET_IS_MY_PAGE'
 const SET_SORT_PACKS = 'packs/SET_SORT_PACKS'
 const SET_SEARCH_PACK = 'packs/SET_SEARCH_PACK'
-
+const SET_PAGE_PACKS = 'packs/SET_PAGE_PACKS'
 
 const initialState = {
     cardPacks: [],
@@ -23,7 +21,6 @@ const initialState = {
     maxCardsCount: 5,
     token: '',
     tokenDeathTime: 0,
-    isMyPage: false,
     sortPacks: '0updated',
 }
 
@@ -37,12 +34,13 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Pa
             return {...state, cardPacks: state.cardPacks.filter(p => p._id !== action._id)}
         case UPDATED_PACK:
             return {...state, ...action.cardsPack}
-        case SET_IS_MY_PAGE:
-            return {...state, isMyPage: action.value}
         case SET_SORT_PACKS:
             return {...state, sortPacks: action.sortPacks}
         case SET_SEARCH_PACK:
             return {...state, cardPacks: state.cardPacks.filter((p => !!(p.name.search(action.title) + 1)))}
+        case SET_PAGE_PACKS:
+            return {...state, page: action.page}
+
         default:
             return state
     }
@@ -53,19 +51,19 @@ export const fetchPacksAC = (packs: ResponsePackType[]) => ({type: FETCH_PACKS, 
 export const createPackAC = (cardsPack: RequestCreatePackType) => ({type: CREATE_PACK, cardsPack} as const)
 export const deletePackAC = (_id: string) => ({type: DELETE_PACK, _id} as const)
 export const updatedPackAC = (cardsPack: RequestUpdatedPackType) => ({type: UPDATED_PACK, cardsPack} as const)
-export const setIsMyPageAC = (value: boolean) =>
-    ({type: SET_IS_MY_PAGE, value} as const)
 export const setSortPacksAC = (sortPacks: string) =>
     ({type: SET_SORT_PACKS, sortPacks} as const)
 export const setSearchPackAC = (title: string) =>
     ({type: SET_SEARCH_PACK, title} as const)
+export const setPagePacksAC = (page: number) =>
+    ({type: SET_PAGE_PACKS, page} as const)
 
 // thunk
-export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
-    let { sortPacks, page, pageCount } = getState().packs
+export const fetchPacksTC = (userId?: string) => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
+    let {sortPacks, page, pageCount} = getState().packs
 
     dispatch(loading(true))
-    packsAPI.getPacks({sortPacks, page, pageCount})
+    packsAPI.getPacks({user_id:userId,sortPacks, page, pageCount})
         .then((res) => {
             dispatch(fetchPacksAC(res.data.cardPacks))
         })
@@ -76,28 +74,14 @@ export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>, getState: 
             dispatch(loading(false))
         })
 }
-export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
-    let { sortPacks, page, pageCount } = getState().packs
 
-    dispatch(loading(true))
-    packsAPI.getPacks({user_id:userId, sortPacks, page, pageCount})
-        .then((res) => {
-            dispatch(fetchPacksAC(res.data.cardPacks))
-        })
-        .catch(error => {
-            handleServerNetworkError(error.response.data.error, dispatch)
-        })
-        .finally(() => {
-            dispatch(loading(false))
-        })
-}
 export const createPackTC = (name?: string, deckCover?: string) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
     packsAPI.createPack
     ({name, deckCover, private: false})
         .then((res) => {
             dispatch(createPackAC(res.data.newCardsPack))
-            dispatch(fetchPacksTC() )
+            dispatch(fetchPacksTC())
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
@@ -153,7 +137,7 @@ export type ResponsePackType = {
     __v: number
     deckCover: string
 }
-export type ResponsePacksType = {
+export type ResponsePacksType = SortPacksType & {
     cardPacks: ResponsePackType[]
     page: number
     pageCount: number
@@ -162,24 +146,22 @@ export type ResponsePacksType = {
     maxCardsCount: number
     token: string
     tokenDeathTime: number
-} & IsMyPageType
-type IsMyPageType = {
-    isMyPage: boolean
+}
+type SortPacksType = {
     sortPacks: string
 }
 export type fetchPacksActionType = ReturnType<typeof fetchPacksAC>
 export type createPackActionType = ReturnType<typeof createPackAC>
 export type deletePackActionType = ReturnType<typeof deletePackAC>
 export type updatePackActionType = ReturnType<typeof updatedPackAC>
-export type setIsMyPageActionType = ReturnType<typeof setIsMyPageAC>
 export type setSortPacksActionType = ReturnType<typeof setSortPacksAC>
 export type setSearchPackActionType = ReturnType<typeof setSearchPackAC>
-
+export type setPagePacksActionType = ReturnType<typeof setPagePacksAC>
 
 export type PacksActionsType = fetchPacksActionType
     | createPackActionType
     | deletePackActionType
     | updatePackActionType
-    | setIsMyPageActionType
     | setSortPacksActionType
     | setSearchPackActionType
+    | setPagePacksActionType
