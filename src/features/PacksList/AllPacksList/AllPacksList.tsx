@@ -1,22 +1,13 @@
 import {Navigate} from 'react-router-dom';
 import Button from '../../../components/Button/Button';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import Input from '../../../components/Input/Input';
 import {Table} from './Table/Table';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from '../../../state/store';
-
 import {createPackTC, setIsMyPageAC, setSearchPackAC} from '../../../state/packs-reducer';
 
 export const AllPacksList = () => {
-
-    /*
-        const params = useParams<'*'>()
-
-        const queryParametr = params['*']
-
-        const s = queryParametr?.split('&')
-    */
 
     const dispatch = useTypedDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)

@@ -2,9 +2,7 @@ import {Dispatch} from 'redux';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
 import {packsAPI, RequestCreatePackType, RequestUpdatedPackType} from '../api/packs-api';
-import {AppActionType, AppDispatch, AppRootStateType, TypedDispatch} from './store';
-import {ThunkDispatch} from 'redux-thunk';
-import {CardType} from './cadrs-reducer';
+import {AppActionType, AppRootStateType, TypedDispatch} from './store';
 
 
 const FETCH_PACKS = 'packs/FETCH_PACKS'
@@ -64,9 +62,8 @@ export const setSearchPackAC = (title: string) =>
 
 // thunk
 export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
-    let sortPacks = getState().packs.sortPacks
-    let page = getState().packs.page
-    let pageCount = getState().packs.pageCount
+    let { sortPacks, page, pageCount } = getState().packs
+
     dispatch(loading(true))
     packsAPI.getPacks({sortPacks, page, pageCount})
         .then((res) => {
@@ -80,9 +77,8 @@ export const fetchPacksTC = () => (dispatch: Dispatch<AppActionType>, getState: 
         })
 }
 export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
-    let sortPacks = getState().packs.sortPacks
-    let page = getState().packs.page
-    let pageCount = getState().packs.pageCount
+    let { sortPacks, page, pageCount } = getState().packs
+
     dispatch(loading(true))
     packsAPI.getPacks({user_id:userId, sortPacks, page, pageCount})
         .then((res) => {
@@ -95,13 +91,13 @@ export const fetchMyPacksTC = (userId: string) => (dispatch: Dispatch<AppActionT
             dispatch(loading(false))
         })
 }
-export const createPackTC = (name?: string, deckCover?: string) => (dispatch: Dispatch<AppActionType>) => {
+export const createPackTC = (name?: string, deckCover?: string) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
     packsAPI.createPack
     ({name, deckCover, private: false})
         .then((res) => {
             dispatch(createPackAC(res.data.newCardsPack))
-            dispatch(fetchPacksTC() as any)
+            dispatch(fetchPacksTC() )
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
@@ -171,7 +167,6 @@ type IsMyPageType = {
     isMyPage: boolean
     sortPacks: string
 }
-//export type initialStateType = typeof initialState
 export type fetchPacksActionType = ReturnType<typeof fetchPacksAC>
 export type createPackActionType = ReturnType<typeof createPackAC>
 export type deletePackActionType = ReturnType<typeof deletePackAC>
@@ -180,7 +175,6 @@ export type setIsMyPageActionType = ReturnType<typeof setIsMyPageAC>
 export type setSortPacksActionType = ReturnType<typeof setSortPacksAC>
 export type setSearchPackActionType = ReturnType<typeof setSearchPackAC>
 
-//export type fetchPacksTCAT = ReturnType<typeof setSortPacksAC>
 
 export type PacksActionsType = fetchPacksActionType
     | createPackActionType
@@ -189,4 +183,3 @@ export type PacksActionsType = fetchPacksActionType
     | setIsMyPageActionType
     | setSortPacksActionType
     | setSearchPackActionType
-//| fetchPacksTCAT
