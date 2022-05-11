@@ -5,7 +5,7 @@ import Button from '../../../../../components/Button/Button';
 import {useTypedDispatch} from '../../../../../state/store';
 import {setCardsIdTC} from '../../../../../state/cadrs-reducer';
 import {useState} from 'react';
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {PATH} from '../../../../../app/Routes/Routes';
 
 
@@ -26,13 +26,15 @@ const [changePageToCard,setChangePageToCard] = useState(false)
         setChangePageToCard(true)
     }
 if (changePageToCard) {
-    return <Navigate to={PATH.CARDS}/>
+    return <Navigate to={PATH.ALL_PACKS_LIST+'/'+_id}/>
 }
 
-
+    // @ts-ignore
     return (
         <tr>
-            <TableCell packValue={name}/>
+            <td onClick={()=>setChangePageToCard(true)}>
+                {name}
+            </td>
             <TableCell packValue={cardsCount}/>
             <TableCell packValue={updated}/>
             <TableCell packValue={user_name}/>

@@ -38,7 +38,7 @@ export const AppRoutes = () => {
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={PATH.MY_PACKS_LIST} element={<AllPacksList/>}/>
                 <Route path={PATH.ALL_PACKS_LIST} element={<AllPacksList/>}/>
-                <Route path={PATH.CARDS} element={<Cards/>}/>
+                <Route path={PATH.ALL_PACKS_LIST+'/:pack_id'} element={<Cards/>}/>
             </Routes>
         </div>
     )

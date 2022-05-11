@@ -8,6 +8,7 @@ const SET_PAGE = 'cards/SET_PAGE'
 const SET_SORT = 'cards/SET_SORT'
 const SET_SEARCH_ANSWER = 'cards/SET_SEARCH_ANSWER'
 const SET_SEARCH_QUESTION = 'cards/SET_SEARCH_QUESTION'
+const SET_CARD_PACK_ID = 'cards/SET_CARD_PACK_ID'
 
 const initialState = {
     cards: [],
@@ -39,15 +40,20 @@ export const cardsReducer = (state: InitialStateType = initialState, action:
                 ...state,
                 sortCards: action.sortCards,
             }
+        case SET_CARD_PACK_ID:
+            return {
+                ...state,
+                cardsPack_id: action.cardsPack_id,
+            }
         case SET_SEARCH_ANSWER:
             return {
                 ...state,
-                cards: state.cards.filter((card: CardType)  => !!(card.answer.search(action.title)+1) )
+                cards: state.cards.filter((card: CardType) => !!(card.answer.search(action.title) + 1))
             }
         case SET_SEARCH_QUESTION:
             return {
                 ...state,
-                cards: state.cards.filter((card: CardType)  => !!(card.question.search(action.title)+1) )
+                cards: state.cards.filter((card: CardType) => !!(card.question.search(action.title) + 1))
             }
         default:
             return state
@@ -70,6 +76,9 @@ export const setSearchCardsAnswerAC = (title: string) =>
 export const setSearchCardsQuestionAC = (title: string) =>
     ({type: SET_SEARCH_QUESTION, title} as const)
 
+export const setPackAC = (cardsPack_id: string) =>
+    ({type: SET_CARD_PACK_ID, cardsPack_id} as const)
+
 // thunk
 export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
@@ -88,7 +97,7 @@ export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRoo
             dispatch(loading(false))
         })
 }
-export const setCardsIdTC = (cardsPack_id:string) => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
+export const setCardsIdTC = (cardsPack_id: string) => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
     //let id=(cardsPack_id ? cardsPack_id :getState().cards.cardsPack_id)
     let sortCards = getState().cards.sortCards
@@ -154,6 +163,7 @@ export type CardsActionsType =
     | ReturnType<typeof setSortCardsAC>
     | ReturnType<typeof setSearchCardsAnswerAC>
     | ReturnType<typeof setSearchCardsQuestionAC>
+    | ReturnType<typeof setPackAC>
 export type CardType = {
     answer: string
     question: string

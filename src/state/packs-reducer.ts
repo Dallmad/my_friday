@@ -2,9 +2,7 @@ import {Dispatch} from 'redux';
 import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
 import {packsAPI, RequestCreatePackType, RequestUpdatedPackType} from '../api/packs-api';
-import {AppActionType, AppDispatch, AppRootStateType, TypedDispatch} from './store';
-import {ThunkDispatch} from 'redux-thunk';
-import {CardType} from './cadrs-reducer';
+import {AppActionType, AppRootStateType} from './store';
 
 
 const FETCH_PACKS = 'packs/FETCH_PACKS'

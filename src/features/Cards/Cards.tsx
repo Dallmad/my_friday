@@ -10,11 +10,12 @@ import {
     editCardTC,
     setCardsTC,
     setPageCardsAC, setSearchCardsAnswerAC, setSearchCardsQuestionAC,
-    setSortCardsAC
+    setSortCardsAC, setPackAC
 } from '../../state/cadrs-reducer';
 import {Card} from './Card/Card';
 import Input from "../../components/Input/Input";
 import {Paginator} from "../../components/Paginator/Paginator";
+import {useParams} from "react-router-dom";
 
 export const Cards = () => {
 
@@ -27,12 +28,17 @@ export const Cards = () => {
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
     const sortCardsInit = useSelector<AppRootStateType, string>(state => state.cards.sortCards)
 
+    let {pack_id} = useParams()
+
     const [currentPage, setCurrentPage] = useState(page)
     const [sortCards, setSortCards] = useState(sortCardsInit)
     const [titleAnswer, setTitleAnswer] = useState('')
     const [titleQuestion, setTitleQuestion] = useState('')
 
     useEffect(() => {
+        if(pack_id){
+        dispatch(setPackAC(pack_id))
+        }
         dispatch(setCardsTC())
     }, [cardsPack_id, currentPage, sortCards, cardsTotalCount])
 
