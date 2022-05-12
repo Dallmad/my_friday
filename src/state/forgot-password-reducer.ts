@@ -1,4 +1,6 @@
 import {Dispatch} from "redux";
+import {handleServerNetworkError} from "../utils/error-utils";
+import {forgotPasswordAPI, ForgotPasswordType} from "../api/forgot-password-api";
 import {loading} from "./registration-reducer";
 
 const SEND_NEW_PASSWORD = 'forgot/SEND-NEW-PASSWORD'
@@ -21,9 +23,20 @@ export const sendNewPassword = () =>
     ({type: SEND_NEW_PASSWORD} as const)
 
 //thunk
-export const forgotPasswordTC = () => {
+export const forgotPasswordTC = (obj: ForgotPasswordType) => {
     return (dispatch: Dispatch) => {
         dispatch(loading(true))
+        forgotPasswordAPI.forgot(obj)
+            .then((res) => {
+                if (res.data.email) {
+                    dispatch(sendNewPassword())
+                    dispatch(loading(false))
+                }
+            })
+            .catch(error =>{
+                handleServerNetworkError(error.response.data.error, dispatch)
+                dispatch(loading(false))
+            })
 
     }
 }

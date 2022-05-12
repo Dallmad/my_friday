@@ -31,7 +31,7 @@ export const ForgotPassword = () => {
             }
         },
         onSubmit: values => {
-            dispatch(forgotPasswordTC())
+            dispatch(forgotPasswordTC(values))//
             formik.resetForm()
         },
     })
