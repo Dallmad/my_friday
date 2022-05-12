@@ -3,8 +3,19 @@ import React, {FC} from 'react';
 import {CardType} from "../../../state/cadrs-reducer";
 import Button from "../../../components/Button/Button";
 
-export const Card: FC<CardType&{deleteCard: any, editCard: any}> = ({answer, question, grade, updated, _id, ...props}) => {
+type PropsType = {
+    deleteCard: (_id: any) => void
+    editCard: (_id: any) => void
+} & CardType
 
+export const Card: FC<PropsType> = ({
+                                        answer,
+                                        question,
+                                        grade,
+                                        updated,
+                                        _id,
+                                        ...props
+                                    }) => {
 
 
     return (

@@ -8,8 +8,9 @@ const SET_PAGE = 'cards/SET_PAGE'
 const SET_SORT = 'cards/SET_SORT'
 const SET_SEARCH_ANSWER = 'cards/SET_SEARCH_ANSWER'
 const SET_SEARCH_QUESTION = 'cards/SET_SEARCH_QUESTION'
+const SET_CARD_PACK_ID = 'cards/SET_CARD_PACK_ID'
 
-const initialState = {
+const initialState: InitialStateType = {
     cards: [],
     cardsTotalCount: 3,
     maxGrade: 0,
@@ -17,7 +18,7 @@ const initialState = {
     page: 1,
     pageCount: 10,
     packUserId: "",
-    cardsPack_id: '627628a08c77230004880ae3',
+    cardsPack_id: '',
     sortCards: '0grade',
 }
 
@@ -27,7 +28,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action:
         case SET_USER:
             return {
                 ...state,
-                ...action.state,
+                ...action.state
             }
         case SET_PAGE:
             return {
@@ -39,15 +40,20 @@ export const cardsReducer = (state: InitialStateType = initialState, action:
                 ...state,
                 sortCards: action.sortCards,
             }
+        case SET_CARD_PACK_ID:
+            return {
+                ...state,
+                cardsPack_id: action.cardsPack_id,
+            }
         case SET_SEARCH_ANSWER:
             return {
                 ...state,
-                cards: state.cards.filter((card: CardType)  => !!(card.answer.search(action.title)+1) )
+                cards: state.cards.filter((card: CardType) => !!(card.answer.search(action.title) + 1))
             }
         case SET_SEARCH_QUESTION:
             return {
                 ...state,
-                cards: state.cards.filter((card: CardType)  => !!(card.question.search(action.title)+1) )
+                cards: state.cards.filter((card: CardType) => !!(card.question.search(action.title) + 1))
             }
         default:
             return state
@@ -70,13 +76,13 @@ export const setSearchCardsAnswerAC = (title: string) =>
 export const setSearchCardsQuestionAC = (title: string) =>
     ({type: SET_SEARCH_QUESTION, title} as const)
 
+export const setPackAC = (cardsPack_id: string) =>
+    ({type: SET_CARD_PACK_ID, cardsPack_id} as const)
+
 // thunk
 export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
-    let cardsPack_id = getState().cards.cardsPack_id
-    let sortCards = getState().cards.sortCards
-    let page = getState().cards.page
-    let pageCount = getState().cards.pageCount
+    let { cardsPack_id, sortCards, page, pageCount } = getState().cards
 
     cardsAPI.getCards({cardsPack_id, page, pageCount, sortCards})
         .then(res => {
@@ -130,13 +136,24 @@ export const editCardTC = (id: string) => (dispatch: TypedDispatch) => {
 }
 
 // types
-type InitialStateType = typeof initialState
+export type InitialStateType = {
+    cards: CardType[]
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    packUserId: string
+    cardsPack_id: string
+    sortCards: string
+}
 export type CardsActionsType =
     ReturnType<typeof setCardsAC>
     | ReturnType<typeof setPageCardsAC>
     | ReturnType<typeof setSortCardsAC>
     | ReturnType<typeof setSearchCardsAnswerAC>
     | ReturnType<typeof setSearchCardsQuestionAC>
+    | ReturnType<typeof setPackAC>
 export type CardType = {
     answer: string
     question: string
@@ -146,5 +163,5 @@ export type CardType = {
     user_id?: string
     created?: Date
     updated: Date
-    _id?: string
+    _id: string
 }

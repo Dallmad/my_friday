@@ -10,22 +10,27 @@ import {
     editCardTC,
     setCardsTC,
     setPageCardsAC, setSearchCardsAnswerAC, setSearchCardsQuestionAC,
-    setSortCardsAC
-} from "../../state/cadrs-reducer";
+    setSortCardsAC, setPackAC
+} from '../../state/cadrs-reducer';
 import {Card} from './Card/Card';
 import Input from "../../components/Input/Input";
 import {Paginator} from "../../components/Paginator/Paginator";
+import {Navigate, useParams} from "react-router-dom";
+
 
 export const Cards = () => {
 
     const dispatch = useTypedDispatch()
 
-    const cards = useSelector<AppRootStateType, any[]>(state => state.cards.cards)
+    const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
     const cardsPack_id = useSelector<AppRootStateType, string>(state => state.cards.cardsPack_id)
     const pageCount = useSelector<AppRootStateType, number>(state => state.cards.pageCount)
     const page = useSelector<AppRootStateType, number>(state => state.cards.page)
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
     const sortCardsInit = useSelector<AppRootStateType, string>(state => state.cards.sortCards)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
+
+    let {pack_id} = useParams()
 
     const [currentPage, setCurrentPage] = useState(page)
     const [sortCards, setSortCards] = useState(sortCardsInit)
@@ -33,7 +38,11 @@ export const Cards = () => {
     const [titleQuestion, setTitleQuestion] = useState('')
 
     useEffect(() => {
+        if(pack_id){
+        dispatch(setPackAC(pack_id))
+        }
         dispatch(setCardsTC())
+
     }, [cardsPack_id, currentPage, sortCards, cardsTotalCount])
 
     const addCard = () => {
@@ -80,6 +89,10 @@ export const Cards = () => {
         setTitleAnswer('')
         setTitleQuestion('')
         dispatch(setCardsTC())
+    }
+
+    if (!isLoggedIn) {
+        return <Navigate to="/login"/>
     }
 
     return (
