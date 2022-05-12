@@ -12,6 +12,9 @@ import {
 } from '../../../state/packs-reducer';
 import {Paginator} from '../../../components/Paginator/Paginator';
 import {PATH} from '../../../app/Routes/Routes';
+import s from './AllPacksList.module.css'
+import {MyAllPacksListPage} from './SettingsPacksList/MyAllPacksList/MyAllPacksListPage';
+import {NumberCardsPage} from './SettingsPacksList/NumberCardsSetting/NumberCardsPage';
 
 
 export const AllPacksList = () => {
@@ -21,19 +24,9 @@ export const AllPacksList = () => {
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const page = useSelector<AppRootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
-    const userId = useSelector<AppRootStateType, string>(state => state.profile._id)
 
     const [searchPacks, setSearchPacks] = useState('')
     const [currentPage, setCurrentPage] = useState(page)
-
-const navigate = useNavigate()
-
-    const changePageToMyHandler = () => {
-        navigate(`${PATH.MY_PACKS_LIST}/${userId}`)
-    }
-    const changePageToAllHandler = () => {
-        navigate(`${PATH.ALL_PACKS_LIST}`)
-    }
 
     const searchPacksHandler = () => {
         dispatch(setSearchPackAC(searchPacks))
@@ -52,25 +45,24 @@ const navigate = useNavigate()
     }
 
     return (
-        <div>
+        <div className={s.container}>
+            <div className={s.settingsPacks}>
+                <MyAllPacksListPage/>
+                <NumberCardsPage/>
+            </div>
             <div>
-                <h4>Show packs cards</h4>
-                <Button onClick={changePageToMyHandler}>My</Button>
-                <Button onClick={changePageToAllHandler}>All</Button>
-                <p>
-                    Number of cards
-                </p>
                 <h2>Packs list</h2>
                 <Input value={searchPacks} onChange={(e) => setSearchPacks(e.currentTarget.value)}/>
                 <Button onClick={searchPacksHandler}>Search</Button>
                 <Button onClick={()=>addNewPackHandler(searchPacks)}>Add new pack</Button>
+
+                <Table currentPage={currentPage} totalCount={cardPacksTotalCount}/>
+                <Paginator
+                    currentPage={currentPage}
+                    onPageChanged={onPageChanged}
+                    totalCount={cardPacksTotalCount}
+                    pageSize={pageCount}/>
             </div>
-            <Table currentPage={currentPage} totalCount={cardPacksTotalCount}/>
-            <Paginator
-                currentPage={currentPage}
-                onPageChanged={onPageChanged}
-                totalCount={cardPacksTotalCount}
-                pageSize={pageCount}/>
         </div>
     )
 }
