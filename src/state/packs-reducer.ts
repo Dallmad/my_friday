@@ -91,11 +91,12 @@ export const createPackTC = (name?: string, deckCover?: string) => (dispatch: Ty
         })
 }
 
-export const deletePackTC = (_id: string) => (dispatch: Dispatch<AppActionType>) => {
+export const deletePackTC = (_id: string) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
     packsAPI.deletePack(_id)
         .then((res) => {
             dispatch(deletePackAC(res.data.deletedCardsPack._id))
+            dispatch(fetchPacksTC())
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
@@ -104,11 +105,12 @@ export const deletePackTC = (_id: string) => (dispatch: Dispatch<AppActionType>)
             dispatch(loading(false))
         })
 }
-export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: Dispatch<AppActionType>) => {
+export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
     packsAPI.updatedPack(cardsPack)
         .then((res) => {
             dispatch(updatedPackAC(res.data.updatedCardsPack))
+            dispatch(fetchPacksTC())
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
