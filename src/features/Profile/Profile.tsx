@@ -58,12 +58,12 @@ export const Profile = () => {
                     label={'email'}
                     value={userEmail}
                 />
-
             </form>
             <div className={s.buttons_container}>
-                <Button className={s.button_cancel} onClick={cancelChangeName} >Cancel</Button>
 
+                <Button className={s.button_cancel} onClick={cancelChangeName} >Cancel</Button>
                 <Button className={s.button_save} onClick={changeName}>Save</Button>
+
             </div>
         </div>
     )

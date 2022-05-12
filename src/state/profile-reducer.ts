@@ -21,7 +21,7 @@ const initialState = {
     error: '',
 }
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
     switch (action.type) {
         case SET_NEW_NAME:
             return {...state,...action.profile}
@@ -54,4 +54,4 @@ type InitialStateType = typeof initialState
 export type setProfileStateActionType = ReturnType<typeof setProfileStateAC>
 export type setErrorActionType = ReturnType<typeof setErrorAC>
 
-type ActionsType = setProfileStateActionType | setErrorActionType
+export type ProfileActionsType = setProfileStateActionType | setErrorActionType

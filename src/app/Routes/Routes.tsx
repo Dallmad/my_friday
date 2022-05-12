@@ -8,6 +8,7 @@ import {Registration} from '../../features/Registartion/Registration';
 import {NewPassword} from '../../features/Registartion/New-password/NewPassword';
 import {RecoveryPassword} from '../../features/Registartion/Recovery-password/RecoveryPassword';
 import {Cards} from "../../features/Cards/Cards";
+import {AllPacksList} from '../../features/PacksList/AllPacksList/AllPacksList';
 
 export const PATH = {
     PROFILE:'/profile',
@@ -17,6 +18,8 @@ export const PATH = {
     REGISTRATION: '/registration',
     PASSWORD_RECOVERY: '/password-recovery',
     NEW_PASSWORD: '/new-password',
+    ALL_PACKS_LIST: '/all-packs-list',
+    MY_PACKS_LIST: '/my-packs-list',
     CARDS: '/cards',
 }
 
@@ -33,7 +36,9 @@ export const AppRoutes = () => {
                 <Route path={PATH.REGISTRATION} element={<Registration/>}/>
                 <Route path={PATH.PASSWORD_RECOVERY} element={<RecoveryPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
-                <Route path={PATH.CARDS} element={<Cards/>}/>
+                <Route path={PATH.MY_PACKS_LIST} element={<AllPacksList/>}/>
+                <Route path={PATH.ALL_PACKS_LIST} element={<AllPacksList/>}/>
+                <Route path={PATH.ALL_PACKS_LIST+'/:pack_id'} element={<Cards/>}/>
             </Routes>
         </div>
     )

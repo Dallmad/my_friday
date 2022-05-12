@@ -4,5 +4,4 @@ import {setErrorAC, setErrorActionType} from '../state/profile-reducer';
 
 export const handleServerNetworkError = (error: string , dispatch: Dispatch<setErrorActionType>) => {
     dispatch(setErrorAC(error ? error: 'Some error occurred'))
-    //dispatch preloader//add type for preloader in dispatch type
 }
