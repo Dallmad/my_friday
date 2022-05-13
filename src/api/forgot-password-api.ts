@@ -3,7 +3,7 @@ import {instance} from './instance';
 
 export const forgotPasswordAPI = {
     forgot( obj: ForgotPasswordType) {
-        return instance.post<{ obj: ForgotPasswordType}, AxiosResponse<any>>('auth/forgot', obj);
+        return instance.post<{ obj: ForgotPasswordType}, AxiosResponse<any>>('auth/forgot', obj.email);
     }
 }
 

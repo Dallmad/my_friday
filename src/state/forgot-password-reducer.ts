@@ -13,14 +13,21 @@ export const forgotPasswordReducer = (state: InitialStateType = initialState, ac
     ActionsType): InitialStateType => {
     switch (action.type) {
         case SEND_NEW_PASSWORD:
-            return {...state}
+            return {...state, email: action.payload.email}
         default:
             return state
     }
 }
 // actions
-export const sendNewPassword = () =>
-    ({type: SEND_NEW_PASSWORD} as const)
+export const sendNewPassword = (email:ForgotPasswordType) => {
+    return {
+        type: SEND_NEW_PASSWORD,
+        payload: {
+            email
+        }
+    } as const
+
+}
 
 //thunk
 export const forgotPasswordTC = (obj: ForgotPasswordType) => {
@@ -29,7 +36,7 @@ export const forgotPasswordTC = (obj: ForgotPasswordType) => {
         forgotPasswordAPI.forgot(obj)
             .then((res) => {
                 if (res.data.email) {
-                    dispatch(sendNewPassword())
+                    dispatch(sendNewPassword(res.data.email))
                     dispatch(loading(false))
                 }
             })
