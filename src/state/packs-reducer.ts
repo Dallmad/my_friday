@@ -11,7 +11,7 @@ const UPDATED_PACK = 'packs/UPDATED_PACK'
 const SET_SORT_PACKS = 'packs/SET_SORT_PACKS'
 const SET_SEARCH_PACK = 'packs/SET_SEARCH_PACK'
 const SET_PAGE_PACKS = 'packs/SET_PAGE_PACKS'
-//const SET_NUMBERS_PACKS = 'packs/SET_MIN_NUMBERS_PACKS'
+const SET_NUMBERS_PACKS = 'packs/SET_MIN_NUMBERS_PACKS'
 
 
 const initialState = {
@@ -42,8 +42,10 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Pa
             return {...state, cardPacks: state.cardPacks.filter((p => !!(p.name.search(action.title) + 1)))}
         case SET_PAGE_PACKS:
             return {...state, page: action.page}
-/*        case SET_NUMBERS_PACKS:
-            return {...state, cardPacks:state.cardPacks.filter((c)=> c.cardsCount>=action.minCardsCount && c.cardsCount<=action.maxCardsCount)}*/
+        case SET_NUMBERS_PACKS:
+            return {...state,minCardsCount:action.minCardsCount,maxCardsCount:action.maxCardsCount}
+
+/*            return {...state, cardPacks:state.cardPacks.filter((c)=> c.cardsCount>=action.minCardsCount && c.cardsCount<=action.maxCardsCount)}*/
         default:
             return state
     }
@@ -60,8 +62,8 @@ export const setSearchPackAC = (title: string) =>
     ({type: SET_SEARCH_PACK, title} as const)
 export const setPagePacksAC = (page: number) =>
     ({type: SET_PAGE_PACKS, page} as const)
-/*export const setNumbersPacksAC = (minCardsCount: number,maxCardsCount: number) =>
-    ({type: SET_NUMBERS_PACKS, minCardsCount, maxCardsCount} as const)*/
+export const setNumbersPacksAC = (minCardsCount: number,maxCardsCount: number) =>
+    ({type: SET_NUMBERS_PACKS, minCardsCount, maxCardsCount} as const)
 
 
 // thunk
@@ -165,8 +167,8 @@ export type updatePackActionType = ReturnType<typeof updatedPackAC>
 export type setSortPacksActionType = ReturnType<typeof setSortPacksAC>
 export type setSearchPackActionType = ReturnType<typeof setSearchPackAC>
 export type setPagePacksActionType = ReturnType<typeof setPagePacksAC>
-//export type setNumbersPacksActionType = ReturnType<typeof setNumbersPacksAC>
-//export type setMaxNumbersPacksActionType = ReturnType<typeof setMaxNumbersPacksAC>
+export type setNumbersPacksActionType = ReturnType<typeof setNumbersPacksAC>
+
 
 export type PacksActionsType = fetchPacksActionType
     | createPackActionType
@@ -175,5 +177,5 @@ export type PacksActionsType = fetchPacksActionType
     | setSortPacksActionType
     | setSearchPackActionType
     | setPagePacksActionType
-//    | setNumbersPacksActionType
-    //| setMaxNumbersPacksActionType
+    | setNumbersPacksActionType
+
