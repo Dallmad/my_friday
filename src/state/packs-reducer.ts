@@ -44,7 +44,6 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Pa
             return {...state, page: action.page}
         case SET_NUMBERS_PACKS:
             return {...state,minCardsCount:action.minCardsCount,maxCardsCount:action.maxCardsCount}
-
 /*            return {...state, cardPacks:state.cardPacks.filter((c)=> c.cardsCount>=action.minCardsCount && c.cardsCount<=action.maxCardsCount)}*/
         default:
             return state
