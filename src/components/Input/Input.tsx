@@ -9,6 +9,7 @@ type SuperInputTextPropsType = DefaultInputPropsType & {
     error?: string
     spanClassName?: string
     label?: string
+    value: string
 }
 
 const Input: React.FC<SuperInputTextPropsType> = (
@@ -18,7 +19,7 @@ const Input: React.FC<SuperInputTextPropsType> = (
         onKeyPress, onEnter,
         error,
         className, spanClassName,
-        label,
+        label, value,
         ...restProps
     }
 ) => {
@@ -43,6 +44,7 @@ const Input: React.FC<SuperInputTextPropsType> = (
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
+                value={value}
 
                 {...restProps}
             />
