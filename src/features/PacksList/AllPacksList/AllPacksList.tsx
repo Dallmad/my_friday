@@ -48,7 +48,7 @@ export const AllPacksList = () => {
         <div className={s.container}>
             <div className={s.settingsPacks}>
                 <MyAllPacksListPage/>
-                <NumberCardsPage/>
+                {/*<NumberCardsPage/>*/}
             </div>
             <div>
                 <h2>Packs list</h2>
