@@ -1,7 +1,5 @@
 import '../../../AllPacksList.module.css'
 
-
-
 export const TableCell = ({packValue}: PackValueType) => {
 
     return (

@@ -60,6 +60,7 @@ export const Registration = () => {
                             label={'email'}
                             type="Email"
                             {...formik.getFieldProps('email')}
+                            // label={''}
                         />
                         {formik.touched.email && formik.errors.email
                             && <div style={{color: 'red'}}>{formik.errors.email}</div>}

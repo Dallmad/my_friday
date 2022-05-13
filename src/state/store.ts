@@ -8,6 +8,7 @@ import {newPasswordReducer} from './new-password-reducer';
 import {useDispatch} from 'react-redux';
 import {CardsActionsType, cardsReducer} from './cadrs-reducer';
 import {PacksActionsType, packsReducer} from './packs-reducer';
+import {forgotPasswordReducer} from "./forgot-password-reducer";
 
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     newPassword: newPasswordReducer,
     cards: cardsReducer,
     packs: packsReducer,
+    forgot: forgotPasswordReducer
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));

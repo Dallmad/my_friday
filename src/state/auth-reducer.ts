@@ -50,10 +50,12 @@ export const logout = () => (dispatch: Dispatch) => {
 }
 export const setUser = () => (dispatch: Dispatch) => {
     dispatch(loading(true))
+
     authAPI.me()
         .then(res => {
             dispatch(loading(false))
             dispatch(setProfileStateAC(res.data))
+            dispatch(setIsLoggedIn(true))
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
