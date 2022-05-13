@@ -1,4 +1,4 @@
-import {Navigate, useNavigate} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import Button from '../../../components/Button/Button';
 import React, {useState} from 'react';
 import Input from '../../../components/Input/Input';
@@ -11,7 +11,6 @@ import {
     setSearchPackAC
 } from '../../../state/packs-reducer';
 import {Paginator} from '../../../components/Paginator/Paginator';
-import {PATH} from '../../../app/Routes/Routes';
 import s from './AllPacksList.module.css'
 import {MyAllPacksListPage} from './SettingsPacksList/MyAllPacksList/MyAllPacksListPage';
 import {NumberCardsPage} from './SettingsPacksList/NumberCardsSetting/NumberCardsPage';
