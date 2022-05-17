@@ -2,7 +2,7 @@ import s from '../../AllPacksList.module.css';
 import Button from '../../../../../components/Button/Button';
 import Input from '../../../../../components/Input/Input';
 import React, {useState} from 'react';
-import {setNumbersPacksAC} from '../../../../../state/packs-reducer';
+import {fetchPacksTC, setNumbersPacksAC} from '../../../../../state/packs-reducer';
 import {useTypedDispatch} from '../../../../../state/store';
 
 export const NumberCardsPage = () => {
@@ -14,6 +14,7 @@ export const NumberCardsPage = () => {
 
     const applySettings = () => {
         dispatch(setNumbersPacksAC(+minCardsCount,+maxNumberCards))
+        dispatch(fetchPacksTC())
     }
 
     return (

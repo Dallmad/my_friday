@@ -28,13 +28,9 @@ export const AllPacksList = () => {
     const [searchPacks, setSearchPacks] = useState('')
     const [currentPage, setCurrentPage] = useState(page)
 
-    //const navigate = useNavigate()
-
     const searchPacksHandler = () => {
-        //navigate(`${PATH.ALL_PACKS_LIST}/${searchPacks}`)
-
         dispatch(setSearchPackAC(searchPacks))
-        setSearchPacks('')
+        dispatch(fetchPacksTC())
     }
     const addNewPackHandler = (title:string) => {
         dispatch(createPackTC(title))
