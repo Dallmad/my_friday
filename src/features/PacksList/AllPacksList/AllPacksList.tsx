@@ -1,4 +1,4 @@
-import {Navigate} from 'react-router-dom';
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import Button from '../../../components/Button/Button';
 import React, {useState} from 'react';
 import Input from '../../../components/Input/Input';
@@ -6,7 +6,7 @@ import {Table} from './Table/Table';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useTypedDispatch} from '../../../state/store';
 import {
-    createPackTC,
+    createPackTC, fetchPacksTC,
     setPagePacksAC,
     setSearchPackAC
 } from '../../../state/packs-reducer';
@@ -14,6 +14,7 @@ import {Paginator} from '../../../components/Paginator/Paginator';
 import s from './AllPacksList.module.css'
 import {MyAllPacksListPage} from './SettingsPacksList/MyAllPacksList/MyAllPacksListPage';
 import {NumberCardsPage} from './SettingsPacksList/NumberCardsSetting/NumberCardsPage';
+import {PATH} from '../../../app/Routes/Routes';
 
 
 export const AllPacksList = () => {
@@ -27,7 +28,11 @@ export const AllPacksList = () => {
     const [searchPacks, setSearchPacks] = useState('')
     const [currentPage, setCurrentPage] = useState(page)
 
+    //const navigate = useNavigate()
+
     const searchPacksHandler = () => {
+        //navigate(`${PATH.ALL_PACKS_LIST}/${searchPacks}`)
+
         dispatch(setSearchPackAC(searchPacks))
         setSearchPacks('')
     }
@@ -47,7 +52,7 @@ export const AllPacksList = () => {
         <div className={s.container}>
             <div className={s.settingsPacks}>
                 <MyAllPacksListPage/>
-                {/*<NumberCardsPage/>*/}
+                <NumberCardsPage/>
             </div>
             <div>
                 <h2>Packs list</h2>

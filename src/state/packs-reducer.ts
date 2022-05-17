@@ -24,6 +24,7 @@ const initialState = {
     token: '',
     tokenDeathTime: 0,
     sortPacks: '0updated',
+    packName:''
 }
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: PacksActionsType): ResponsePacksType => {
@@ -39,12 +40,11 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Pa
         case SET_SORT_PACKS:
             return {...state, sortPacks: action.sortPacks}
         case SET_SEARCH_PACK:
-            return {...state, cardPacks: state.cardPacks.filter((p => !!(p.name.search(action.title) + 1)))}
+            return {...state,packName:action.title}
         case SET_PAGE_PACKS:
             return {...state, page: action.page}
         case SET_NUMBERS_PACKS:
             return {...state,minCardsCount:action.minCardsCount,maxCardsCount:action.maxCardsCount}
-/*            return {...state, cardPacks:state.cardPacks.filter((c)=> c.cardsCount>=action.minCardsCount && c.cardsCount<=action.maxCardsCount)}*/
         default:
             return state
     }
@@ -67,10 +67,10 @@ export const setNumbersPacksAC = (minCardsCount: number,maxCardsCount: number) =
 
 // thunk
 export const fetchPacksTC = (userId?: string) => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
-    let {sortPacks, page, pageCount,minCardsCount,maxCardsCount} = getState().packs
+    let {packName, sortPacks, page, pageCount,minCardsCount,maxCardsCount} = getState().packs
 
     dispatch(loading(true))
-    packsAPI.getPacks({min: minCardsCount, max: maxCardsCount,sortPacks,page,   pageCount,user_id: userId})
+    packsAPI.getPacks({packName, min: minCardsCount, max: maxCardsCount, sortPacks, page, pageCount,user_id: userId})
         .then((res) => {
             dispatch(fetchPacksAC(res.data))
         })
@@ -158,6 +158,7 @@ export type ResponsePacksType = SortPacksType & {
 }
 type SortPacksType = {
     sortPacks: string
+    packName:string
 }
 export type fetchPacksActionType = ReturnType<typeof fetchPacksAC>
 export type createPackActionType = ReturnType<typeof createPackAC>

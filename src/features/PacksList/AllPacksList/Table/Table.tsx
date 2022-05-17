@@ -12,7 +12,7 @@ type PropsType = {
     totalCount: number
 }
 
-export const Table = ({currentPage, totalCount}: PropsType) => {
+export const Table = ({currentPage}: PropsType) => {
 
     const dispatch = useTypedDispatch()
 
@@ -20,13 +20,14 @@ export const Table = ({currentPage, totalCount}: PropsType) => {
     const packs = useSelector<AppRootStateType, ResponsePackType[]>(state => state.packs.cardPacks)
     const minCardsCount = useSelector<AppRootStateType, number>(state => state.packs.minCardsCount)
     const maxCardsCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
-
+const searchPacks = useSelector<AppRootStateType, string>(state => state.packs.packName)
 
     const {user_id} = useParams()
 
+
     useEffect(() => {
         dispatch(fetchPacksTC(user_id))
-    }, [sortPacks, currentPage, totalCount, user_id,minCardsCount,maxCardsCount])
+    }, [sortPacks, currentPage, user_id,minCardsCount,maxCardsCount,searchPacks])
 
     return (
         <div>
