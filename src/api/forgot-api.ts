@@ -7,7 +7,7 @@ export type ForgotDataType = {
 }
 
 export const ForgotAPI = {
-    forgot: async (email: string) => {
+    forgot: async (email: ForgotDataType) => {
         const response = await instance.post<ForgotDataType>("/auth/forgot", {
             email,
             from: "test-front-admin <ai73a@yandex.by>",
