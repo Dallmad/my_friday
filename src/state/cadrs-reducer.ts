@@ -144,14 +144,12 @@ export const editCardTC = (id: string) => (dispatch: TypedDispatch) => {
             dispatch(loading(false))
         })
 }
-export const editGradeCardTC = (grade:any,card_id: any) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const editGradeCardTC = (grade:number,card_id: string) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
-    //let {cardsPack_id} = getState().cards
     cardsAPI.editGradeCard(grade, card_id)
         .then(res => {
             dispatch(loading(false))
-            console.log('res:'+res)
-            //dispatch(setCardsTC())
+            dispatch(setCardsTC())
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)

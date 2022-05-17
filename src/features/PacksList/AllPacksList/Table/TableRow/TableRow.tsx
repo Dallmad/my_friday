@@ -9,10 +9,9 @@ import {useSelector} from "react-redux";
 import s from "../../AllPacksList.module.css";
 import Input from "../../../../../components/Input/Input";
 import {Modal} from "../../../../../components/Modal/Modal";
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import Radio from "../../../../../components/Radio/Radio";
 import {CardType, editGradeCardTC, setCardsTC, setPackAC} from '../../../../../state/cadrs-reducer';
-
 
 const grades: string[] = [`Don't know`, 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer'];
 
@@ -33,26 +32,15 @@ const getCard = (cards: CardType[]) => {
 export const TableRow = ({cardPacks}: ResponseCardPackType) => {
 
     const {name, cardsCount, updated, user_name, _id, user_id} = cardPacks
+    const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
 
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalLearn, setShowModalLearn] = useState(false);
     const [showModalLearn2, setShowModalLearn2] = useState(false);
-    const [value, onChangeOption] = useState(grades[0])
-    const [card, setCard] = useState<CardType>(
-        {
-        answer: 'e',
-        question: 'rr',
-        cardsPack_id: 'qeqwer',
-        grade: 0,
-        shots: 0,
-        user_id: 'titu',
-        created: new Date,
-        updated:new Date,
-        _id: 'erty',
-    }
-    );
-    const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
+    const [value, onChangeOption] = useState((grades[0]))
+
+    const [card, setCard] = useState<CardType>(cards[0])
 
     const myUserId = useSelector<AppRootStateType, string>(state => state.profile._id)
 
@@ -93,11 +81,11 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     const editShowModalLearnNext = () => {
         dispatch(setPackAC(cardPacks._id))
         //dispatch(setCardsTC())
-        setCard(getCard(cards))
-        //setShowModalLearn(value)
-        //set grade
+        //setCard(getCard(cards))
+
+
         //dispatch(editGradeCardAC(4,card._id))
-        dispatch(editGradeCardTC(indexCard,card._id))
+        //dispatch(editGradeCardTC(indexCard, card._id))
         setShowModalLearn2(false)
 
     }
@@ -107,8 +95,10 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
         setShowModalLearn2(value)
     }
     /*console.log('grade:'+(grades.indexOf(value)+1),'id:'+card._id,'currGrade:'+card.grade)*/
-    console.log('id:'+_id,'id2222:'+card._id,'quest:'+card.question)
-    let {question,answer} = card
+    //console.log('id:'+_id,'id2222:'+card._id,'quest:'+card.question)
+    //let {question,answer} = card
+
+
 
     return (
         <tr>
@@ -148,13 +138,15 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                 {/*</Modal>*/}
 
                 <Button onClick={() => editShowModalLearn(true)}>Learn</Button>
+
+
                 <Modal editShowModal={editShowModalLearn} showModal={showModalLearn}>
                     <div className={s.modal}>
                         <div className={s.titleModal}>
                             Learn Pack Name
                         </div>
                         <div className={s.titleModal}>
-                            {question}
+                            {/*{card.question}*/}
                         </div>
                         <div className={s.containerBtn}>
                             <Button onClick={() => setShowModalLearn(false)}>cancel</Button>
@@ -169,10 +161,10 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                             Learn Pack Name
                         </div>
                         <div className={s.titleModal}>
-                            {question}
+                           {/* {card.question}*/}
                         </div>
                         <div className={s.titleModal}>
-                            {answer}
+                           {/* {card.answer}*/}
                         </div>
                         <div>
                             <Radio options={grades}
