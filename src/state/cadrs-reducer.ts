@@ -78,6 +78,8 @@ export const setSearchCardsQuestionAC = (title: string) =>
 
 export const setPackAC = (cardsPack_id: string) =>
     ({type: SET_CARD_PACK_ID, cardsPack_id} as const)
+//export const
+
 
 // thunk
 export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
@@ -134,7 +136,18 @@ export const editCardTC = (id: string) => (dispatch: TypedDispatch) => {
             dispatch(loading(false))
         })
 }
-
+export const editGradeCardTC = (grade:number,id: string) => (dispatch: TypedDispatch) => {
+    dispatch(loading(true))
+    cardsAPI.editGradeCard(grade,id)
+        .then(res => {
+            dispatch(loading(false))
+            dispatch(setCardsTC())
+        })
+        .catch(error => {
+            handleServerNetworkError(error.response.data.error, dispatch)
+            dispatch(loading(false))
+        })
+}
 // types
 export type InitialStateType = {
     cards: CardType[]

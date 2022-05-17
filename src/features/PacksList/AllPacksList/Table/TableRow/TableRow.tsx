@@ -11,10 +11,10 @@ import Input from "../../../../../components/Input/Input";
 import {Modal} from "../../../../../components/Modal/Modal";
 import React, {useState} from "react";
 import Radio from "../../../../../components/Radio/Radio";
-import {CardType, setCardsTC, setPackAC} from '../../../../../state/cadrs-reducer';
+import {CardType, editGradeCardTC, setCardsTC, setPackAC} from '../../../../../state/cadrs-reducer';
 
 
-const grades = [`Don't know`, 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer'];
+const grades: string[] = [`Don't know`, 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer'];
 
 const getCard = (cards: CardType[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
@@ -24,7 +24,7 @@ const getCard = (cards: CardType[]) => {
             return {sum: newSum, id: newSum < rand ? i : acc.id}
         }
         , {sum: 0, id: -1});
-    console.log('test: ', sum, rand, res)
+    //console.log('test: ', sum, rand, res)
 
     return cards[res.id + 1];
 }
@@ -91,14 +91,19 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
         dispatch(setPackAC(cardPacks._id))
         dispatch(setCardsTC())
         setCard(getCard(cards))
+
+        //set grade
+        dispatch(editGradeCardTC((grades.indexOf(value)+1),card._id))
+
         setShowModalLearn2(false)
+
     }
 
     const allShowModalLearn = (value: boolean) => {
         setShowModalLearn(value)
         setShowModalLearn2(value)
     }
-
+    //console.log((grades.indexOf(value)+1))
     return (
         <tr>
             <td onClick={setChangePageToCard}>
@@ -166,7 +171,8 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                         <div>
                             <Radio options={grades}
                                    value={value}
-                                   onChangeOption={onChangeOption}/>
+                                   onChangeOption={onChangeOption}
+                            />
                         </div>
                         <div className={s.containerBtn}>
                             <Button onClick={() => allShowModalLearn(false)}>cancel</Button>
@@ -184,3 +190,4 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
 type ResponseCardPackType = {
     cardPacks: ResponsePackType
 }
+
