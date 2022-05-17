@@ -1,7 +1,8 @@
 import {handleServerNetworkError} from '../utils/error-utils';
-import {loading} from "./registration-reducer";
-import {cardsAPI} from "../api/cards-api";
-import {AppRootStateType, TypedDispatch} from "./store";
+import {loading} from './registration-reducer';
+import {cardsAPI} from '../api/cards-api';
+import {AppRootStateType, TypedDispatch} from './store';
+import {Dispatch} from 'redux';
 
 const SET_USER = 'cards/SET_USER'
 const SET_PAGE = 'cards/SET_PAGE'
@@ -9,6 +10,7 @@ const SET_SORT = 'cards/SET_SORT'
 const SET_SEARCH_ANSWER = 'cards/SET_SEARCH_ANSWER'
 const SET_SEARCH_QUESTION = 'cards/SET_SEARCH_QUESTION'
 const SET_CARD_PACK_ID = 'cards/SET_CARD_PACK_ID'
+//const EDIT_GRADE_CARD = 'cards/EDIT_GRADE_CARD'
 
 const initialState: InitialStateType = {
     cards: [],
@@ -17,7 +19,7 @@ const initialState: InitialStateType = {
     minGrade: 0,
     page: 1,
     pageCount: 10,
-    packUserId: "",
+    packUserId: '',
     cardsPack_id: '',
     sortCards: '0grade',
 }
@@ -55,6 +57,11 @@ export const cardsReducer = (state: InitialStateType = initialState, action:
                 ...state,
                 cards: state.cards.filter((card: CardType) => !!(card.question.search(action.title) + 1))
             }
+   /*     case EDIT_GRADE_CARD:
+            return {
+                ...state, cards: state.cards.map(c => c._id===action.card_id ? {...c,grade: action.grade}: c)
+
+            }*/
         default:
             return state
     }
@@ -78,13 +85,14 @@ export const setSearchCardsQuestionAC = (title: string) =>
 
 export const setPackAC = (cardsPack_id: string) =>
     ({type: SET_CARD_PACK_ID, cardsPack_id} as const)
-//export const
+/*export const editGradeCardAC = (grade: number, card_id: string) =>
+    ({type: EDIT_GRADE_CARD, grade, card_id} as const)*/
 
 
 // thunk
 export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
-    let { cardsPack_id, sortCards, page, pageCount } = getState().cards
+    let {cardsPack_id, sortCards, page, pageCount} = getState().cards
 
     cardsAPI.getCards({cardsPack_id, page, pageCount, sortCards})
         .then(res => {
@@ -100,7 +108,7 @@ export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRoo
 export const addCardTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
     let cardsPack_id = getState().cards.cardsPack_id
-    cardsAPI.addCard({cardsPack_id, question: "new question", answer: "new answer", grade: 3})
+    cardsAPI.addCard({cardsPack_id, question: 'new question', answer: 'new answer', grade: 3})
         .then(res => {
             dispatch(loading(false))
             dispatch(setCardsTC())
@@ -126,7 +134,7 @@ export const deleteCardTC = (id: string) => (dispatch: TypedDispatch) => {
 
 export const editCardTC = (id: string) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
-    cardsAPI.editCard({_id: id, question: "new edit question"})
+    cardsAPI.editCard({_id: id, question: 'new edit question'})
         .then(res => {
             dispatch(loading(false))
             dispatch(setCardsTC())
@@ -136,12 +144,14 @@ export const editCardTC = (id: string) => (dispatch: TypedDispatch) => {
             dispatch(loading(false))
         })
 }
-export const editGradeCardTC = (grade:number,id: string) => (dispatch: TypedDispatch) => {
+export const editGradeCardTC = (grade:any,card_id: any) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
-    cardsAPI.editGradeCard(grade,id)
+    //let {cardsPack_id} = getState().cards
+    cardsAPI.editGradeCard(grade, card_id)
         .then(res => {
             dispatch(loading(false))
-            dispatch(setCardsTC())
+            console.log('res:'+res)
+            //dispatch(setCardsTC())
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
@@ -167,6 +177,8 @@ export type CardsActionsType =
     | ReturnType<typeof setSearchCardsAnswerAC>
     | ReturnType<typeof setSearchCardsQuestionAC>
     | ReturnType<typeof setPackAC>
+    //| ReturnType<typeof editGradeCardAC>
+
 export type CardType = {
     answer: string
     question: string

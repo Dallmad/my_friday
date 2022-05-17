@@ -39,17 +39,19 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     const [showModalLearn, setShowModalLearn] = useState(false);
     const [showModalLearn2, setShowModalLearn2] = useState(false);
     const [value, onChangeOption] = useState(grades[0])
-    const [card, setCard] = useState<CardType>({
-        answer: '',
-        question: '',
-        cardsPack_id: '',
+    const [card, setCard] = useState<CardType>(
+        {
+        answer: 'e',
+        question: 'rr',
+        cardsPack_id: 'qeqwer',
         grade: 0,
         shots: 0,
-        user_id: '',
+        user_id: 'titu',
         created: new Date,
         updated:new Date,
-        _id: '',
-    });
+        _id: 'erty',
+    }
+    );
     const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
 
     const myUserId = useSelector<AppRootStateType, string>(state => state.profile._id)
@@ -86,15 +88,16 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     const editShowModalLearn2 = (value: boolean) => {
         setShowModalLearn2(value)
     }
+    const indexCard = (grades.indexOf(value)+1)
 
     const editShowModalLearnNext = () => {
         dispatch(setPackAC(cardPacks._id))
-        dispatch(setCardsTC())
+        //dispatch(setCardsTC())
         setCard(getCard(cards))
-
+        //setShowModalLearn(value)
         //set grade
-        dispatch(editGradeCardTC((grades.indexOf(value)+1),card._id))
-
+        //dispatch(editGradeCardAC(4,card._id))
+        dispatch(editGradeCardTC(indexCard,card._id))
         setShowModalLearn2(false)
 
     }
@@ -103,7 +106,10 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
         setShowModalLearn(value)
         setShowModalLearn2(value)
     }
-    //console.log((grades.indexOf(value)+1))
+    /*console.log('grade:'+(grades.indexOf(value)+1),'id:'+card._id,'currGrade:'+card.grade)*/
+    console.log('id:'+_id,'id2222:'+card._id,'quest:'+card.question)
+    let {question,answer} = card
+
     return (
         <tr>
             <td onClick={setChangePageToCard}>
@@ -148,7 +154,7 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                             Learn Pack Name
                         </div>
                         <div className={s.titleModal}>
-                            Question:{card.question}
+                            {question}
                         </div>
                         <div className={s.containerBtn}>
                             <Button onClick={() => setShowModalLearn(false)}>cancel</Button>
@@ -163,10 +169,10 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                             Learn Pack Name
                         </div>
                         <div className={s.titleModal}>
-                            Question:{card.question}
+                            {question}
                         </div>
                         <div className={s.titleModal}>
-                            Answer:{card.answer}
+                            {answer}
                         </div>
                         <div>
                             <Radio options={grades}

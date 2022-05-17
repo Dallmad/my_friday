@@ -15,8 +15,8 @@ export const cardsAPI = {
     editCard(card: any) {
         return instance.put<AxiosResponse<ResponseType>>('cards/card/', {card});
     },
-    editGradeCard(grade: number, card_id: string) {
-        return instance.put<AxiosResponse<ResponseType>>('cards/grade/', {grade, card_id})
+    editGradeCard(grade: any, card_id: any) {
+        return instance.put<AxiosResponse<ResponseType>>('cards/grade/', {grade,card_id})
     }
 }
 
@@ -31,4 +31,8 @@ type GetParamsRequestType = {
     sortCards?: string
     page?: number
     pageCount?: number
+}
+export type RequestEditGradeType = {
+    grade: number
+    card_id: string
 }
