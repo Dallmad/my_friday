@@ -14,6 +14,7 @@ import {Paginator} from '../../../components/Paginator/Paginator';
 import s from './AllPacksList.module.css'
 import {MyAllPacksListPage} from './SettingsPacksList/MyAllPacksList/MyAllPacksListPage';
 import {NumberCardsPage} from './SettingsPacksList/NumberCardsSetting/NumberCardsPage';
+import {Modal} from "../../../components/Modal/Modal";
 
 
 export const AllPacksList = () => {
@@ -25,15 +26,20 @@ export const AllPacksList = () => {
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
 
     const [searchPacks, setSearchPacks] = useState('')
+    const [newPack, setNewPack] = useState('')
     const [currentPage, setCurrentPage] = useState(page)
+    const [showModal, setShowModal] = useState(false);
 
     const searchPacksHandler = () => {
         dispatch(setSearchPackAC(searchPacks))
         setSearchPacks('')
     }
-    const addNewPackHandler = (title:string) => {
+    const addNewPackHandler = (title: string) => {
         dispatch(createPackTC(title))
-        setSearchPacks('')
+        setNewPack('')
+    }
+    const editShowModal = (value: boolean) => {
+        setShowModal(value)
     }
     const onPageChanged = (pageNumber: number) => {
         setCurrentPage(pageNumber)
@@ -53,7 +59,19 @@ export const AllPacksList = () => {
                 <h2>Packs list</h2>
                 <Input value={searchPacks} onChange={(e) => setSearchPacks(e.currentTarget.value)}/>
                 <Button onClick={searchPacksHandler}>Search</Button>
-                <Button onClick={()=>addNewPackHandler(searchPacks)}>Add new pack</Button>
+                <Button onClick={() => editShowModal(true)}>Add new pack</Button>
+                <Modal editShowModal={editShowModal} showModal={showModal}>
+                    <div className={s.modal}>
+                        <div className={s.titleModal}>
+                            Add new pack
+                        </div>
+                        <Input value={newPack} onChange={(e) => setNewPack(e.currentTarget.value)}/>
+                        <div className={s.containerBtn}>
+                                <Button onClick={() => editShowModal(false)}>cancel</Button>
+                                <Button onClick={() => addNewPackHandler(newPack)}>save</Button>
+                        </div>
+                    </div>
+                </Modal>
 
                 <Table currentPage={currentPage} totalCount={cardPacksTotalCount}/>
                 <Paginator
