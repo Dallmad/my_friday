@@ -11,11 +11,26 @@ import Input from "../../../../../components/Input/Input";
 import {Modal} from "../../../../../components/Modal/Modal";
 import React, {useState} from "react";
 import Radio from "../../../../../components/Radio/Radio";
+import {CardType, setCardsTC, setPackAC} from '../../../../../state/cadrs-reducer';
+
+
+const grades = [`Don't know`, 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer'];
+
+const getCard = (cards: CardType[]) => {
+    const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
+    const rand = Math.random() * sum;
+    const res = cards.reduce((acc: { sum: number, id: number}, card, i) => {
+            const newSum = acc.sum + (6 - card.grade) * (6 - card.grade);
+            return {sum: newSum, id: newSum < rand ? i : acc.id}
+        }
+        , {sum: 0, id: -1});
+    console.log('test: ', sum, rand, res)
+
+    return cards[res.id + 1];
+}
 
 
 export const TableRow = ({cardPacks}: ResponseCardPackType) => {
-
-    const arr = ['1', '2', '3', '4', '5']
 
     const {name, cardsCount, updated, user_name, _id, user_id} = cardPacks
 
@@ -23,8 +38,19 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalLearn, setShowModalLearn] = useState(false);
     const [showModalLearn2, setShowModalLearn2] = useState(false);
-    const [value, onChangeOption] = useState(arr[0])
-
+    const [value, onChangeOption] = useState(grades[0])
+    const [card, setCard] = useState<CardType>({
+        answer: '',
+        question: '',
+        cardsPack_id: '',
+        grade: 0,
+        shots: 0,
+        user_id: '',
+        created: new Date,
+        updated:new Date,
+        _id: '',
+    });
+    const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
 
     const myUserId = useSelector<AppRootStateType, string>(state => state.profile._id)
 
@@ -51,7 +77,10 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     }
 
     const editShowModalLearn = (value: boolean) => {
+        dispatch(setPackAC(cardPacks._id))
+        dispatch(setCardsTC())
         setShowModalLearn(value)
+        setCard(getCard(cards))
     }
 
     const editShowModalLearn2 = (value: boolean) => {
@@ -59,6 +88,9 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     }
 
     const editShowModalLearnNext = () => {
+        dispatch(setPackAC(cardPacks._id))
+        dispatch(setCardsTC())
+        setCard(getCard(cards))
         setShowModalLearn2(false)
     }
 
@@ -111,7 +143,7 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                             Learn Pack Name
                         </div>
                         <div className={s.titleModal}>
-                            Question:
+                            Question:{card.question}
                         </div>
                         <div className={s.containerBtn}>
                             <Button onClick={() => setShowModalLearn(false)}>cancel</Button>
@@ -126,13 +158,13 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                             Learn Pack Name
                         </div>
                         <div className={s.titleModal}>
-                            Question:
+                            Question:{card.question}
                         </div>
                         <div className={s.titleModal}>
-                            Answer:
+                            Answer:{card.answer}
                         </div>
                         <div>
-                            <Radio options={arr}
+                            <Radio options={grades}
                                    value={value}
                                    onChangeOption={onChangeOption}/>
                         </div>

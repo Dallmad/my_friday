@@ -18,7 +18,6 @@ export const Table = ({currentPage}: PropsType) => {
 
     const sortPacks = useSelector<AppRootStateType, string>(state => state.packs.sortPacks)
     const packs = useSelector<AppRootStateType, ResponsePackType[]>(state => state.packs.cardPacks)
-/*    const searchPacks = useSelector<AppRootStateType, string>(state => state.packs.packName)*/
 
     const {user_id} = useParams()
 
