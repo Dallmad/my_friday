@@ -24,8 +24,9 @@ export const AllPacksList = () => {
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const page = useSelector<AppRootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
+    const lastSearch = useSelector<AppRootStateType, string>(state => state.packs.packName)
 
-    const [searchPacks, setSearchPacks] = useState('')
+    const [searchPacks, setSearchPacks] = useState(lastSearch ? lastSearch : '')
     const [currentPage, setCurrentPage] = useState(page)
 
     const searchPacksHandler = () => {
