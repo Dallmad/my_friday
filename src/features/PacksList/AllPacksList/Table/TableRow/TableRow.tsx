@@ -62,6 +62,11 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
         setShowModalLearn2(false)
     }
 
+    const allShowModalLearn = (value: boolean) => {
+        setShowModalLearn(value)
+        setShowModalLearn2(value)
+    }
+
     return (
         <tr>
             <td onClick={setChangePageToCard}>
@@ -115,7 +120,7 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                     </div>
                 </Modal>
 
-                <Modal editShowModal={editShowModalLearn2} showModal={showModalLearn2}>
+                <Modal editShowModal={allShowModalLearn} showModal={showModalLearn2}>
                     <div className={s.bigModal}>
                         <div className={s.titleModal}>
                             Learn Pack Name
@@ -132,7 +137,7 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                                    onChangeOption={onChangeOption}/>
                         </div>
                         <div className={s.containerBtn}>
-                            <Button onClick={() => setShowModalLearn2(false)}>cancel</Button>
+                            <Button onClick={() => allShowModalLearn(false)}>cancel</Button>
                             <Button onClick={editShowModalLearnNext}>next</Button>
                         </div>
                     </div>
