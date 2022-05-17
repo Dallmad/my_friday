@@ -9,6 +9,7 @@ import {NewPassword} from '../../features/Registartion/New-password/NewPassword'
 import {RecoveryPassword} from '../../features/Registartion/Recovery-password/RecoveryPassword';
 import {Cards} from "../../features/Cards/Cards";
 import {AllPacksList} from '../../features/PacksList/AllPacksList/AllPacksList';
+import ForgotContainer from "../../features/Forgot/ForgotContainer";
 
 export const PATH = {
     PROFILE:'/profile',
@@ -39,7 +40,7 @@ export const AppRoutes = () => {
                 <Route path={PATH.MY_PACKS_LIST+'/:user_id'} element={<AllPacksList/>}/>
                 <Route path={PATH.ALL_PACKS_LIST} element={<AllPacksList/>}/>
                 <Route path={PATH.ALL_PACKS_LIST+'/:pack_id'} element={<Cards/>}/>
-                {/*<Route path={PATH.FORGOT_PASSWORD} element={<Forgot/>}/>*/}
+                <Route path={PATH.FORGOT_PASSWORD} element={<ForgotContainer/>}/>
             </Routes>
         </div>
     )

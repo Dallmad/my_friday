@@ -1,13 +1,13 @@
 import React, {useCallback, useState} from 'react';
-import {useDispatch} from "react-redux";
 import {Forgot} from "./Forgot";
 import {forgotTC} from "../../state/forgot-reducer";
+import {useTypedDispatch} from "../../state/store";
 
 const ForgotContainer = React.memo(() => {
 
     const [email, setEmail] = useState<string>('')
 
-    const dispatch = useDispatch();
+    const dispatch = useTypedDispatch();
     const forgotCallback = useCallback(
         () => dispatch(forgotTC(email)),
         [email, dispatch]
