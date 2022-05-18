@@ -1,7 +1,7 @@
 import {Dispatch} from "redux";
 import {handleServerNetworkError} from "../utils/error-utils";
 import {loading} from "./registration-reducer";
-import {ForgotAPI, ForgotDataType} from "../api/forgot-api";
+import {ForgotAPI} from "../api/forgot-api";
 
 export type ForgotStateType = {
     loading: boolean;
