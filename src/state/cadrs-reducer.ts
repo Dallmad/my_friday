@@ -105,10 +105,10 @@ export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRoo
         })
 }
 
-export const addCardTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
+export const addCardTC = ( newTitleQuestion: string, newTitleAnswer: string) => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
     let cardsPack_id = getState().cards.cardsPack_id
-    cardsAPI.addCard({cardsPack_id, question: 'new question', answer: 'new answer', grade: 3})
+    cardsAPI.addCard({cardsPack_id, question: newTitleQuestion, answer: newTitleAnswer, grade: 3})
         .then(res => {
             dispatch(loading(false))
             dispatch(setCardsTC())
@@ -132,9 +132,9 @@ export const deleteCardTC = (id: string) => (dispatch: TypedDispatch) => {
         })
 }
 
-export const editCardTC = (id: string) => (dispatch: TypedDispatch) => {
+export const editCardTC = (id: string, editTitleQuestion: string, editTitleAnswer: string) => (dispatch: TypedDispatch) => {
     dispatch(loading(true))
-    cardsAPI.editCard({_id: id, question: 'new edit question'})
+    cardsAPI.editCard({_id: id, question: editTitleQuestion, answer: editTitleAnswer,})
         .then(res => {
             dispatch(loading(false))
             dispatch(setCardsTC())
@@ -156,6 +156,7 @@ export const editGradeCardTC = (grade:number,card_id: string) => (dispatch: Type
             dispatch(loading(false))
         })
 }
+
 // types
 export type InitialStateType = {
     cards: CardType[]

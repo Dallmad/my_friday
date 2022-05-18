@@ -9,7 +9,7 @@ import {useSelector} from "react-redux";
 import s from "../../AllPacksList.module.css";
 import Input from "../../../../../components/Input/Input";
 import {Modal} from "../../../../../components/Modal/Modal";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Radio from "../../../../../components/Radio/Radio";
 import {CardType, editGradeCardTC, setCardsTC, setPackAC} from '../../../../../state/cadrs-reducer';
 
@@ -24,10 +24,8 @@ const getCard = (cards: CardType[]) => {
         }
         , {sum: 0, id: -1});
     //console.log('test: ', sum, rand, res)
-
     return cards[res.id + 1];
 }
-
 
 export const TableRow = ({cardPacks}: ResponseCardPackType) => {
 
@@ -38,6 +36,7 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalLearn, setShowModalLearn] = useState(false);
     const [showModalLearn2, setShowModalLearn2] = useState(false);
+    const [packTitle, setTackTitle] = useState<string>(name)
     const [value, onChangeOption] = useState((grades[0]))
 
     const [card, setCard] = useState<CardType>(cards[0])
@@ -50,8 +49,8 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     const deletePackHandler = (id: string) => {
         dispatch(deletePackTC(id))
     }
-    const editPackHandler = (cardPacks: ResponsePackType) => {
-        dispatch(updatedPackTC(cardPacks))
+    const editPackHandler = (packTitle: string) => {
+        dispatch(updatedPackTC(_id, packTitle))
     }
 
     const setChangePageToCard = () => {
@@ -67,10 +66,10 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     }
 
     const editShowModalLearn = (value: boolean) => {
-        dispatch(setPackAC(cardPacks._id))
-        dispatch(setCardsTC())
-        setShowModalLearn(value)
-        setCard(getCard(cards))
+            //setCard(getCard(cards))
+            dispatch(setPackAC(cardPacks._id))
+            dispatch(setCardsTC())
+            setShowModalLearn(value)
     }
 
     const editShowModalLearn2 = (value: boolean) => {
@@ -79,26 +78,23 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     const indexCard = (grades.indexOf(value)+1)
 
     const editShowModalLearnNext = () => {
-        dispatch(setPackAC(cardPacks._id))
-        //dispatch(setCardsTC())
-        //setCard(getCard(cards))
-
-
-        //dispatch(editGradeCardAC(4,card._id))
-        //dispatch(editGradeCardTC(indexCard, card._id))
-        setShowModalLearn2(false)
-
+        if (card) {
+            dispatch(setPackAC(cardPacks._id))
+            setCard(getCard(cards))
+            dispatch(editGradeCardTC(indexCard, card._id))
+            setShowModalLearn2(false)
+        }
     }
 
     const allShowModalLearn = (value: boolean) => {
         setShowModalLearn(value)
         setShowModalLearn2(value)
     }
-    /*console.log('grade:'+(grades.indexOf(value)+1),'id:'+card._id,'currGrade:'+card.grade)*/
-    //console.log('id:'+_id,'id2222:'+card._id,'quest:'+card.question)
-    //let {question,answer} = card
+    const dateUpdate = updated.slice(8,10)+updated.slice(4,8)+updated.slice(0,4)
 
-
+    useEffect(()=>{
+        setCard(getCard(cards))
+    },[cards])
 
     return (
         <tr>
@@ -106,48 +102,46 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                 {name}
             </td>
             <TableCell packValue={cardsCount}/>
-            <TableCell packValue={updated}/>
+            <TableCell packValue={dateUpdate}/>
             <TableCell packValue={user_name}/>
             <td className="button">
-                {myUserId === user_id && <Button onClick={() => deletePackHandler(_id)}>Delete</Button>}
-                {/*<Modal editShowModal={editShowModal} showModal={showModal}>*/}
-                {/*    <div className={s.modal}>*/}
-                {/*        <div className={s.titleModal}>*/}
-                {/*            Add new pack*/}
-                {/*        </div>*/}
-                {/*        <Input value={newPack} onChange={(e) => setNewPack(e.currentTarget.value)}/>*/}
-                {/*        <div className={s.containerBtn}>*/}
-                {/*            <Button onClick={() => editShowModal(false)}>cancel</Button>*/}
-                {/*            <Button onClick={() => addNewPackHandler(newPack)}>save</Button>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</Modal>*/}
+                {myUserId === user_id && <Button onClick={() => editShowModalDelete(true)}>Delete</Button>}
+                <Modal editShowModal={editShowModalDelete} showModal={showModalDelete}>
+                    <div className={s.modal}>
+                        <div className={s.titleModal}>
+                            Delete pack
+                        </div>
+                        <div className={s.containerBtn}>
+                            <Button onClick={() => setShowModalDelete(false)}>cancel</Button>
+                            <Button onClick={() => deletePackHandler(_id)}>delete</Button>
+                        </div>
+                    </div>
+                </Modal>
 
-                {myUserId === user_id && <Button onClick={() => editPackHandler(cardPacks)}>Edit</Button>}
-                {/*<Modal editShowModal={editShowModal} showModal={showModal}>*/}
-                {/*    <div className={s.modal}>*/}
-                {/*        <div className={s.titleModal}>*/}
-                {/*            Add new pack*/}
-                {/*        </div>*/}
-                {/*        <Input value={newPack} onChange={(e) => setNewPack(e.currentTarget.value)}/>*/}
-                {/*        <div className={s.containerBtn}>*/}
-                {/*            <Button onClick={() => editShowModal(false)}>cancel</Button>*/}
-                {/*            <Button onClick={() => addNewPackHandler(newPack)}>save</Button>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</Modal>*/}
+                {myUserId === user_id && <Button onClick={() => editShowModalEdit(true)}>Edit</Button>}
+                <Modal editShowModal={editShowModalEdit} showModal={showModalEdit}>
+                    <div className={s.modal}>
+                        <div className={s.titleModal}>
+                            Edit pack
+                        </div>
+                        <Input value={packTitle} onChange={(e) => setTackTitle(e.currentTarget.value)}/>
+                        <div className={s.containerBtn}>
+                            <Button onClick={() => editShowModalEdit(false)}>cancel</Button>
+                            <Button onClick={() => editPackHandler(packTitle)}>save</Button>
+                        </div>
+                    </div>
+                </Modal>
 
                 <Button onClick={() => editShowModalLearn(true)}>Learn</Button>
-
 
                 <Modal editShowModal={editShowModalLearn} showModal={showModalLearn}>
                     <div className={s.modal}>
                         <div className={s.titleModal}>
                             Learn Pack Name
                         </div>
-                        <div className={s.titleModal}>
-                            {/*{card.question}*/}
-                        </div>
+                        {card && <div className={s.titleModal}>
+                            {card.question}
+                        </div>}
                         <div className={s.containerBtn}>
                             <Button onClick={() => setShowModalLearn(false)}>cancel</Button>
                             <Button onClick={() => editShowModalLearn2(true)}>show answer</Button>
@@ -160,12 +154,13 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                         <div className={s.titleModal}>
                             Learn Pack Name
                         </div>
-                        <div className={s.titleModal}>
-                           {/* {card.question}*/}
-                        </div>
-                        <div className={s.titleModal}>
-                           {/* {card.answer}*/}
-                        </div>
+                        {card && <div className={s.titleModal}>
+                            {card.question}
+                        </div>}
+
+                        {card && <div className={s.titleModal}>
+                            {card.answer}
+                        </div>}
                         <div>
                             <Radio options={grades}
                                    value={value}
@@ -188,4 +183,3 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
 type ResponseCardPackType = {
     cardPacks: ResponsePackType
 }
-

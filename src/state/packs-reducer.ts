@@ -112,9 +112,9 @@ export const deletePackTC = (_id: string) => (dispatch: TypedDispatch) => {
             dispatch(loading(false))
         })
 }
-export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: TypedDispatch) => {
+export const updatedPackTC = (_id: string, name: string) => (dispatch:TypedDispatch) => {
     dispatch(loading(true))
-    packsAPI.updatedPack(cardsPack)
+    packsAPI.updatedPack({_id, name})
         .then((res) => {
             dispatch(updatedPackAC(res.data.updatedCardsPack))
             dispatch(fetchPacksTC())
