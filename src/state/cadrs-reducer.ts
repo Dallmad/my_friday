@@ -174,7 +174,7 @@ export type CardType = {
     grade: number
     shots?: number
     user_id?: string
-    created?: Date
-    updated: Date
+    created?: string
+    updated: string
     _id: string
 }

@@ -32,13 +32,14 @@ export const Card: FC<CardType> = ({  answer, question, grade, updated, _id,  ..
     const editCard = (editTitleQuestion: string, editTitleAnswer: string) => {
         dispatch(editCardTC(_id, editTitleQuestion, editTitleAnswer))
     }
+    const dateUpdate = updated.slice(8,10)+updated.slice(4,8)+updated.slice(0,4)
 
     return (
         <tr>
             <td>{question}</td>
             <td>{answer}</td>
             <td>{grade}</td>
-            <td>{updated ? updated.toString() : '---'}</td>
+            <td>{dateUpdate}</td>
             <td>
                 <Button onClick={() => editShowModalDelete(true)}>Delete</Button>
                 <Modal editShowModal={editShowModalDelete} showModal={showModalDelete}>

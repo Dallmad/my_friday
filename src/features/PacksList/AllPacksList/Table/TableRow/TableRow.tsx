@@ -66,7 +66,7 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     }
 
     const editShowModalLearn = (value: boolean) => {
-            //setCard(getCard(cards))
+            setCard(getCard(cards))
             dispatch(setPackAC(cardPacks._id))
             dispatch(setCardsTC())
             setShowModalLearn(value)
