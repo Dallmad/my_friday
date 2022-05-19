@@ -6,11 +6,13 @@ import {ForgotAPI} from "../api/forgot-api";
 export type ForgotStateType = {
     loading: boolean
     error: string
+    // check: boolean
 }
 
 export const ForgotInitState: ForgotStateType = {
     loading: false,
-    error: ""
+    error: "",
+    // check: false
 };
 
 export const forgotReducer = (state:ForgotStateType = ForgotInitState, action: any): ForgotStateType => {
@@ -22,14 +24,16 @@ export const forgotReducer = (state:ForgotStateType = ForgotInitState, action: a
 
 //action
 
+
 //thunk
 
-export const forgotTC = (email: string) => {
+export const forgotTC = (email: string, setCheck: (check:boolean) => void) => {
     return (dispatch: Dispatch) => {
         dispatch(loading(true))
         ForgotAPI.forgot(email)
             .then((res) => {
                 dispatch(loading(false))
+                setCheck(true)
             })
             .catch(error =>{
                 handleServerNetworkError(error.response.data.error, dispatch)

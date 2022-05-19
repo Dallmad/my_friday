@@ -2,13 +2,20 @@ import {Dispatch} from "redux";
 import {NewPasswordAPI} from "../api/new-password-api";
 import {loading} from "./registration-reducer";
 import {handleServerNetworkError} from "../utils/error-utils";
+import CheckEmail from "../features/CheckEmail/CheckEmail";
 
-const initialState = {
-    newPassword: ''
+export type NewPasswordStateType = {
+    newPassword: string
+    error: string
 }
 
-export const newPasswordReducer = (state: InitialStateType = initialState, action:
-    any): InitialStateType => {
+export const NewPasswordInitialState: NewPasswordStateType = {
+    newPassword: '',
+    error: ''
+}
+
+export const newPasswordReducer = (state: NewPasswordStateType = NewPasswordInitialState, action:
+    any): NewPasswordStateType => {
     switch (action.type) {
         default:
             return state
@@ -18,17 +25,19 @@ export const newPasswordReducer = (state: InitialStateType = initialState, actio
 
 //thunk
 
-export const newPasswordTC = (resetPasswordToken: any, newPassword:string) => (dispatch: Dispatch) => {
-    dispatch(loading(true))
-    NewPasswordAPI.setPass(resetPasswordToken, newPassword)
-        .then((res) => {
-            dispatch(loading(false))
-        })
-        .catch(error =>{
-            handleServerNetworkError(error.response.data.error, dispatch)
-            dispatch(loading(false))
-        })
-}
+export const newPasswordTC = (resetPasswordToken: any, newPassword:string, setLoginPage: (loginPage:boolean) => void) =>
+    (dispatch: Dispatch) => {
+        dispatch(loading(true))
+        NewPasswordAPI.setPass(resetPasswordToken, newPassword)
+            .then((res) => {
+                dispatch(loading(false))
+                // @ts-ignore
+                dispatch(setLoginPage(true))
+            })
+            .catch(error =>{
+                handleServerNetworkError(error.response.data.error, dispatch)
+                dispatch(loading(false))
+            })
+    }
 
 // types
-type InitialStateType = typeof initialState

@@ -11,6 +11,7 @@ import {AllPacksList} from '../../features/PacksList/AllPacksList/AllPacksList';
 import ForgotContainer from "../../features/Forgot/ForgotContainer";
 import {NewPassword} from "../../features/Registartion/New-password/NewPassword";
 import {NewPasswordContainer} from "../../features/Registartion/New-password/NewPasswordContainer";
+import CheckEmail from "../../features/CheckEmail/CheckEmail";
 
 export const PATH = {
     PROFILE:'/profile',
@@ -22,7 +23,8 @@ export const PATH = {
     NEW_PASSWORD: '/set-new-password/*',
     ALL_PACKS_LIST: '/packs-list',
     MY_PACKS_LIST: '/my-packs-list',
-    FORGOT_PASSWORD: '/forgot'
+    FORGOT_PASSWORD: '/forgot',
+    CHECK_EMAIL: '/check_email'
 }
 
 export const AppRoutes = () => {
@@ -43,6 +45,7 @@ export const AppRoutes = () => {
                 <Route path={PATH.ALL_PACKS_LIST} element={<AllPacksList/>}/>
                 <Route path={PATH.ALL_PACKS_LIST+'/:pack_id'} element={<Cards/>}/>
                 <Route path={PATH.FORGOT_PASSWORD} element={<ForgotContainer/>}/>
+                <Route path={PATH.CHECK_EMAIL} element={<CheckEmail/>}/>
             </Routes>
         </div>
     )
