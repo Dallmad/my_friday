@@ -5,12 +5,12 @@ import Button from '../../../../../components/Button/Button';
 import {AppRootStateType, useTypedDispatch} from '../../../../../state/store';
 import {useNavigate} from 'react-router-dom';
 import {PATH} from '../../../../../app/Routes/Routes';
-import {useSelector} from "react-redux";
-import s from "../../AllPacksList.module.css";
-import Input from "../../../../../components/Input/Input";
-import {Modal} from "../../../../../components/Modal/Modal";
+import {useSelector} from 'react-redux';
+import s from '../../AllPacksList.module.css';
+import Input from '../../../../../components/Input/Input';
+import {Modal} from '../../../../../components/Modal/Modal';
 import React, {useEffect, useState} from 'react';
-import Radio from "../../../../../components/Radio/Radio";
+import Radio from '../../../../../components/Radio/Radio';
 import {CardType, editGradeCardTC, setCardsTC, setPackAC} from '../../../../../state/cadrs-reducer';
 
 const grades: string[] = [`Don't know`, 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer'];
@@ -18,7 +18,7 @@ const grades: string[] = [`Don't know`, 'Forgot', 'A lot of thought', 'Confused'
 const getCard = (cards: CardType[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
     const rand = Math.random() * sum;
-    const res = cards.reduce((acc: { sum: number, id: number}, card, i) => {
+    const res = cards.reduce((acc: { sum: number, id: number }, card, i) => {
             const newSum = acc.sum + (6 - card.grade) * (6 - card.grade);
             return {sum: newSum, id: newSum < rand ? i : acc.id}
         }
@@ -30,21 +30,23 @@ const getCard = (cards: CardType[]) => {
 export const TableRow = ({cardPacks}: ResponseCardPackType) => {
 
     const {name, cardsCount, updated, user_name, _id, user_id} = cardPacks
+
     const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
+    const myUserId = useSelector<AppRootStateType, string>(state => state.profile._id)
 
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalLearn, setShowModalLearn] = useState(false);
     const [showModalLearn2, setShowModalLearn2] = useState(false);
     const [packTitle, setTackTitle] = useState<string>(name)
-    const [value, onChangeOption] = useState((grades[0]))
-
+    const [value, onChangeOption] = useState<string>((grades[0]))
     const [card, setCard] = useState<CardType>(cards[0])
-
-    const myUserId = useSelector<AppRootStateType, string>(state => state.profile._id)
 
     const navigate = useNavigate()
     const dispatch = useTypedDispatch()
+
+    const indexCard = (grades.indexOf(value) + 1)
+    const dateUpdate = updated.slice(8, 10) + updated.slice(4, 8) + updated.slice(0, 4)
 
     const deletePackHandler = (id: string) => {
         dispatch(deletePackTC(id))
@@ -66,16 +68,15 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
     }
 
     const editShowModalLearn = (value: boolean) => {
-            setCard(getCard(cards))
-            dispatch(setPackAC(cardPacks._id))
-            dispatch(setCardsTC())
-            setShowModalLearn(value)
+        setCard(getCard(cards))
+        dispatch(setPackAC(cardPacks._id))
+        dispatch(setCardsTC())
+        setShowModalLearn(value)
     }
 
     const editShowModalLearn2 = (value: boolean) => {
         setShowModalLearn2(value)
     }
-    const indexCard = (grades.indexOf(value)+1)
 
     const editShowModalLearnNext = () => {
         if (card) {
@@ -90,11 +91,10 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
         setShowModalLearn(value)
         setShowModalLearn2(value)
     }
-    const dateUpdate = updated.slice(8,10)+updated.slice(4,8)+updated.slice(0,4)
 
-    useEffect(()=>{
+    useEffect(() => {
         setCard(getCard(cards))
-    },[cards])
+    }, [cards])
 
     return (
         <tr>
@@ -139,9 +139,11 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                         <div className={s.titleModal}>
                             Learn Pack Name
                         </div>
-                        {card && <div className={s.titleModal}>
-                            {card.question}
-                        </div>}
+                        {card &&
+                            <div className={s.titleModal}>
+                                {card.question}
+                            </div>
+                        }
                         <div className={s.containerBtn}>
                             <Button onClick={() => setShowModalLearn(false)}>cancel</Button>
                             <Button onClick={() => editShowModalLearn2(true)}>show answer</Button>
@@ -154,13 +156,17 @@ export const TableRow = ({cardPacks}: ResponseCardPackType) => {
                         <div className={s.titleModal}>
                             Learn Pack Name
                         </div>
-                        {card && <div className={s.titleModal}>
-                            {card.question}
-                        </div>}
+                        {card &&
+                            <div className={s.titleModal}>
+                                {card.question}
+                            </div>
+                        }
 
-                        {card && <div className={s.titleModal}>
-                            {card.answer}
-                        </div>}
+                        {card &&
+                            <div className={s.titleModal}>
+                                {card.answer}
+                            </div>
+                        }
                         <div>
                             <Radio options={grades}
                                    value={value}

@@ -13,12 +13,9 @@ export const Modal: React.FC<any> = (props) => {
                 left: '0px',
                 width: '100vw',
                 height: '100vh',
-
                 background: 'black',
                 opacity: 0.35,
                 zIndex: 20,
-
-                // ...backgroundStyle,
             }}
             onClick={()=>props.editShowModal(false)}
         />}
@@ -33,11 +30,8 @@ export const Modal: React.FC<any> = (props) => {
                 flexFlow: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-
                 background: 'lime',
                 zIndex: 21,
-
-                // ...modalStyle,
             }}
         >
             {props.children}

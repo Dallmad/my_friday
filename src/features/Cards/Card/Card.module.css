@@ -11,6 +11,7 @@
     background: #F9F9FE;
     border-radius: 2px;
 }
+
 .bigModal {
     display: flex;
     flex-direction: column;
@@ -24,6 +25,7 @@
     background: #F9F9FE;
     border-radius: 8px;
 }
+
 .modal .titleModal {
     font-size: 18px;
     font-weight: 500;

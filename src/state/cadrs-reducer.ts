@@ -2,7 +2,6 @@ import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
 import {cardsAPI} from '../api/cards-api';
 import {AppRootStateType, TypedDispatch} from './store';
-import {setIsLoggedIn} from './auth-reducer';
 
 const SET_USER = 'cards/SET_USER'
 const SET_PAGE = 'cards/SET_PAGE'
@@ -27,60 +26,31 @@ export const cardsReducer = (state: InitialStateType = initialState, action:
     CardsActionsType): InitialStateType => {
     switch (action.type) {
         case SET_USER:
-            return {
-                ...state,
-                ...action.state
-            }
+            return {...state, ...action.state}
         case SET_PAGE:
-            return {
-                ...state,
-                page: action.page,
-            }
+            return {...state, page: action.page,}
         case SET_SORT:
-            return {
-                ...state,
-                sortCards: action.sortCards,
-            }
+            return {...state, sortCards: action.sortCards,}
         case SET_CARD_PACK_ID:
-            return {
-                ...state,
-                cardsPack_id: action.cardsPack_id,
-            }
+            return {...state, cardsPack_id: action.cardsPack_id,}
         case SET_SEARCH_ANSWER:
-            return {
-                ...state,
-                cards: state.cards.filter((card: CardType) => !!(card.answer.search(action.title) + 1))
-            }
+            return {...state, cards: state.cards.filter((card: CardType) => !!(card.answer.search(action.title) + 1))}
         case SET_SEARCH_QUESTION:
-            return {
-                ...state,
-                cards: state.cards.filter((card: CardType) => !!(card.question.search(action.title) + 1))
-            }
+            return {...state, cards: state.cards.filter((card: CardType) => !!(card.question.search(action.title) + 1))}
         default:
             return state
     }
 }
 
 // actions
-export const setCardsAC = (state: InitialStateType) =>
-    ({type: SET_USER, state} as const)
+export const setCardsAC = (state: InitialStateType) => ({type: SET_USER, state} as const)
+export const setPageCardsAC = (page: number) => ({type: SET_PAGE, page} as const)
+export const setSortCardsAC = (sortCards: string) => ({type: SET_SORT, sortCards} as const)
+export const setSearchCardsAnswerAC = (title: string) => ({type: SET_SEARCH_ANSWER, title} as const)
+export const setSearchCardsQuestionAC = (title: string) => ({type: SET_SEARCH_QUESTION, title} as const)
+export const setPackAC = (cardsPack_id: string) => ({type: SET_CARD_PACK_ID, cardsPack_id} as const)
 
-export const setPageCardsAC = (page: number) =>
-    ({type: SET_PAGE, page} as const)
-
-export const setSortCardsAC = (sortCards: string) =>
-    ({type: SET_SORT, sortCards} as const)
-
-export const setSearchCardsAnswerAC = (title: string) =>
-    ({type: SET_SEARCH_ANSWER, title} as const)
-
-export const setSearchCardsQuestionAC = (title: string) =>
-    ({type: SET_SEARCH_QUESTION, title} as const)
-
-export const setPackAC = (cardsPack_id: string) =>
-    ({type: SET_CARD_PACK_ID, cardsPack_id} as const)
-
-// thunk
+// thunks
 export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     dispatch(loading(true))
     let {cardsPack_id, sortCards, page, pageCount} = getState().cards
@@ -96,7 +66,8 @@ export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRoo
         })
 }
 
-export const addCardTC = ( newTitleQuestion: string, newTitleAnswer: string) => (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
+export const addCardTC = ( newTitleQuestion: string, newTitleAnswer: string) => (dispatch: TypedDispatch,
+                                                                                 getState: () => AppRootStateType) => {
     dispatch(loading(true))
     let cardsPack_id = getState().cards.cardsPack_id
     cardsAPI.addCard({cardsPack_id, question: newTitleQuestion, answer: newTitleAnswer, grade: 3})
@@ -160,14 +131,6 @@ export type InitialStateType = {
     cardsPack_id: string
     sortCards: string
 }
-export type CardsActionsType =
-    ReturnType<typeof setCardsAC>
-    | ReturnType<typeof setPageCardsAC>
-    | ReturnType<typeof setSortCardsAC>
-    | ReturnType<typeof setSearchCardsAnswerAC>
-    | ReturnType<typeof setSearchCardsQuestionAC>
-    | ReturnType<typeof setPackAC>
-
 export type CardType = {
     answer: string
     question: string
@@ -179,3 +142,12 @@ export type CardType = {
     updated: string
     _id: string
 }
+export type CardsActionsType =
+    ReturnType<typeof setCardsAC>
+    | ReturnType<typeof setPageCardsAC>
+    | ReturnType<typeof setSortCardsAC>
+    | ReturnType<typeof setSearchCardsAnswerAC>
+    | ReturnType<typeof setSearchCardsQuestionAC>
+    | ReturnType<typeof setPackAC>
+
+

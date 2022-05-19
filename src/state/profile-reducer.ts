@@ -39,7 +39,7 @@ export const setProfileStateAC = (profile: ResponseUserType) => ({type: SET_NEW_
 export const setNewUserNameAC = (userName: string) => ({type: SET_NEW_USER_NAME, userName} as const)
 export const setErrorAC = (error: string) => ({type: SET_ERROR, error}as const)
 
-// thunk
+// thunks
 export const setProfileStateThunk = (name: string) => (dispatch: Dispatch) => {
     dispatch(loading(true))
     profileAPI.changeUserName(name)
@@ -60,4 +60,6 @@ export type setProfileStateActionType = ReturnType<typeof setProfileStateAC>
 export type setErrorActionType = ReturnType<typeof setErrorAC>
 export type setNewUserNameActionType = ReturnType<typeof setNewUserNameAC>
 
-export type ProfileActionsType = setProfileStateActionType | setErrorActionType |setNewUserNameActionType
+export type ProfileActionsType = setProfileStateActionType
+    | setErrorActionType
+    |setNewUserNameActionType

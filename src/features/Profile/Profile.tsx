@@ -12,11 +12,12 @@ import Button from '../../components/Button/Button';
 
 export const Profile = () => {
 
+    const dispatch = useTypedDispatch()
+
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const userName = useSelector<AppRootStateType, string>((state) => state.profile.name)
     const userEmail = useSelector<AppRootStateType, string>((state) => state.profile.email)
     const avatar = useSelector<AppRootStateType, string>((state) => state.profile.avatar)
-    const dispatch = useTypedDispatch()
 
     const [newName, setNewName] = useState<string>(userName)
 
@@ -62,10 +63,8 @@ export const Profile = () => {
                 />
             </form>
             <div className={s.buttons_container}>
-
                 <Button className={s.button_cancel} onClick={cancelChangeName} >Cancel</Button>
                 <Button className={s.button_save} onClick={changeName}>Save</Button>
-
             </div>
         </div>
     )

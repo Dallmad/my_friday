@@ -16,10 +16,10 @@ import {MyAllPacksListPage} from './SettingsPacksList/MyAllPacksList/MyAllPacksL
 import {NumberCardsPage} from './SettingsPacksList/NumberCardsSetting/NumberCardsPage';
 import {Modal} from "../../../components/Modal/Modal";
 
-
 export const AllPacksList = () => {
 
     const dispatch = useTypedDispatch()
+
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const page = useSelector<AppRootStateType, number>(state => state.packs.page)

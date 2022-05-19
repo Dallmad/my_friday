@@ -6,13 +6,13 @@ export const cardsAPI = {
     getCards(params: GetParamsRequestType) {
         return instance.get<GetParamsRequestType,AxiosResponse<InitialStateType>>('cards/card/', {params})
     },
-    addCard(card: any) {
+    addCard(card: RequestAddCardType) {
         return instance.post<AxiosResponse<ResponseType>>('cards/card/', {card});
     },
     deleteCard(id: string) {
         return instance.delete<AxiosResponse<ResponseType>>('cards/card/?id=' + id);
     },
-    editCard(card: any) {
+    editCard(card: RequestEditCardType) {
         return instance.put<AxiosResponse<ResponseType>>('cards/card/', {card});
     },
     editGradeCard(grade: number, card_id: string) {
@@ -21,7 +21,6 @@ export const cardsAPI = {
 }
 
 //types
-
 type GetParamsRequestType = {
     cardAnswer?: string
     cardQuestion?: string
@@ -32,7 +31,14 @@ type GetParamsRequestType = {
     page?: number
     pageCount?: number
 }
-export type RequestEditGradeType = {
+type RequestAddCardType = {
+    cardsPack_id: string
+    question: string
+    answer: string
     grade: number
-    card_id: string
+}
+type RequestEditCardType = {
+    _id: string
+    question: string
+    answer: string
 }

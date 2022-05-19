@@ -6,8 +6,6 @@ import {Modal} from "../../../components/Modal/Modal";
 import Input from "../../../components/Input/Input";
 import {useTypedDispatch} from "../../../state/store";
 
-
-
 export const Card: FC<CardType> = ({  answer, question, grade, updated, _id,  ...props}) => {
 
     const dispatch = useTypedDispatch()
@@ -63,7 +61,8 @@ export const Card: FC<CardType> = ({  answer, question, grade, updated, _id,  ..
                         Question
                         <Input value={editTitleQuestion} onChange={(e) => setEditTitleQuestion(e.currentTarget.value)}/>
                         Answer
-                        <Input value={editTitleAnswer} onChange={(e) => setEditTitleAnswer(e.currentTarget.value)}/>                        <div className={s.containerBtn}>
+                        <Input value={editTitleAnswer} onChange={(e) => setEditTitleAnswer(e.currentTarget.value)}/>
+                        <div className={s.containerBtn}>
                             <Button onClick={() => editShowModalEdit(false)}>cancel</Button>
                             <Button onClick={() => editCard(editTitleQuestion, editTitleAnswer)}>save</Button>
                         </div>

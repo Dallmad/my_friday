@@ -3,11 +3,7 @@ import s from './Cards.module.css'
 import Button from "../../components/Button/Button";
 import {AppRootStateType, useTypedDispatch} from "../../state/store";
 import {useSelector} from "react-redux";
-import {
-    addCardTC,
-    CardType,
-    setCardsTC,
-    setPageCardsAC, setSearchCardsAnswerAC, setSearchCardsQuestionAC,
+import {addCardTC, CardType, setCardsTC, setPageCardsAC, setSearchCardsAnswerAC, setSearchCardsQuestionAC,
     setSortCardsAC, setPackAC
 } from '../../state/cadrs-reducer';
 import {Card} from './Card/Card';
@@ -20,16 +16,14 @@ import {Modal} from "../../components/Modal/Modal";
 export const Cards = () => {
 
     const dispatch = useTypedDispatch()
+    let {pack_id} = useParams()
 
     const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
-    const cardsPack_id = useSelector<AppRootStateType, string>(state => state.cards.cardsPack_id)
     const pageCount = useSelector<AppRootStateType, number>(state => state.cards.pageCount)
     const page = useSelector<AppRootStateType, number>(state => state.cards.page)
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
     const sortCardsInit = useSelector<AppRootStateType, string>(state => state.cards.sortCards)
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
-
-    let {pack_id} = useParams()
 
     const [currentPage, setCurrentPage] = useState(page)
     const [sortCards, setSortCards] = useState(sortCardsInit)

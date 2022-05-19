@@ -45,3 +45,14 @@
 .forgot {
     margin-top: 20px;
 }
+
+.link {
+    font-family: SF UI Display;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    color: #24254A;
+    opacity: 0.70;
+    text-decoration: none;
+    cursor: pointer;
+}

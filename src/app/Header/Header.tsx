@@ -12,7 +12,6 @@ export const Header = () => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isRegistration)
 
-
     return (
         <div>
             <div className={s.preloader}>

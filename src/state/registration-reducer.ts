@@ -4,6 +4,7 @@ import {handleServerNetworkError} from '../utils/error-utils';
 
 const REGISTRATION = 'registration/REGISTRATION'
 const LOADING = 'registration/LOADING'
+
 const initialState = {
     isRegistration: false,
     isLoading: false
@@ -22,13 +23,10 @@ export const registrationReducer = (state: InitialStateType = initialState, acti
 }
 
 // actions
-export const registration = () =>
-    ({type: REGISTRATION} as const)
+export const registration = () => ({type: REGISTRATION} as const)
+export const loading = (isLoading: boolean) => ({type: LOADING, isLoading} as const)
 
-export const loading = (isLoading: boolean) =>
-    ({type: LOADING, isLoading} as const)
-
-// thunk
+// thunks
 export const registrationTC = (obj: RegistrationType) => {
     return (dispatch: Dispatch) => {
         dispatch(loading(true))
