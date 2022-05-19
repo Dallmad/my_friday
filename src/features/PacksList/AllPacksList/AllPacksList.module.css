@@ -49,10 +49,10 @@ td button {
     justify-content: space-around;
     align-items: center;
     position: absolute;
-    width: 395px;
-    height: 233px;
-    left: 442px;
-    top: 283px;
+    width: 400px;
+    min-height: 250px;
+    left: 450px;
+    top: 300px;
     background: #F9F9FE;
     border-radius: 2px;
 }
@@ -63,10 +63,10 @@ td button {
     justify-content: space-around;
     align-items: center;
     position: absolute;
-    width: 413px;
-    height: 576px;
-    left: 434px;
-    top: 96px;
+    width: 400px;
+    min-height: 600px;
+    left: 450px;
+    top: 100px;
     background: #F9F9FE;
     border-radius: 8px;
 }

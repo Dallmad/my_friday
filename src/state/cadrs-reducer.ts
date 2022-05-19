@@ -2,6 +2,7 @@ import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
 import {cardsAPI} from '../api/cards-api';
 import {AppRootStateType, TypedDispatch} from './store';
+import {setIsLoggedIn} from './auth-reducer';
 
 const SET_USER = 'cards/SET_USER'
 const SET_PAGE = 'cards/SET_PAGE'
@@ -88,6 +89,10 @@ export const setCardsTC = () => (dispatch: TypedDispatch, getState: () => AppRoo
         .then(res => {
             dispatch(loading(false))
             dispatch(setCardsAC(res.data))
+            /*dispatch(setIsLoggedIn(true))
+            if(pack_id){
+                dispatch(setPackAC(pack_id))
+            }*/
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)

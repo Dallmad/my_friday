@@ -41,11 +41,11 @@ export const Cards = () => {
 
     useEffect(() => {
         if(pack_id){
-        dispatch(setPackAC(pack_id))
+            dispatch(setPackAC(pack_id))
         }
         dispatch(setCardsTC())
-
-    }, [cardsPack_id, currentPage, sortCards, cardsTotalCount])
+        //dispatch(setCardsTC(pack_id))
+    }, [cardsPack_id, currentPage, sortCards])
 
     const addCard = (newTitleQuestion: string, newTitleAnswer: string) => {
         dispatch(addCardTC(newTitleQuestion, newTitleAnswer))

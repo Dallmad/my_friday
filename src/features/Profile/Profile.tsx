@@ -15,6 +15,7 @@ export const Profile = () => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const userName = useSelector<AppRootStateType, string>((state) => state.profile.name)
     const userEmail = useSelector<AppRootStateType, string>((state) => state.profile.email)
+    const avatar = useSelector<AppRootStateType, string>((state) => state.profile.avatar)
     const dispatch = useTypedDispatch()
 
     const [newName, setNewName] = useState<string>(userName)
@@ -27,6 +28,7 @@ export const Profile = () => {
     const changeName = () => {
         dispatch(setProfileStateThunk(newName))
     }
+
     const cancelChangeName = () => {
         setNewName(userName)
         dispatch(setProfileStateThunk(userName))
@@ -42,7 +44,7 @@ export const Profile = () => {
                 Personal Information
             </div>
             <div className={s.profile_img}>
-                <img src={ava} alt="Avatar" className={s.profile_avatar}/>
+                <img src={avatar?avatar: ava} alt="Avatar" className={s.profile_avatar}/>
                 <div className={s.icon}>
                     <img src={icon} alt="Img-Icon" className={s.icon_img}/>
                 </div>

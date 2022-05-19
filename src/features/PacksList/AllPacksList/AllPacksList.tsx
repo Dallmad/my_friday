@@ -47,7 +47,7 @@ export const AllPacksList = () => {
         dispatch(setPagePacksAC(pageNumber))
     }
     if (!isLoggedIn) {
-        return <Navigate to="/login"/>
+        return <Navigate to="/"/>
     }
 
     return (
