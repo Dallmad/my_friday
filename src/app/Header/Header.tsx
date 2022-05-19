@@ -20,8 +20,8 @@ export const Header = () => {
             </div>
             <div className={s.navLink}>
                 <NavLink to={PATH.PROFILE} className={s.link}>Profile</NavLink>
-                <NavLink to={PATH.ALL_PACKS_LIST} className={s.link}>Packs List</NavLink>
-                {!isLoggedIn&&!isRegistration&&<NavLink to={PATH.REGISTRATION} className={s.link}>Registration</NavLink>}
+                {isLoggedIn && <NavLink to={PATH.ALL_PACKS_LIST} className={s.link}>Packs List</NavLink>}
+                {!isLoggedIn && !isRegistration && <NavLink to={PATH.REGISTRATION} className={s.link}>Registration</NavLink>}
                 <Logout/>
             </div>
         </div>

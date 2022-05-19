@@ -44,8 +44,7 @@ export const Cards = () => {
             dispatch(setPackAC(pack_id))
         }
         dispatch(setCardsTC())
-        //dispatch(setCardsTC(pack_id))
-    }, [cardsPack_id, currentPage, sortCards])
+    }, [currentPage, sortCards, pack_id])
 
     const addCard = (newTitleQuestion: string, newTitleAnswer: string) => {
         dispatch(addCardTC(newTitleQuestion, newTitleAnswer))
