@@ -16,7 +16,9 @@ const ForgotContainer = React.memo(() => {
 
     return (
         <div>
-            <Forgot email={email} setEmail={setEmail} forgot={forgotCallback}/>
+            <Forgot email={email}
+                    setEmail={setEmail}
+                    forgot={forgotCallback}/>
         </div>
     );
 });

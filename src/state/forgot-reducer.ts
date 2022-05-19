@@ -4,15 +4,13 @@ import {loading} from "./registration-reducer";
 import {ForgotAPI} from "../api/forgot-api";
 
 export type ForgotStateType = {
-    loading: boolean;
-    success: boolean;
-    error: string;
+    loading: boolean
+    error: string
 }
 
 export const ForgotInitState: ForgotStateType = {
     loading: false,
-    success: false,
-    error: "",
+    error: ""
 };
 
 export const forgotReducer = (state:ForgotStateType = ForgotInitState, action: any): ForgotStateType => {
@@ -21,6 +19,8 @@ export const forgotReducer = (state:ForgotStateType = ForgotInitState, action: a
             return state
     }
 }
+
+//action
 
 //thunk
 

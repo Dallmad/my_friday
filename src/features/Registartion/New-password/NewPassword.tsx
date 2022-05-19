@@ -10,15 +10,15 @@ type NewPasswordType = {
 }
 
 export const NewPassword: React.FC<NewPasswordType> = React.memo((
-    { newPassword,setNewPassword,newPasswordCallback }) => {
+    {newPassword, setNewPassword, newPasswordCallback}) => {
     return (
         <div>
             <div className={s.div}>
                 Create new Password
                 <Input value={newPassword}
                        onChangeText={setNewPassword}/>
-                <button onClick={newPasswordCallback}>Save New Password</button>
-                {/*<Button/>*/}
+                <Button callBack={newPasswordCallback}
+                        buttonName={'Create'}/>
             </div>
         </div>
     );

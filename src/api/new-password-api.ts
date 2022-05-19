@@ -2,20 +2,17 @@ import {instance} from "./instance";
 
 
 export type RegisterDataType = {
-    error: string;
+    error: string
 }
 
-export const NewPassAPI = {
-    setPass: async (resetPasswordToken: any, newPassword: string) => {
-        const response = await instance.post<RegisterDataType>(
+export const NewPasswordAPI = {
+    setPass(resetPasswordToken: any, newPassword: string) {
+        return instance.post<RegisterDataType>(
             "/auth/set-new-password",
             {
                 password: newPassword,
                 resetPasswordToken: resetPasswordToken
             }
-        );
-
-        return response.data;
-    },
-
-};
+        )
+    }
+}

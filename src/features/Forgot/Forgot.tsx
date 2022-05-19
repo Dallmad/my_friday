@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button";
 
 type ForgotPropsType = {
     email: string;
-    setEmail: (email:string) => void;
+    setEmail: (email: string) => void;
     forgot: () => void
 }
 
@@ -13,10 +13,10 @@ export const Forgot: React.FC<ForgotPropsType> = React.memo(({email, setEmail, f
 
     return (
         <div>
-            <div><Input value={email}
-                        onChangeText={setEmail}/></div>
-            <button onClick={forgot}>Send</button>
-            {/*<Button/>*/}
+            <Input value={email}
+                   onChangeText={setEmail}/>
+            <Button callBack={forgot}
+                    buttonName={'Send'}/>
         </div>
     );
 })
