@@ -77,7 +77,7 @@ export const Login = () => {
                 </div>
             </form>
             <div className={s.forgot}>
-                <a href="#/forgot" className={s.link}>Forgot?</a>
+                <NavLink to={PATH.FORGOT_PASSWORD} className={s.link}>Forgot?</NavLink>
             </div>
             <div className={s.link}>
                 <NavLink to={PATH.REGISTRATION} className={s.link}>Sign Up</NavLink>
