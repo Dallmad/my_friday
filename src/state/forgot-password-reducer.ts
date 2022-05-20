@@ -1,13 +1,11 @@
 import {Dispatch} from "redux";
 import {handleServerNetworkError} from "../utils/error-utils";
-import {forgotPasswordAPI, ForgotPasswordType} from "../api/forgot-password-api";
+//mport {forgotPasswordAPI, ForgotPasswordType} from "../api/forgot-password-api";
 import {loading} from "./registration-reducer";
 
 const SEND_NEW_PASSWORD = 'forgot/SEND-NEW-PASSWORD'
 
-const initialState = {
-
-}
+const initialState = {}
 
 export const forgotPasswordReducer = (state: InitialStateType = initialState, action:
     ActionsType): InitialStateType => {
@@ -22,8 +20,8 @@ export const forgotPasswordReducer = (state: InitialStateType = initialState, ac
 export const sendNewPassword = () =>
     ({type: SEND_NEW_PASSWORD} as const)
 
-//thunk
-export const forgotPasswordTC = (obj: ForgotPasswordType) => {
+// thunks
+/*export const forgotPasswordTC = (obj: ForgotPasswordType) => {
     return (dispatch: Dispatch) => {
         dispatch(loading(true))
         forgotPasswordAPI.forgot(obj)
@@ -37,9 +35,8 @@ export const forgotPasswordTC = (obj: ForgotPasswordType) => {
                 handleServerNetworkError(error.response.data.error, dispatch)
                 dispatch(loading(false))
             })
-
     }
-}
+}*/
 
 // types
 type InitialStateType = typeof initialState

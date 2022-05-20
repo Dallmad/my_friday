@@ -1,7 +1,6 @@
 .container {
     display: flex;
     justify-content: center;
-
 }
 
 .selectedPage {
@@ -19,6 +18,7 @@
     width: 20px;
     text-align: center;
 }
+
 button {
     margin: 0 10px;
 }

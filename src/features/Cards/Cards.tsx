@@ -3,58 +3,47 @@ import s from './Cards.module.css'
 import Button from "../../components/Button/Button";
 import {AppRootStateType, useTypedDispatch} from "../../state/store";
 import {useSelector} from "react-redux";
-import {
-    addCardTC,
-    CardType,
-    deleteCardTC,
-    editCardTC,
-    setCardsTC,
-    setPageCardsAC, setSearchCardsAnswerAC, setSearchCardsQuestionAC,
+import {addCardTC, CardType, setCardsTC, setPageCardsAC, setSearchCardsAnswerAC, setSearchCardsQuestionAC,
     setSortCardsAC, setPackAC
 } from '../../state/cadrs-reducer';
 import {Card} from './Card/Card';
 import Input from "../../components/Input/Input";
 import {Paginator} from "../../components/Paginator/Paginator";
 import {Navigate, useParams} from "react-router-dom";
+import {Modal} from "../../components/Modal/Modal";
 
 
 export const Cards = () => {
 
     const dispatch = useTypedDispatch()
+    let {pack_id} = useParams()
 
     const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
-    const cardsPack_id = useSelector<AppRootStateType, string>(state => state.cards.cardsPack_id)
     const pageCount = useSelector<AppRootStateType, number>(state => state.cards.pageCount)
     const page = useSelector<AppRootStateType, number>(state => state.cards.page)
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
     const sortCardsInit = useSelector<AppRootStateType, string>(state => state.cards.sortCards)
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
 
-    let {pack_id} = useParams()
-
     const [currentPage, setCurrentPage] = useState(page)
     const [sortCards, setSortCards] = useState(sortCardsInit)
     const [titleAnswer, setTitleAnswer] = useState('')
     const [titleQuestion, setTitleQuestion] = useState('')
+    const [showModal, setShowModal] = useState(false);
+    const [newTitleQuestion, setNewTitleQuestion] = useState('')
+    const [newTitleAnswer, setNewTitleAnswer] = useState('')
 
     useEffect(() => {
         if(pack_id){
-        dispatch(setPackAC(pack_id))
+            dispatch(setPackAC(pack_id))
         }
         dispatch(setCardsTC())
+    }, [currentPage, sortCards, pack_id])
 
-    }, [cardsPack_id, currentPage, sortCards, cardsTotalCount])
-
-    const addCard = () => {
-        dispatch(addCardTC())
-    }
-
-    const deleteCard = (id: string) => {
-        dispatch(deleteCardTC(id))
-    }
-
-    const editCard = (id: string) => {
-        dispatch(editCardTC(id))
+    const addCard = (newTitleQuestion: string, newTitleAnswer: string) => {
+        dispatch(addCardTC(newTitleQuestion, newTitleAnswer))
+        setNewTitleQuestion('')
+        setNewTitleAnswer('')
     }
 
     const onPageChanged = (pageNumber: number) => {
@@ -91,6 +80,10 @@ export const Cards = () => {
         dispatch(setCardsTC())
     }
 
+    const editShowModal = (value: boolean) => {
+        setShowModal(value)
+    }
+
     if (!isLoggedIn) {
         return <Navigate to="/login"/>
     }
@@ -105,8 +98,8 @@ export const Cards = () => {
             <table className="table">
                 <thead>
                 <tr>
-                    <th onClick={() => onSortCards('answer')}>answer</th>
                     <th onClick={() => onSortCards('question')}>question</th>
+                    <th onClick={() => onSortCards('answer')}>answer</th>
                     <th onClick={() => onSortCards('grade')}>grade</th>
                     <th onClick={() => onSortCards('updated')}>updated</th>
                     <th>actions</th>
@@ -120,12 +113,25 @@ export const Cards = () => {
                           question={question}
                           grade={grade}
                           updated={updated}
-                          deleteCard={deleteCard}
-                          editCard={editCard}
                     />)}
                 </tbody>
             </table>
-            <Button onClick={addCard}>Add</Button>
+            <Button onClick={() => editShowModal(true)}>Add new card</Button>
+            <Modal editShowModal={editShowModal} showModal={showModal}>
+                <div className={s.bigModal}>
+                    <div className={s.titleModal}>
+                        Add new card
+                    </div>
+                    Question
+                    <Input value={newTitleQuestion} onChange={(e) => setNewTitleQuestion(e.currentTarget.value)}/>
+                    Answer
+                    <Input value={newTitleAnswer} onChange={(e) => setNewTitleAnswer(e.currentTarget.value)}/>
+                    <div className={s.containerBtn}>
+                        <Button onClick={() => editShowModal(false)}>cancel</Button>
+                        <Button onClick={() => addCard(newTitleQuestion, newTitleAnswer)}>save</Button>
+                    </div>
+                </div>
+            </Modal>
             <Paginator currentPage={currentPage} onPageChanged={onPageChanged} totalCount={cardsTotalCount} pageSize={pageCount}/>
         </div>
     );

@@ -6,7 +6,7 @@ import {Navigate, NavLink} from "react-router-dom";
 import {AppRootStateType, useTypedDispatch} from "../../state/store";
 import {useFormik} from "formik";
 import {PATH} from "../../app/Routes/Routes";
-import {forgotPasswordTC} from "../../state/forgot-password-reducer";
+//import {forgotPasswordTC} from "../../state/forgot-password-reducer";
 import {Preloader} from "../../components/Preloader/Preloader";
 import {useSelector} from "react-redux";
 
@@ -31,7 +31,7 @@ export const ForgotPassword = () => {
             }
         },
         onSubmit: values => {
-            dispatch(forgotPasswordTC(values))//
+            //dispatch(forgotPasswordTC(values))//
             formik.resetForm()
         },
     })

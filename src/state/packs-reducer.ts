@@ -13,7 +13,6 @@ const SET_SEARCH_PACK = 'packs/SET_SEARCH_PACK'
 const SET_PAGE_PACKS = 'packs/SET_PAGE_PACKS'
 const SET_NUMBERS_PACKS = 'packs/SET_MIN_NUMBERS_PACKS'
 
-
 const initialState = {
     cardPacks: [],
     page: 1,
@@ -55,17 +54,13 @@ export const fetchPacksAC = (packs: ResponsePacksType) => ({type: FETCH_PACKS, p
 export const createPackAC = (cardsPack: RequestCreatePackType) => ({type: CREATE_PACK, cardsPack} as const)
 export const deletePackAC = (_id: string) => ({type: DELETE_PACK, _id} as const)
 export const updatedPackAC = (cardsPack: RequestUpdatedPackType) => ({type: UPDATED_PACK, cardsPack} as const)
-export const setSortPacksAC = (sortPacks: string) =>
-    ({type: SET_SORT_PACKS, sortPacks} as const)
-export const setSearchPackAC = (title: string) =>
-    ({type: SET_SEARCH_PACK, title} as const)
-export const setPagePacksAC = (page: number) =>
-    ({type: SET_PAGE_PACKS, page} as const)
+export const setSortPacksAC = (sortPacks: string) => ({type: SET_SORT_PACKS, sortPacks} as const)
+export const setSearchPackAC = (title: string) => ({type: SET_SEARCH_PACK, title} as const)
+export const setPagePacksAC = (page: number) => ({type: SET_PAGE_PACKS, page} as const)
 export const setNumbersPacksAC = (minCardsCount: number,maxCardsCount: number) =>
     ({type: SET_NUMBERS_PACKS, minCardsCount, maxCardsCount} as const)
 
-
-// thunk
+// thunks
 export const fetchPacksTC = (userId?: string) => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
     let {packName, sortPacks, page, pageCount,minCardsCount,maxCardsCount} = getState().packs
 
@@ -112,9 +107,9 @@ export const deletePackTC = (_id: string) => (dispatch: TypedDispatch) => {
             dispatch(loading(false))
         })
 }
-export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: TypedDispatch) => {
+export const updatedPackTC = (_id: string, name: string) => (dispatch:TypedDispatch) => {
     dispatch(loading(true))
-    packsAPI.updatedPack(cardsPack)
+    packsAPI.updatedPack({_id, name})
         .then((res) => {
             dispatch(updatedPackAC(res.data.updatedCardsPack))
             dispatch(fetchPacksTC())
