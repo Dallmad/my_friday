@@ -1,6 +1,4 @@
-const initialState = {
-
-}
+const initialState = {}
 
 export const recoveryPasswordReducer = (state: InitialStateType = initialState, action:
     ActionsType): InitialStateType => {

@@ -12,10 +12,12 @@ import Button from '../../components/Button/Button';
 
 export const Profile = () => {
 
+    const dispatch = useTypedDispatch()
+
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const userName = useSelector<AppRootStateType, string>((state) => state.profile.name)
     const userEmail = useSelector<AppRootStateType, string>((state) => state.profile.email)
-    const dispatch = useTypedDispatch()
+    const avatar = useSelector<AppRootStateType, string>((state) => state.profile.avatar)
 
     const [newName, setNewName] = useState<string>(userName)
 
@@ -27,6 +29,7 @@ export const Profile = () => {
     const changeName = () => {
         dispatch(setProfileStateThunk(newName))
     }
+
     const cancelChangeName = () => {
         setNewName(userName)
         dispatch(setProfileStateThunk(userName))
@@ -42,7 +45,7 @@ export const Profile = () => {
                 Personal Information
             </div>
             <div className={s.profile_img}>
-                <img src={ava} alt="Avatar" className={s.profile_avatar}/>
+                <img src={avatar?avatar: ava} alt="Avatar" className={s.profile_avatar}/>
                 <div className={s.icon}>
                     <img src={icon} alt="Img-Icon" className={s.icon_img}/>
                 </div>
@@ -60,10 +63,8 @@ export const Profile = () => {
                 />
             </form>
             <div className={s.buttons_container}>
-
                 <Button className={s.button_cancel} onClick={cancelChangeName} >Cancel</Button>
                 <Button className={s.button_save} onClick={changeName}>Save</Button>
-
             </div>
         </div>
     )

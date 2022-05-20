@@ -6,8 +6,6 @@ import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../../../state/store';
 
 
-
-
 export const MyAllPacksListPage = () => {
 
     const userId = useSelector<AppRootStateType, string>(state => state.profile._id)
