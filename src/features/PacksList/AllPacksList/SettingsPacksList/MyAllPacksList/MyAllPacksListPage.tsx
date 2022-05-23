@@ -12,6 +12,7 @@ export const MyAllPacksListPage = () => {
     const navigate = useNavigate()
 
     const changePageToMyHandler = () => {
+        console.log(`${PATH.MY_PACKS_LIST}/${userId}`)
         navigate(`${PATH.MY_PACKS_LIST}/${userId}`)
     }
     const changePageToAllHandler = () => {
