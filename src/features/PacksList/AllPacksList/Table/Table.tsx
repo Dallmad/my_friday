@@ -7,26 +7,17 @@ import {TableHeader} from './TableHeader/TableHeader';
 import '../AllPacksList.module.css'
 import {useParams} from 'react-router-dom';
 
-type PropsType = {
-    currentPage: number
-    totalCount: number
-}
-
-export const Table = ({currentPage, totalCount}: PropsType) => {
+export const Table = ({currentPage}: TablePropsType) => {
 
     const dispatch = useTypedDispatch()
+    const {user_id} = useParams()
 
     const sortPacks = useSelector<AppRootStateType, string>(state => state.packs.sortPacks)
     const packs = useSelector<AppRootStateType, ResponsePackType[]>(state => state.packs.cardPacks)
-    const minCardsCount = useSelector<AppRootStateType, number>(state => state.packs.minCardsCount)
-    const maxCardsCount = useSelector<AppRootStateType, number>(state => state.packs.maxCardsCount)
-
-
-    const {user_id} = useParams()
 
     useEffect(() => {
         dispatch(fetchPacksTC(user_id))
-    }, [sortPacks, currentPage, totalCount, user_id,minCardsCount,maxCardsCount])
+    }, [sortPacks, currentPage, user_id])
 
     return (
         <div>
@@ -45,4 +36,10 @@ export const Table = ({currentPage, totalCount}: PropsType) => {
             </table>
         </div>
     )
+}
+
+//types
+type TablePropsType = {
+    currentPage: number
+    totalCount: number
 }

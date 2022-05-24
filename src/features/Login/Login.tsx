@@ -55,7 +55,6 @@ export const Login = () => {
                         type="Email"
                         placeholder={'Enter your email'}
                         {...formik.getFieldProps('email')}
-                        // label={''}
                     />
                     {formik.touched.email && formik.errors.email
                         && <div style={{color: 'red'}}>{formik.errors.email}</div>}
@@ -63,7 +62,6 @@ export const Login = () => {
                         type="password"
                         placeholder={'Enter password'}
                         {...formik.getFieldProps('password')}
-                        // label={''}
                     />
                     {formik.touched.password && formik.errors.password
                         && <div style={{color: 'red'}}>{formik.errors.password}</div>}
@@ -79,7 +77,7 @@ export const Login = () => {
                 </div>
             </form>
             <div className={s.forgot}>
-                <NavLink to={PATH.FORGOT_PASSWORD} >Forgot?</NavLink>
+                <NavLink to={PATH.FORGOT_PASSWORD} className={s.link}>Forgot?</NavLink>
             </div>
             <div className={s.link}>
                 <NavLink to={PATH.REGISTRATION} className={s.link}>Sign Up</NavLink>

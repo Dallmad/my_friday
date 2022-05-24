@@ -13,7 +13,6 @@ const SET_SEARCH_PACK = 'packs/SET_SEARCH_PACK'
 const SET_PAGE_PACKS = 'packs/SET_PAGE_PACKS'
 const SET_NUMBERS_PACKS = 'packs/SET_MIN_NUMBERS_PACKS'
 
-
 const initialState = {
     cardPacks: [],
     page: 1,
@@ -24,6 +23,7 @@ const initialState = {
     token: '',
     tokenDeathTime: 0,
     sortPacks: '0updated',
+    packName:''
 }
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: PacksActionsType): ResponsePacksType => {
@@ -39,13 +39,11 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Pa
         case SET_SORT_PACKS:
             return {...state, sortPacks: action.sortPacks}
         case SET_SEARCH_PACK:
-            return {...state, cardPacks: state.cardPacks.filter((p => !!(p.name.search(action.title) + 1)))}
+            return {...state,packName:action.title}
         case SET_PAGE_PACKS:
             return {...state, page: action.page}
         case SET_NUMBERS_PACKS:
             return {...state,minCardsCount:action.minCardsCount,maxCardsCount:action.maxCardsCount}
-
-/*            return {...state, cardPacks:state.cardPacks.filter((c)=> c.cardsCount>=action.minCardsCount && c.cardsCount<=action.maxCardsCount)}*/
         default:
             return state
     }
@@ -56,22 +54,18 @@ export const fetchPacksAC = (packs: ResponsePacksType) => ({type: FETCH_PACKS, p
 export const createPackAC = (cardsPack: RequestCreatePackType) => ({type: CREATE_PACK, cardsPack} as const)
 export const deletePackAC = (_id: string) => ({type: DELETE_PACK, _id} as const)
 export const updatedPackAC = (cardsPack: RequestUpdatedPackType) => ({type: UPDATED_PACK, cardsPack} as const)
-export const setSortPacksAC = (sortPacks: string) =>
-    ({type: SET_SORT_PACKS, sortPacks} as const)
-export const setSearchPackAC = (title: string) =>
-    ({type: SET_SEARCH_PACK, title} as const)
-export const setPagePacksAC = (page: number) =>
-    ({type: SET_PAGE_PACKS, page} as const)
+export const setSortPacksAC = (sortPacks: string) => ({type: SET_SORT_PACKS, sortPacks} as const)
+export const setSearchPackAC = (title: string) => ({type: SET_SEARCH_PACK, title} as const)
+export const setPagePacksAC = (page: number) => ({type: SET_PAGE_PACKS, page} as const)
 export const setNumbersPacksAC = (minCardsCount: number,maxCardsCount: number) =>
     ({type: SET_NUMBERS_PACKS, minCardsCount, maxCardsCount} as const)
 
-
-// thunk
+// thunks
 export const fetchPacksTC = (userId?: string) => (dispatch: Dispatch<AppActionType>, getState: () => AppRootStateType) => {
-    let {sortPacks, page, pageCount,minCardsCount,maxCardsCount} = getState().packs
+    let {packName, sortPacks, page, pageCount,minCardsCount,maxCardsCount} = getState().packs
 
     dispatch(loading(true))
-    packsAPI.getPacks({min: minCardsCount, max: maxCardsCount,sortPacks,page,   pageCount,user_id: userId})
+    packsAPI.getPacks({packName, min: minCardsCount, max: maxCardsCount, sortPacks, page, pageCount,user_id: userId})
         .then((res) => {
             dispatch(fetchPacksAC(res.data))
         })
@@ -113,9 +107,9 @@ export const deletePackTC = (_id: string) => (dispatch: TypedDispatch) => {
             dispatch(loading(false))
         })
 }
-export const updatedPackTC = (cardsPack: RequestUpdatedPackType) => (dispatch: TypedDispatch) => {
+export const updatedPackTC = (_id: string, name: string) => (dispatch:TypedDispatch) => {
     dispatch(loading(true))
-    packsAPI.updatedPack(cardsPack)
+    packsAPI.updatedPack({_id, name})
         .then((res) => {
             dispatch(updatedPackAC(res.data.updatedCardsPack))
             dispatch(fetchPacksTC())
@@ -159,6 +153,7 @@ export type ResponsePacksType = SortPacksType & {
 }
 type SortPacksType = {
     sortPacks: string
+    packName:string
 }
 export type fetchPacksActionType = ReturnType<typeof fetchPacksAC>
 export type createPackActionType = ReturnType<typeof createPackAC>

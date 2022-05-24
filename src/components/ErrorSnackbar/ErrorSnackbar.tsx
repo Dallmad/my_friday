@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../state/store';
 import {setErrorAC} from '../../state/profile-reducer';
 import s from './ErrorSnackbar.module.css'
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {loading} from '../../state/registration-reducer';
 
 export const ErrorSnackbar = () => {
@@ -14,7 +14,6 @@ export const ErrorSnackbar = () => {
             const timer = setTimeout(() => {
                 dispatch(setErrorAC(''))
                 dispatch(loading(false))
-             //   setErr(false)
             }, 4500)
             return () => clearTimeout(timer)
         }
@@ -26,8 +25,8 @@ export const ErrorSnackbar = () => {
     }
 
     return (
-        <div className={s.div}>
-            {error && <div onClick={handleClose} style={{backgroundColor:'red'}}>{error}</div>}
-        </div>
+        <>
+            {error && <div onClick={handleClose} className={s.div}>{error}</div>}
+        </>
     )
 }

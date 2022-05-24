@@ -5,6 +5,7 @@ import {handleServerNetworkError} from '../utils/error-utils';
 import {loading} from './registration-reducer';
 
 const SET_IS_LOGGED_IN = 'login/SET-IS-LOGGED-IN'
+
 const initialState = {
     isLoggedIn: false
 }
@@ -18,9 +19,9 @@ export const authReducer = (state: InitialStateType = initialState, action:
             return state
     }
 }
+
 // actions
-export const setIsLoggedIn = (value: boolean) =>
-    ({type: SET_IS_LOGGED_IN, value})
+export const setIsLoggedIn = (value: boolean) => ({type: SET_IS_LOGGED_IN, value})
 
 // thunks
 export const login = (data: LoginParamsType) => (dispatch: Dispatch) => {
@@ -54,6 +55,7 @@ export const setUser = () => (dispatch: Dispatch) => {
         .then(res => {
             dispatch(loading(false))
             dispatch(setProfileStateAC(res.data))
+            dispatch(setIsLoggedIn(true))
         })
         .catch(error => {
             handleServerNetworkError(error.response.data.error, dispatch)
